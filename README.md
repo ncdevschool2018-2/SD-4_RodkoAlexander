@@ -3,14 +3,12 @@
 Web App for schedule planing.
 
 ## Built With
-Status: in development
+
 * [Spring Framework](https://spring.io/) - Web Framework
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Angular](https://angular.io/) - Superheroic JavaScript MVW Framework
 * [MySQL](https://rometools.github.io/rome/) - Open-source Relational Database Management System
 * [Bootstrap](https://rometools.github.io/rome/) - Web Framework
-
-
 
 ## Authors
 
