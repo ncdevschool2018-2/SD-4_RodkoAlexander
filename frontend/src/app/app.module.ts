@@ -3,23 +3,25 @@ import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HeaderComponent} from './header/header.component';
 import {ScheduleComponent} from './schedule/schedule.component';
-import {ModalModule} from './modal/modal.module';
-import {LoginComponent} from './modal/login/login.component';
+import {LoginComponent} from './login/login.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    ModalModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
+  entryComponents: [LoginComponent],
   providers: [],
   bootstrap: [HeaderComponent,
-    ScheduleComponent,
-  LoginComponent]
+    ScheduleComponent]
 })
 export class AppModule {
 }
