@@ -1,0 +1,22 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img src="/src/assets/images/app_icons/ms-icon-150x150.png" width="150" height="150"
+                                     class="d-inline-block align-top align-self-center" alt="">
+
+    <label for="inputEmail" class="sr-only  m-8">Email address</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required
+           autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-lg btn-info my-2 my-sm-0 btn-block" type="submit" (click)="modal.close('Sign in')">Sign in</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

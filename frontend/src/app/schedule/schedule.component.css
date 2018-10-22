@@ -1,0 +1,11 @@
+.topcap{
+  caption-side: top;
+}
+table {
+  width: 100%;
+}
+
+th {
+  height: 5px;
+  width: 30px;
+}

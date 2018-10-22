@@ -1,0 +1,25 @@
+<div class="container" *ngFor="let day of days">
+  <table class="table table-bordered table-striped">
+    <caption class="topcap has-success">{{days.keys()[day]}}</caption>
+    <thead>
+
+    <tr class="thead-dark">
+      <th class="z-depth-0">{{header.time}}</th>
+      <th>{{header.lesson}}</th>
+      <th>{{header.type}}</th>
+      <th>{{header.auditorium}}</th>
+      <th>{{header.who}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let class of classes">
+      <td>{{class.time}}</td>
+      <td>{{class.lesson}}</td>
+      <td>{{class.type}}</td>
+      <td>{{class.auditorium}}</td>
+      <td>{{class.who}}</td>
+    </tr>
+
+    </tbody>
+  </table>
+</div>
