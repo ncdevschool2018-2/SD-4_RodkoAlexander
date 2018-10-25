@@ -16,12 +16,6 @@ export class HeaderComponent implements OnInit {
 
   openFormModal() {
     const modalRef = this.modalService.open(LoginComponent);
-
-    modalRef.result.then((result) => {
-      console.log(result);
-    }).catch((error) => {
-      console.log(error);
-    });
   }
 
 }

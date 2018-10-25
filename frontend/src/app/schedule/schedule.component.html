@@ -1,25 +1,81 @@
-<div class="container" *ngFor="let day of days">
+<div class="container">
   <table class="table table-bordered table-striped">
-    <caption class="topcap has-success">{{days.keys()[day]}}</caption>
+    <caption class="topcap has-success"></caption>
     <thead>
 
     <tr class="thead-dark">
-      <th class="z-depth-0">{{header.time}}</th>
-      <th>{{header.lesson}}</th>
-      <th>{{header.type}}</th>
-      <th>{{header.auditorium}}</th>
-      <th>{{header.who}}</th>
+      <th>Time</th>
+      <th>Subject</th>
+      <th>Teacher</th>
+      <th>Group</th>
+      <th>LessonType</th>
+      <th>Room</th>
+      <th>Modify</th>
+
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let class of classes">
-      <td>{{class.time}}</td>
-      <td>{{class.lesson}}</td>
-      <td>{{class.type}}</td>
-      <td>{{class.auditorium}}</td>
-      <td>{{class.who}}</td>
+    <tr *ngFor="let lesson of loadedLessons">
+      <td>{{lesson.time}}</td>
+      <td>{{lesson.subject}}</td>
+      <td>{{lesson.teacher}}</td>
+      <td>{{lesson.who}}</td>
+      <td>{{lesson.lessonType}}</td>
+      <td>{{lesson.room}}</td>
+      <td><button type="button" class="btn btn-danger" (click)="_deleteLessonById(lesson.id)">Delete</button>
+      <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button></td>
     </tr>
 
     </tbody>
   </table>
 </div>
+
+
+<!-- Modal -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Lesson</h4>
+    <button type="button" class="close pull-right"
+            aria-label="Close" (click)="_closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!--Time	Subject	Teacher	Group	LessonType	Room-->
+
+    <div class="form-group">
+      <label>Time</label>
+      <input class="form-control" name="time" [(ngModel)]="lessonToEdit.time" #time="ngModel" required/>
+      <div [hidden]="time.valid" class="alert alert-danger">
+        Please set time!
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Subject</label>
+      <input class="form-control" name="subject" [(ngModel)]="lessonToEdit.subject" #subject="ngModel" required/>
+    </div>
+    <div class="form-group">
+      <label>Teacher</label>
+      <input class="form-control" name="subject" [(ngModel)]="lessonToEdit.teacher" #teacher="ngModel" required/>
+    </div>
+    <div class="form-group">
+      <label>Group</label>
+      <input class="form-control" name="group" [(ngModel)]="lessonToEdit.who" #group="ngModel" required/>
+    </div>
+    <div class="form-group">
+      <label>LessonType</label>
+      <input class="form-control" name="lessonType" [(ngModel)]="lessonToEdit.lessonType" #lessonType="ngModel" required/>
+    </div>
+    <div class="form-group">
+      <label>Room</label>
+      <input class="form-control" name="room" [(ngModel)]="lessonToEdit.room" #room="ngModel" required/>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="_addLesson()"
+            [disabled]="time.invalid ">{{editMode ? "Save": "Create"}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
+
+  </div>
+</ng-template>

@@ -1,14 +1,16 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import {FormGroup, FormBuilder, FormControl} from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+
 })
 export class LoginComponent {
 
   @Input()id: number;
-  myForm: FormGroup;
+  scheduleLoginForm: FormGroup;
   constructor(
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder
@@ -16,12 +18,12 @@ export class LoginComponent {
     this.createForm();
   }
   private createForm() {
-    this.myForm = this.formBuilder.group({
-      username: '',
-      password: ''
+    this.scheduleLoginForm = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl()
     });
   }
   private submitForm() {
-    this.activeModal.close(this.myForm.value);
+    this.activeModal.close(this.scheduleLoginForm.value);
   }
 }
