@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Component
 public class AccountServiceImpl implements AccountService {
+
     private AccountRepository repository;
 
     @Autowired
@@ -37,4 +38,5 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(Long id) {
         repository.deleteById(id);
     }
+
 }

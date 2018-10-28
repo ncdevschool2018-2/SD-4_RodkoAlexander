@@ -1,64 +1,37 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
-
 @Entity
+@Table(name = "student_group", schema = "backend", catalog = "")
 public class StudentGroup {
-
+    private int groupId;
+    private int course;
+    private String description;
 
     @Id
-    private long id;
-
-    private String description;
-    private byte course;
-
-
-    @ManyToMany
-    @JoinTable(
-            name="lesson",
-            joinColumns=@JoinColumn(name="group_id"),
-            inverseJoinColumns=@JoinColumn(name="lesson_id"))
-    private List<Lesson> lessons;
-
-    @OneToMany(mappedBy = "group")
-    private List<Student> students;
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("StudentGroup{");
-        sb.append("id=").append(id);
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", course=").append(course);
-        sb.append('}');
-        return sb.toString();
+    @Column(name = "group_id", nullable = false)
+    public int getGroupId() {
+        return groupId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentGroup that = (StudentGroup) o;
-        return id == that.id &&
-                course == that.course &&
-                Objects.equals(description, that.description);
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, course);
+    @Basic
+    @Column(name = "course", nullable = false)
+    public int getCourse() {
+        return course;
     }
 
-    public long getId() {
-        return id;
+    public void setCourse(int course) {
+        this.course = course;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    @Basic
+    @Column(name = "description", nullable = false, length = 255)
     public String getDescription() {
         return description;
     }
@@ -67,14 +40,18 @@ public class StudentGroup {
         this.description = description;
     }
 
-    public byte getCourse() {
-        return course;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentGroup that = (StudentGroup) o;
+        return groupId == that.groupId &&
+                course == that.course &&
+                Objects.equals(description, that.description);
     }
 
-    public void setCourse(byte course) {
-        this.course = course;
-    }
-
-    public StudentGroup() {
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, course, description);
     }
 }
