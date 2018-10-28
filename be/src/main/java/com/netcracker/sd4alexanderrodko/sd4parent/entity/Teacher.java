@@ -1,27 +1,40 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "teachers")
 public class Teacher {
-    private int teacherId;
-    private String name;
-    private String surname;
-    private Account accountByAccountId;
+
 
     @Id
-    @Column(name = "teacher_id", nullable = false)
-    public int getTeacherId() {
-        return teacherId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long number;
+
+    @Column(name = "name", length = 255, nullable = false)
+    private String name;
+    @Column(name = "surname", length = 255, nullable = false)
+    private String surame;
+
+    @OneToOne
+    @JoinColumn(name = "account_id",referencedColumnName = "id")
+    private Account account;
+
+
+    public Teacher() {
+
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public long getNumber() {
+        return number;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    public void setNumber(long number) {
+        this.number = number;
+    }
+
     public String getName() {
         return name;
     }
@@ -30,14 +43,20 @@ public class Teacher {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "surname", nullable = true, length = 255)
-    public String getSurname() {
-        return surname;
+    public String getSurame() {
+        return surame;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurame(String surame) {
+        this.surame = surame;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
@@ -45,23 +64,25 @@ public class Teacher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return teacherId == teacher.teacherId &&
+        return number == teacher.number &&
                 Objects.equals(name, teacher.name) &&
-                Objects.equals(surname, teacher.surname);
+                Objects.equals(surame, teacher.surame) &&
+                Objects.equals(account, teacher.account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teacherId, name, surname);
+        return Objects.hash(number, name, surame, account);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
-    public Account getAccountByAccountId() {
-        return accountByAccountId;
-    }
-
-    public void setAccountByAccountId(Account accountByAccountId) {
-        this.accountByAccountId = accountByAccountId;
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Teacher{");
+        sb.append("number=").append(number);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", surame='").append(surame).append('\'');
+        sb.append(", account=").append(account);
+        sb.append('}');
+        return sb.toString();
     }
 }

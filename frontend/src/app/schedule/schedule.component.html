@@ -19,7 +19,7 @@
       <td>{{lesson.time}}</td>
       <td>{{lesson.subject}}</td>
       <td>{{lesson.account_id}}</td>
-      <td>{{lesson.who}}</td>
+      <td>{{lesson.groups}}</td>
       <td>{{lesson.lessonType}}</td>
       <td>{{lesson.room}}</td>
       <td><button type="button" class="btn btn-danger" (click)="_deleteLessonById(lesson.account_id)">Delete</button>
@@ -60,7 +60,7 @@
     </div>
     <div class="form-group">
       <label>Group</label>
-      <input class="form-control" name="group" [(ngModel)]="lessonToEdit.who" #group="ngModel" required/>
+      <input class="form-control" name="group" [(ngModel)]="lessonToEdit.groups" #group="ngModel" required/>
     </div>
     <div class="form-group">
       <label>LessonType</label>

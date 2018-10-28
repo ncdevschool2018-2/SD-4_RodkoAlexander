@@ -1,30 +1,30 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(name = "accounts")
 public class Account {
-    private int accountId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String email;
     private String password;
     private String role;
 
-    @Id
-    @Column(name = "account_id", nullable = false)
-    public int getAccountId() {
-        return accountId;
+    public Account() {
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
+    public long getId() {
+        return id;
     }
 
-    @Basic
-    @Column(name = "email", nullable = false, length = 255)
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -33,8 +33,6 @@ public class Account {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "password", nullable = false, length = 255)
     public String getPassword() {
         return password;
     }
@@ -43,8 +41,6 @@ public class Account {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "role", nullable = false, length = 255)
     public String getRole() {
         return role;
     }
@@ -58,7 +54,7 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return accountId == account.accountId &&
+        return id == account.id &&
                 Objects.equals(email, account.email) &&
                 Objects.equals(password, account.password) &&
                 Objects.equals(role, account.role);
@@ -66,6 +62,17 @@ public class Account {
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId, email, password, role);
+        return Objects.hash(id, email, password, role);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Account{");
+        sb.append("id=").append(id);
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", role='").append(role).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

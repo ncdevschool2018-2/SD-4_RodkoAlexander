@@ -1,27 +1,82 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Student {
-    private int studentId;
-    private String name;
-    private String surname;
-    private Account accountByAccountId;
+@Table(name = "students")
+public class Student implements Serializable {
 
     @Id
-    @Column(name = "student_id", nullable = false)
-    public int getStudentId() {
-        return studentId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long number;
+
+    @OneToOne
+    @JoinColumn(name="account_id")
+    private Account account;
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name="group_number")
+    @JsonBackReference
+    private Group group;
+
+    @OneToMany(
+            mappedBy = "student",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Visit> visit;
+
+    private String name;
+
+    private String surname;
+
+
+    public Student() {
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public long getNumber() {
+        return number;
     }
 
-    @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    public void setNumber(long number) {
+        this.number = number;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public List<Visit> getVisit() {
+        return visit;
+    }
+
+    public void setVisit(List<Visit> visit) {
+        this.visit = visit;
+    }
+
     public String getName() {
         return name;
     }
@@ -30,8 +85,6 @@ public class Student {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "surname", nullable = true, length = 255)
     public String getSurname() {
         return surname;
     }
@@ -45,23 +98,17 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return studentId == student.studentId &&
+        return number == student.number &&
+                Objects.equals(account, student.account) &&
+                Objects.equals(group, student.group) &&
+                Objects.equals(visit, student.visit) &&
                 Objects.equals(name, student.name) &&
                 Objects.equals(surname, student.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, name, surname);
+        return Objects.hash(number, account, group, visit, name, surname);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
-    public Account getAccountByAccountId() {
-        return accountByAccountId;
-    }
-
-    public void setAccountByAccountId(Account accountByAccountId) {
-        this.accountByAccountId = accountByAccountId;
-    }
 }
