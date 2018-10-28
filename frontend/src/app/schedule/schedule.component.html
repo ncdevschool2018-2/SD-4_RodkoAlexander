@@ -18,11 +18,11 @@
     <tr *ngFor="let lesson of loadedLessons">
       <td>{{lesson.time}}</td>
       <td>{{lesson.subject}}</td>
-      <td>{{lesson.teacher}}</td>
+      <td>{{lesson.account_id}}</td>
       <td>{{lesson.who}}</td>
       <td>{{lesson.lessonType}}</td>
       <td>{{lesson.room}}</td>
-      <td><button type="button" class="btn btn-danger" (click)="_deleteLessonById(lesson.id)">Delete</button>
+      <td><button type="button" class="btn btn-danger" (click)="_deleteLessonById(lesson.account_id)">Delete</button>
       <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button></td>
     </tr>
 
@@ -56,7 +56,7 @@
     </div>
     <div class="form-group">
       <label>Teacher</label>
-      <input class="form-control" name="subject" [(ngModel)]="lessonToEdit.teacher" #teacher="ngModel" required/>
+      <input class="form-control" name="subject" [(ngModel)]="lessonToEdit.account_id" #account_id="ngModel" required/>
     </div>
     <div class="form-group">
       <label>Group</label>
