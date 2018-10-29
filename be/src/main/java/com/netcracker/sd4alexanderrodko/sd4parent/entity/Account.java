@@ -1,6 +1,11 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.web.servlet.View;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -10,7 +15,9 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(length = 256, nullable = false,unique = true)
     private String email;
+    @Column(length = 33, nullable = false)
     private String password;
     private String role;
 

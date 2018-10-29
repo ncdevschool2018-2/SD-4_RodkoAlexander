@@ -1,12 +1,9 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,16 +16,13 @@ public class Student implements Serializable {
     private long number;
 
     @OneToOne
-    @JoinColumn(name="account_id")
     private Account account;
 
-
-
-
     @ManyToOne
-    @JoinColumn(name="group_number")
     @JsonBackReference
-    private Group group;
+    @JoinColumn(name="group_number")
+    private StudentGroup group;
+
 
     @OneToMany(
             mappedBy = "student",
@@ -61,11 +55,11 @@ public class Student implements Serializable {
         this.account = account;
     }
 
-    public Group getGroup() {
+    public StudentGroup getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(StudentGroup group) {
         this.group = group;
     }
 

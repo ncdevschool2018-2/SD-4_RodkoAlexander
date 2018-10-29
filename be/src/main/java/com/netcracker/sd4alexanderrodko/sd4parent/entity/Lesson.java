@@ -1,6 +1,8 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -38,8 +40,9 @@ public class Lesson {
     )
     private List<Visit> visits;
 
-    @ManyToMany
-    private List<Group> groups;
+    @ManyToMany(mappedBy = "lessons")
+    @JsonBackReference
+    private List<StudentGroup> studentGroups;
 
     public Lesson() {
     }

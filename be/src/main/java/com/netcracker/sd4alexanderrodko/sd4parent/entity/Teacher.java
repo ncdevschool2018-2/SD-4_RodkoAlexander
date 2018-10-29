@@ -1,6 +1,9 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -16,7 +19,7 @@ public class Teacher {
     @Column(name = "name", length = 255, nullable = false)
     private String name;
     @Column(name = "surname", length = 255, nullable = false)
-    private String surame;
+    private String surname;
 
     @OneToOne
     @JoinColumn(name = "account_id",referencedColumnName = "id")
@@ -43,14 +46,13 @@ public class Teacher {
         this.name = name;
     }
 
-    public String getSurame() {
-        return surame;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurame(String surame) {
-        this.surame = surame;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
-
     public Account getAccount() {
         return account;
     }
@@ -66,13 +68,13 @@ public class Teacher {
         Teacher teacher = (Teacher) o;
         return number == teacher.number &&
                 Objects.equals(name, teacher.name) &&
-                Objects.equals(surame, teacher.surame) &&
+                Objects.equals(surname, teacher.surname) &&
                 Objects.equals(account, teacher.account);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, name, surame, account);
+        return Objects.hash(number, name, surname, account);
     }
 
     @Override
@@ -80,7 +82,7 @@ public class Teacher {
         final StringBuilder sb = new StringBuilder("Teacher{");
         sb.append("number=").append(number);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", surame='").append(surame).append('\'');
+        sb.append(", surname='").append(surname).append('\'');
         sb.append(", account=").append(account);
         sb.append('}');
         return sb.toString();

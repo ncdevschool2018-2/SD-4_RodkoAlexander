@@ -9,26 +9,29 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "stgroups")
-public class Group implements Serializable {
+@Table(name = "student_groups")
+public class StudentGroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long number;
 
     private String description;
+
     private String course;
 
+
+
     @ManyToMany
+    @JsonManagedReference
     private List<Lesson> lessons;
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
-    @Column(nullable = true)
     @JsonManagedReference
     private List<Student> students;
 
-    public Group() {
+    public StudentGroup() {
     }
 
     public long getNumber() {
@@ -75,12 +78,12 @@ public class Group implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Group group = (Group) o;
-        return number == group.number &&
-                Objects.equals(course, group.course) &&
-                Objects.equals(description, group.description) &&
-                Objects.equals(lessons, group.lessons) &&
-                Objects.equals(students, group.students);
+        StudentGroup studentGroup = (StudentGroup) o;
+        return number == studentGroup.number &&
+                Objects.equals(course, studentGroup.course) &&
+                Objects.equals(description, studentGroup.description) &&
+                Objects.equals(lessons, studentGroup.lessons) &&
+                Objects.equals(students, studentGroup.students);
     }
 
     @Override
@@ -89,3 +92,5 @@ public class Group implements Serializable {
     }
 
 }
+
+

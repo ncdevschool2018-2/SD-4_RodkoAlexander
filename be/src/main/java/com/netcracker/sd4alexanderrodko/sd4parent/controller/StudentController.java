@@ -31,7 +31,6 @@ public class StudentController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<Student> getStudents() {
-        System.out.println(studentService.getAllStudents());
         return studentService.getAllStudents();
     }
 
