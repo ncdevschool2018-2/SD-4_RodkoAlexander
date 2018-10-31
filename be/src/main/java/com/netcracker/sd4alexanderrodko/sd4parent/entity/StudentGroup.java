@@ -14,6 +14,7 @@ public class StudentGroup {
     private Collection<Student> students;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "number", nullable = false)
     public long getNumber() {
         return number;

@@ -13,6 +13,7 @@ public class Teacher {
     private Account account;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "number", nullable = false)
     public long getNumber() {
         return number;
