@@ -1,29 +1,19 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.web.servlet.View;
-
 import javax.persistence.*;
 import java.util.Objects;
 
+
 @Entity
-@Table(name = "accounts")
+@Table(name = "accounts", schema = "backend", catalog = "")
 public class Account {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(length = 256, nullable = false,unique = true)
     private String email;
-    @Column(length = 33, nullable = false)
     private String password;
     private String role;
 
-    public Account() {
-    }
-
+    @Id
+    @Column(name = "id", nullable = false)
     public long getId() {
         return id;
     }
@@ -32,6 +22,8 @@ public class Account {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "email", nullable = false, length = 256)
     public String getEmail() {
         return email;
     }
@@ -40,6 +32,8 @@ public class Account {
         this.email = email;
     }
 
+    @Basic
+    @Column(name = "password", nullable = false, length = 256)
     public String getPassword() {
         return password;
     }
@@ -48,6 +42,8 @@ public class Account {
         this.password = password;
     }
 
+    @Basic
+    @Column(name = "role", nullable = true, length = 256)
     public String getRole() {
         return role;
     }
@@ -70,16 +66,5 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(id, email, password, role);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Account{");
-        sb.append("id=").append(id);
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", role='").append(role).append('\'');
-        sb.append('}');
-        return sb.toString();
     }
 }

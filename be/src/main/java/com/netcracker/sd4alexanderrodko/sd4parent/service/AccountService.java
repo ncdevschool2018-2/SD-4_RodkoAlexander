@@ -1,9 +1,9 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service;
 
-
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.Account;
 
 import java.util.Optional;
+
 
 public interface AccountService {
 
@@ -14,4 +14,5 @@ public interface AccountService {
     Iterable<Account> getAllAccounts();
 
     void deleteAccount(Long id);
+
 }

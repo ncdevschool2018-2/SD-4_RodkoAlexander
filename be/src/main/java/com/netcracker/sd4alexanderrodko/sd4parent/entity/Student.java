@@ -1,44 +1,20 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
+
 @Entity
-@Table(name = "students")
-public class Student implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Table(name = "students", schema = "backend", catalog = "")
+public class Student {
     private long number;
-
-    @OneToOne
+    private String firstName;
+    private String lastName;
+    private Long groupNumber;
     private Account account;
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name="group_number")
-    private StudentGroup group;
-
-
-    @OneToMany(
-            mappedBy = "student",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Visit> visit;
-
-    private String name;
-
-    private String surname;
-
-
-    public Student() {
-    }
-
+    @Id
+    @Column(name = "number", nullable = false)
     public long getNumber() {
         return number;
     }
@@ -47,44 +23,34 @@ public class Student implements Serializable {
         this.number = number;
     }
 
-    public Account getAccount() {
-        return account;
+    @Basic
+    @Column(name = "first_name", nullable = true, length = 256)
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public StudentGroup getGroup() {
-        return group;
+    @Basic
+    @Column(name = "last_name", nullable = true, length = 256)
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setGroup(StudentGroup group) {
-        this.group = group;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public List<Visit> getVisit() {
-        return visit;
+    @Basic
+    @Column(name = "group_number", nullable = true)
+    public Long getGroupNumber() {
+        return groupNumber;
     }
 
-    public void setVisit(List<Visit> visit) {
-        this.visit = visit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setGroupNumber(Long groupNumber) {
+        this.groupNumber = groupNumber;
     }
 
     @Override
@@ -93,16 +59,23 @@ public class Student implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
         return number == student.number &&
-                Objects.equals(account, student.account) &&
-                Objects.equals(group, student.group) &&
-                Objects.equals(visit, student.visit) &&
-                Objects.equals(name, student.name) &&
-                Objects.equals(surname, student.surname);
+                Objects.equals(firstName, student.firstName) &&
+                Objects.equals(lastName, student.lastName) &&
+                Objects.equals(groupNumber, student.groupNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, account, group, visit, name, surname);
+        return Objects.hash(number, firstName, lastName, groupNumber);
     }
 
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

@@ -4,7 +4,9 @@ import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 
 import java.util.Optional;
 
+
 public interface StudentGroupService {
+
     StudentGroup saveStudentGroup(StudentGroup studentGroup);
 
     Optional<StudentGroup> getStudentGroupById(Long id);
@@ -12,4 +14,5 @@ public interface StudentGroupService {
     Iterable<StudentGroup> getAllStudentGroups();
 
     void deleteStudentGroup(Long id);
+
 }

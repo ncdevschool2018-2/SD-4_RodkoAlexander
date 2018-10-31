@@ -1,13 +1,11 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service.impl;
 
-import com.netcracker.sd4alexanderrodko.sd4parent.entity.Student;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 import com.netcracker.sd4alexanderrodko.sd4parent.repository.StudentGroupRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.Optional;
 
 
@@ -40,7 +38,5 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     public void deleteStudentGroup(Long id) {
         repository.deleteById(id);
     }
-
-
 
 }

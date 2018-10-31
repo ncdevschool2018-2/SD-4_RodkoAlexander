@@ -6,8 +6,6 @@ import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -40,6 +38,5 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(Long id) {
         repository.deleteById(id);
     }
-
 
 }

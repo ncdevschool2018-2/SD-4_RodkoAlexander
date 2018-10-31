@@ -1,39 +1,20 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 
 @Entity
-@Table(name = "student_groups")
-public class StudentGroup implements Serializable {
+@Table(name = "student_groups", schema = "backend", catalog = "")
+public class StudentGroup {
+    private long number;
+    private Long course;
+    private String description;
+    private Collection<Student> students;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long number;
-
-    private String description;
-
-    private String course;
-
-
-
-    @ManyToMany
-    @JsonManagedReference
-    private List<Lesson> lessons;
-
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "group")
-    @JsonManagedReference
-    private List<Student> students;
-
-    public StudentGroup() {
-    }
-
+    @Column(name = "number", nullable = false)
     public long getNumber() {
         return number;
     }
@@ -42,6 +23,18 @@ public class StudentGroup implements Serializable {
         this.number = number;
     }
 
+    @Basic
+    @Column(name = "course", nullable = true)
+    public Long getCourse() {
+        return course;
+    }
+
+    public void setCourse(Long course) {
+        this.course = course;
+    }
+
+    @Basic
+    @Column(name = "description", nullable = true, length = 256)
     public String getDescription() {
         return description;
     }
@@ -50,47 +43,27 @@ public class StudentGroup implements Serializable {
         this.description = description;
     }
 
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentGroup studentGroup = (StudentGroup) o;
-        return number == studentGroup.number &&
-                Objects.equals(course, studentGroup.course) &&
-                Objects.equals(description, studentGroup.description) &&
-                Objects.equals(lessons, studentGroup.lessons) &&
-                Objects.equals(students, studentGroup.students);
+        StudentGroup that = (StudentGroup) o;
+        return number == that.number &&
+                Objects.equals(course, that.course) &&
+                Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, description, course, lessons, students);
+        return Objects.hash(number, course, description);
     }
 
+    @OneToMany(mappedBy = "groupNumber")
+    public Collection<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
 }
-
-

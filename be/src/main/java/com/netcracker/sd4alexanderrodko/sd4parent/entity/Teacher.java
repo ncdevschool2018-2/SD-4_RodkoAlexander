@@ -1,35 +1,19 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import java.util.Objects;
 
+
 @Entity
-@Table(name = "teachers")
+@Table(name = "teachers", schema = "backend", catalog = "")
 public class Teacher {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long number;
-
-    @Column(name = "name", length = 255, nullable = false)
-    private String name;
-    @Column(name = "surname", length = 255, nullable = false)
-    private String surname;
-
-    @OneToOne
-    @JoinColumn(name = "account_id",referencedColumnName = "id")
+    private String firstName;
+    private String lastName;
     private Account account;
 
-
-    public Teacher() {
-
-    }
-
+    @Id
+    @Column(name = "number", nullable = false)
     public long getNumber() {
         return number;
     }
@@ -38,27 +22,24 @@ public class Teacher {
         this.number = number;
     }
 
-    public String getName() {
-        return name;
+    @Basic
+    @Column(name = "first_name", nullable = true, length = 256)
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    @Basic
+    @Column(name = "last_name", nullable = true, length = 256)
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
@@ -67,24 +48,22 @@ public class Teacher {
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
         return number == teacher.number &&
-                Objects.equals(name, teacher.name) &&
-                Objects.equals(surname, teacher.surname) &&
-                Objects.equals(account, teacher.account);
+                Objects.equals(firstName, teacher.firstName) &&
+                Objects.equals(lastName, teacher.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, name, surname, account);
+        return Objects.hash(number, firstName, lastName);
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Teacher{");
-        sb.append("number=").append(number);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", surname='").append(surname).append('\'');
-        sb.append(", account=").append(account);
-        sb.append('}');
-        return sb.toString();
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
