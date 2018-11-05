@@ -1,18 +1,13 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
-
-public class StudentViewModel {
-
-
+public class TeacherViewModel {
     private long number;
     private String firstName;
     private String lastName;
-    private Long groupNumber;
     private AccountViewModel account;
 
-    public StudentViewModel() {
+    public TeacherViewModel() {
     }
-
 
     public long getNumber() {
         return number;
@@ -38,19 +33,11 @@ public class StudentViewModel {
         this.lastName = lastName;
     }
 
-    public long getGroupNumber() {
-        return groupNumber;
-    }
-
-    public void setGroupNumber(long groupNumber) {
-        this.groupNumber = groupNumber;
-    }
-
     public AccountViewModel getAccount() {
         return account;
     }
 
-    public void setAccount(AccountViewModel accountID) {
-        this.account = accountID;
+    public void setAccount(AccountViewModel account) {
+        this.account = account;
     }
 }

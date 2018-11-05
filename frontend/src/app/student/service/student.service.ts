@@ -12,7 +12,9 @@ export class StudentService {
   }
 
   getStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>('/api/students');
+    let students: Observable<Student[]>  = this.http.get<Student[]>('/api/students');
+    console.log(students);
+    return students;
   }
 
   saveStudent(student: Student): Observable<Student> {

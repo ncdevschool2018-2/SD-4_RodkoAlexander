@@ -9,6 +9,8 @@ import {BsDropdownModule, ModalModule, TooltipModule} from "ngx-bootstrap";
 import {Ng4LoadingSpinnerModule} from "ng4-loading-spinner";
 import { AccountComponent } from './account/account.component';
 import { StudentComponent } from './student/student.component';
+import {StudentService} from "./student/service/student.service";
+import {AccountService} from "./account/service/account.service";
 
 
 @NgModule({
@@ -30,7 +32,7 @@ import { StudentComponent } from './student/student.component';
     ModalModule.forRoot()
   ],
   entryComponents: [],
-  providers: [],
+  providers: [StudentService,AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

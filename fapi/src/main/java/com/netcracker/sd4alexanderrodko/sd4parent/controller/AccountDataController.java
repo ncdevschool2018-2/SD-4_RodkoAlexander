@@ -29,7 +29,7 @@ public class AccountDataController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteBillingAccount(@PathVariable String id) {
+    public void deleteAccount(@PathVariable String id) {
         accountDataService.deleteAccount(Long.valueOf(id));
     }
 }

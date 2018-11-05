@@ -1,8 +1,5 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountViewModel {
 
     private long id;
@@ -13,12 +10,6 @@ public class AccountViewModel {
     public AccountViewModel() {
     }
 
-    public AccountViewModel(long id, String email, String password, String role) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
 
     public long getId() {
         return id;

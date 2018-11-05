@@ -23,7 +23,7 @@
           <td>{{student.firstName}}</td>
           <td type="password">{{student.lastName}}</td>
           <td>{{student.groupNumber}}</td>
-          <td>{{student.accountId}}</td>
+          <td>{{student.account.id}}</td>
           <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteStudent(student.number)">Delete</button>
             <button type="button" class="btn btn-secondary" (click)="_openModal(template, student)">Edit</button></div></td>
         </tr>
@@ -55,7 +55,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Billing Student</h4>
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Student</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -83,13 +83,13 @@
     </div>
     <div class="form-group">
       <label>AccountId</label>
-      <input class="form-control" name="accountId" [(ngModel)]="studentToEdit.accountId" #accountId="ngModel"
+      <input class="form-control" name="account" [(ngModel)]="studentToEdit.account.id" #account="ngModel"
              required />
     </div>
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="_addStudent(firstName, lastName,groupNumber,accountId)"
+    <button type="button" class="btn btn-default" (click)="_addStudent(firstName, lastName,groupNumber,account)"
             [disabled]="firstName.invalid || lastName.invalid">{{editMode ? "Save": "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>

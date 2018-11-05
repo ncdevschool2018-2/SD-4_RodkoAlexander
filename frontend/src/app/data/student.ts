@@ -1,9 +1,11 @@
+import {Account} from "./account";
+
 export class Student {
   number: number;
   firstName: string;
   lastName: string;
   groupNumber: string;
-  accountId: number;
+  account: Account;
 
   constructor(){}
 
@@ -14,7 +16,7 @@ export class Student {
     cloned.firstName = student.firstName;
     cloned.lastName = student.lastName;
     cloned.groupNumber = student.groupNumber;
-    cloned.accountId = student.accountId;
+    cloned.account = student.account;
     return cloned;
   }
 
