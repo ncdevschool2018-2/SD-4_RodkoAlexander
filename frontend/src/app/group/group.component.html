@@ -1,0 +1,87 @@
+<ng4-loading-spinner> </ng4-loading-spinner>
+<div class="container mt-lg-5">
+  <div class="row">
+
+    <div class="col">
+
+      <h4>Groups component:</h4>
+
+      <table class="table align-self-center">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col" style="width: 5%">Number</th>
+          <th scope="col" style="width: 5%">Course</th>
+          <th scope="col" style="width: 80%">Description</th>
+          <th scope="col" style="width: 10%">Modify</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let group of groups">
+          <td scope="row">{{group.number}}</td>
+          <td>{{group.course}}</td>
+          <td type="password">{{group.description}}</td>
+          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteGroup(group.number)">Delete</button>
+            <button type="button" class="btn btn-secondary" (click)="_openModal(template, group)">Edit</button></div></td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <div>
+        <p>Groups count: {{groups ? groups.length : 0}}</p>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-dark" (click)="_updateGroups()">Update</button>
+
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+              (click)="_openModal(template,groupToEdit)">
+        Create new group
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Group</h4>
+    <button type="button" class="close pull-right"
+            aria-label="Close" (click)="_closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Course</label>
+      <input class="form-control" name="course" [(ngModel)]="groupToEdit.course" #course="ngModel"/>
+      <div [hidden]="course.valid || course.untouched" class="alert alert-danger">
+        Please set course
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-control control-box" name="description" [(ngModel)]="groupToEdit.description" #description="ngModel"
+                required></textarea>
+      <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
+        Description
+      </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="_addGroup()"
+            [disabled]="course.invalid || description.invalid">{{editMode ? "Save": "Create"}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
+
+  </div>
+</ng-template>
+

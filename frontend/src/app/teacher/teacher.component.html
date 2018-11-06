@@ -4,7 +4,7 @@
 
     <div class="col">
 
-      <h4>Students component:</h4>
+      <h4>Teachers component:</h4>
 
       <table class="table align-self-center">
         <thead class="thead-dark">
@@ -12,40 +12,38 @@
           <th scope="col" style="width: 15%">Number</th>
           <th scope="col" style="width: 30%">First name</th>
           <th scope="col" style="width: 20%">Last name</th>
-          <th scope="col" style="width: 10%">Group number</th>
           <th scope="col" style="width: 5%">Account id</th>
           <th scope="col" style="width: 10%">Edit</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let student of students">
-          <td scope="row">{{student.number}}</td>
-          <td>{{student.firstName}}</td>
-          <td type="password">{{student.lastName}}</td>
-          <td>{{student.groupNumber}}</td>
-          <td>{{student.account.id}}</td>
-          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteStudent(student.number)">Delete</button>
-            <button type="button" class="btn btn-secondary" (click)="_openModal(template, student)">Edit</button></div></td>
+        <tr *ngFor="let teacher of teachers">
+          <td scope="row">{{teacher.number}}</td>
+          <td>{{teacher.firstName}}</td>
+          <td type="password">{{teacher.lastName}}</td>
+          <td>{{teacher.account.id}}</td>
+          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteTeacher(teacher.number)">Delete</button>
+            <button type="button" class="btn btn-secondary" (click)="_openModal(template, teacher)">Edit</button></div></td>
         </tr>
 
         </tbody>
       </table>
 
       <div>
-        <p>Students count: {{students ? students.length : 0}}</p>
+        <p>Teachers count: {{teachers ? teachers.length : 0}}</p>
       </div>
 
     </div>
   </div>
   <div class="row">
     <div class="col">
-      <button type="button" class="btn btn-dark" (click)="_updateStudents()">Update</button>
+      <button type="button" class="btn btn-dark" (click)="_updateTeachers()">Update</button>
 
     </div>
     <div class="col">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-              (click)="_openModal(template,studentToEdit)">
-        Create new student
+              (click)="_openModal(template,teacherToEdit)">
+        Create new teacher
       </button>
     </div>
   </div>
@@ -55,7 +53,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Student</h4>
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Teacher</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -64,32 +62,27 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Id</label>
-      <input class="form-control" name="id" [(ngModel)]="studentToEdit.number" #id="ngModel" readonly/>
+      <input class="form-control" name="id" [(ngModel)]="teacherToEdit.number" #id="ngModel" readonly/>
     </div>
     <div class="form-group">
       <label>First name</label>
-      <input class="form-control" name="firstName" [(ngModel)]="studentToEdit.firstName" #firstName="ngModel"
+      <input class="form-control" name="firstName" [(ngModel)]="teacherToEdit.firstName" #firstName="ngModel"
              required />
     </div>
     <div class="form-group">
       <label>LastName</label>
-      <input type="lastName" class="form-control" name="lastName" [(ngModel)]="studentToEdit.lastName" #lastName="ngModel"/>
+      <input type="lastName" class="form-control" name="lastName" [(ngModel)]="teacherToEdit.lastName" #lastName="ngModel"/>
     </div>
 
     <div class="form-group">
-      <label>GroupNumber</label>
-      <input class="form-control" name="groupNumber" [(ngModel)]="studentToEdit.groupNumber" #groupNumber="ngModel"
-             required />
-    </div>
-    <div class="form-group">
       <label>AccountId</label>
-      <input class="form-control" name="account" [(ngModel)]="studentToEdit.account.id" #account="ngModel"
+      <input class="form-control" name="account" [(ngModel)]="teacherToEdit.account.id" #account="ngModel"
              required />
     </div>
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="_addStudent()"
+    <button type="button" class="btn btn-default" (click)="_addTeacher()"
             [disabled]="firstName.invalid || lastName.invalid">{{editMode ? "Save": "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>

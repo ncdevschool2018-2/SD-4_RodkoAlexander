@@ -9,7 +9,6 @@ export class Student {
 
   constructor(){}
 
-
   static clone(student: Student): Student{
     let cloned: Student = new Student();
     cloned.number = student.number;
@@ -19,5 +18,4 @@ export class Student {
     cloned.account = student.account;
     return cloned;
   }
-
 }

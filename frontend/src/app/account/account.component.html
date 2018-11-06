@@ -1,12 +1,8 @@
 <ng4-loading-spinner> </ng4-loading-spinner>
 <div class="container mt-lg-5">
   <div class="row">
-
     <div class="col">
-
-      <h4>Accounts component:</h4>
-
-      <table class="table align-self-center">
+      <table class="table align-self-center table-sm">
         <thead class="thead-dark">
         <tr>
           <th scope="col" style="width: 15%">Id</th>
@@ -90,7 +86,7 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="_addAccount(email, password,selectedRole)"
+    <button type="button" class="btn btn-default" (click)="_addAccount()"
             [disabled]="email.invalid || password.invalid">{{editMode ? "Save": "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>

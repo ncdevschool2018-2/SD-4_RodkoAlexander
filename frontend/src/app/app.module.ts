@@ -11,6 +11,13 @@ import { AccountComponent } from './account/account.component';
 import { StudentComponent } from './student/student.component';
 import {StudentService} from "./student/service/student.service";
 import {AccountService} from "./account/service/account.service";
+import { TeacherComponent } from './teacher/teacher.component';
+import { GroupComponent } from './group/group.component';
+import {RouterModule} from '@angular/router';
+import { StartComponent } from './start/start.component';
+import {Router} from "./router";
+import { CarouselModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
+import { LessonComponent } from './lesson/lesson.component'
 
 
 @NgModule({
@@ -18,7 +25,11 @@ import {AccountService} from "./account/service/account.service";
     HeaderComponent,
     AppComponent,
     AccountComponent,
-    StudentComponent
+    StudentComponent,
+    TeacherComponent,
+    GroupComponent,
+    StartComponent,
+    LessonComponent
   ],
   imports: [
     BrowserModule,
@@ -29,11 +40,16 @@ import {AccountService} from "./account/service/account.service";
     Ng4LoadingSpinnerModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    RouterModule.forRoot(Router.routes()),
+    CarouselModule.forRoot(),
+    WavesModule.forRoot(),
+    ButtonsModule
   ],
   entryComponents: [],
   providers: [StudentService,AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+
 }
