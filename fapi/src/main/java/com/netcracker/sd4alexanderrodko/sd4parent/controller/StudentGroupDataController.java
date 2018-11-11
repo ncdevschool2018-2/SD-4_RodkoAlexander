@@ -16,9 +16,15 @@ public class StudentGroupDataController {
 
     @Autowired
     StudentGroupDataService studentGroupDataService;
+
     @RequestMapping
     public ResponseEntity<List<StudentGroupViewModel>> getAllGroups() {
         return ResponseEntity.ok(studentGroupDataService.getAll());
+    }
+
+    @RequestMapping(value = "/numbers", method = RequestMethod.GET)
+    public ResponseEntity<List<Long>> getStudentGroupsNumbers() {
+        return ResponseEntity.ok(studentGroupDataService.getNumbers());
     }
 
     @RequestMapping(method = RequestMethod.POST)

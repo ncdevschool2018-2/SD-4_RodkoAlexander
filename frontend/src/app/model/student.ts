@@ -7,7 +7,10 @@ export class Student {
   groupNumber: string;
   account: Account;
 
-  constructor(){}
+  constructor(){
+    this.account = new Account();
+    this.account.role = "Student"
+  }
 
   static clone(student: Student): Student{
     let cloned: Student = new Student();

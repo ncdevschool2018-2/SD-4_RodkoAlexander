@@ -70,7 +70,7 @@ public class Student {
         return Objects.hash(number, firstName, lastName, groupNumber);
     }
 
-    @ManyToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     public Account getAccount() {
         return account;
@@ -78,5 +78,17 @@ public class Student {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Student{");
+        sb.append("number=").append(number);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", groupNumber=").append(groupNumber);
+        sb.append(", account=").append(account);
+        sb.append('}');
+        return sb.toString();
     }
 }

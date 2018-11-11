@@ -1,9 +1,9 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
-import {GroupService} from "./service/group.service";
+import {GroupService} from "../../connect/group/group.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
-import {Group} from "../model/group";
+import {Group} from "../../model/group";
 
 @Component({
   selector: 'app-group',

@@ -1,27 +1,23 @@
 <ng4-loading-spinner> </ng4-loading-spinner>
 <div class="container mt-lg-5">
   <div class="row">
-
     <div class="col">
-
-      <h4>Students component:</h4>
-
-      <table class="table align-self-center">
+      <table class="table align-self-center table-sm table-bordered table-hover">
         <thead class="thead-dark">
         <tr>
-          <th scope="col" style="width: 15%">Number</th>
-          <th scope="col" style="width: 30%">First name</th>
-          <th scope="col" style="width: 20%">Last name</th>
-          <th scope="col" style="width: 10%">Group number</th>
+          <th scope="col" style="width: 5%">Number</th>
+          <th scope="col" style="width: 10%">First name</th>
+          <th scope="col" style="width: 10%">Last name</th>
+          <th scope="col" style="width: 5%">Group number</th>
           <th scope="col" style="width: 5%">Account id</th>
-          <th scope="col" style="width: 10%">Edit</th>
+          <th scope="col" style="width: 10%">Modify</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let student of students">
-          <td scope="row">{{student.number}}</td>
+          <td>{{student.number}}</td>
           <td>{{student.firstName}}</td>
-          <td type="password">{{student.lastName}}</td>
+          <td>{{student.lastName}}</td>
           <td>{{student.groupNumber}}</td>
           <td>{{student.account.id}}</td>
           <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteStudent(student.number)">Delete</button>
@@ -63,10 +59,6 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label>Id</label>
-      <input class="form-control" name="id" [(ngModel)]="studentToEdit.number" #id="ngModel" readonly/>
-    </div>
-    <div class="form-group">
       <label>First name</label>
       <input class="form-control" name="firstName" [(ngModel)]="studentToEdit.firstName" #firstName="ngModel"
              required />
@@ -75,16 +67,27 @@
       <label>LastName</label>
       <input type="lastName" class="form-control" name="lastName" [(ngModel)]="studentToEdit.lastName" #lastName="ngModel"/>
     </div>
-
     <div class="form-group">
       <label>GroupNumber</label>
-      <input class="form-control" name="groupNumber" [(ngModel)]="studentToEdit.groupNumber" #groupNumber="ngModel"
-             required />
+      <select class="form-control" name="groupNumber" [(ngModel)]="studentToEdit.groupNumber" #groupNumber="ngModel">
+        <option [value]="group" *ngFor="let group of groups">{{group}}</option>
+      </select>
     </div>
     <div class="form-group">
-      <label>AccountId</label>
-      <input class="form-control" name="account" [(ngModel)]="studentToEdit.account.id" #account="ngModel"
-             required />
+      <label>Email</label>
+      <input class="form-control" name="email" [(ngModel)]="studentToEdit.account.email" #email="ngModel"
+             required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"/>
+      <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+        Please set email
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="studentToEdit.account.password" #password="ngModel"
+             required/>
+      <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+        Password
+      </div>
     </div>
 
   </div>

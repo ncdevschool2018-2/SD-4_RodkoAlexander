@@ -1,14 +1,13 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
-import com.netcracker.sd4alexanderrodko.sd4parent.entity.Student;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,6 +33,11 @@ public class StudentGroupController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<StudentGroup> getStudentGroups() {
         return studentGroupService.getAllStudentGroups();
+    }
+
+    @RequestMapping(value = "/numbers", method = RequestMethod.GET)
+    public List<Long> getStudentGroupsNumbers() {
+        return studentGroupService.getNumbers();
     }
 
 

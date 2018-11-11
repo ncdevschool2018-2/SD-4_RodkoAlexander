@@ -1,11 +1,13 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.Student;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.Teacher;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.temporal.Temporal;
 import java.util.Optional;
 
 
@@ -44,5 +46,9 @@ public class TeacherController {
     public ResponseEntity deleteTeacher(@PathVariable(name = "id") Long id) {
         teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
+    }
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public void saveStudentWithAccount(@RequestBody Teacher teacher) {
+        teacherService.saveTeacherWithAccount(teacher);
     }
 }

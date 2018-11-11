@@ -29,6 +29,15 @@ public class AccountController {
             return ResponseEntity.notFound().build();
         }
     }
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public ResponseEntity<Long> getIdByEmail(@RequestParam("email") String email) {
+        Optional<Long> accountId = accountService.getIdByEmail(email);
+        if (accountId.isPresent()) {
+            return ResponseEntity.ok(accountId.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<Account> getAccounts() {

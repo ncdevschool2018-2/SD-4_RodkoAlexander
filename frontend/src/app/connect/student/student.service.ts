@@ -20,6 +20,9 @@ export class StudentService {
   saveStudent(student: Student): Observable<Student> {
     return this.http.post<Student>('/api/students', student);
   }
+  saveStudentWithAccount(student: Student): Observable<Student> {
+    return this.http.post<Student>('/api/students', student);
+  }
 
   deleteStudent(studentId: string): Observable<void> {
     return this.http.delete<void>('/api/students/' + studentId);

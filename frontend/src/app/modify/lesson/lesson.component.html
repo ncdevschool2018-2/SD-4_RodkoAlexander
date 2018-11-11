@@ -1,0 +1,115 @@
+<ng4-loading-spinner> </ng4-loading-spinner>
+<div class="container mt-lg-5">
+  <div class="row">
+    <div class="col">
+      <table class="table align-self-center table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col" style="width: 5%">Id</th>
+          <th scope="col" style="width: 5%">TimeStart</th>
+          <th scope="col" style="width: 10%">TimeEnd</th>
+          <th scope="col" style="width: 5%">Type</th>
+          <th scope="col" style="width: 5%">Room</th>
+          <th scope="col" style="width: 5%">Description</th>
+          <th scope="col" style="width: 20%">Teacher</th>
+          <th scope="col" style="width: 10%">Modify</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let lesson of lessons">
+          <td scope="row">{{lesson.id}}</td>
+          <td>{{lesson.timeStart.toString()}}</td>
+          <td>{{lesson.timeEnd}}</td>
+          <td>{{lesson.type}}</td>
+          <td>{{lesson.room}}</td>
+          <td>{{lesson.description}}</td>
+          <td>{{lesson.teacher.fullName}}</td>
+          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteLesson(lesson.id)">Delete</button>
+            <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button></div></td>
+        </tr>
+
+        </tbody>
+      </table>
+
+      <div>
+        <p>Lessons count: {{lessons ? lessons.length : 0}}</p>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-dark" (click)="_updateLessons()">Update</button>
+
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+              (click)="_openModal(template,lessonToEdit)">
+        Create new lesson
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Lesson</h4>
+    <button type="button" class="close pull-right"
+            aria-label="Close" (click)="_closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>timeStart</label>
+      <input class="form-control" name="timeStart" [(ngModel)]="lessonToEdit.timeStart" #timeStart="ngModel"/>
+      <div [hidden]="timeStart.valid || timeStart.untouched" class="alert alert-danger">
+        Please set timeStart
+      </div>
+    </div>
+    <div class="form-group">
+      <label>timeEnd</label>
+      <input class="form-control" name="timeEnd" [(ngModel)]="lessonToEdit.timeEnd" #timeEnd="ngModel"/>
+      <div [hidden]="timeEnd.valid || timeEnd.untouched" class="alert alert-danger">
+        Please set timeEnd
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Room</label>
+      <input class="form-control control-box" name="room" [(ngModel)]="lessonToEdit.room" #room="ngModel"
+                required/>
+      <div [hidden]="room.valid || room.untouched" class="alert alert-danger">
+        Room
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input class="form-control control-box" name="description" [(ngModel)]="lessonToEdit.description" #description="ngModel"
+                required/>
+      <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
+        Room
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Teacher</label>
+      <input class="form-control control-box" name="teacher" [(ngModel)]="lessonToEdit.teacher.fullName" #teacher="ngModel"
+                required/>
+      <div [hidden]="teacher.valid || teacher.untouched" class="alert alert-danger">
+        Room
+      </div>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="_addLesson()"
+            [disabled]="description.invalid">{{editMode ? "Save": "Create"}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
+
+  </div>
+</ng-template>
+

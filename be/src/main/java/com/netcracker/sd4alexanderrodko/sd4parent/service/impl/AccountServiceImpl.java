@@ -39,4 +39,9 @@ public class AccountServiceImpl implements AccountService {
         repository.deleteById(id);
     }
 
+    @Override
+    public Optional<Long> getIdByEmail(String email) {
+        return repository.getIdByEmail(email);
+    }
+
 }

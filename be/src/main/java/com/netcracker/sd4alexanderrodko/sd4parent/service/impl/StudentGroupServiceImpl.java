@@ -6,6 +6,7 @@ import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -37,6 +38,11 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Override
     public void deleteStudentGroup(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Long> getNumbers() {
+        return repository.getNumbers();
     }
 
 }

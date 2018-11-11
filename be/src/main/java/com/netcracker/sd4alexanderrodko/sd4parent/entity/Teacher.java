@@ -58,7 +58,7 @@ public class Teacher {
         return Objects.hash(number, firstName, lastName);
     }
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     public Account getAccount() {
         return account;

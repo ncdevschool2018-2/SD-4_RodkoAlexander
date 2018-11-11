@@ -1,10 +1,22 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.repository;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
-public interface StudentGroupRepository extends CrudRepository<StudentGroup, Long> {
+public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long> {
+
+    @Query(value = "SELECT number FROM StudentGroup order by number")
+    List<Long> getNumbers();
+
+
+   /* @Query(value = "from StudentGroup sg")
+    List<StudentGroup> getGroupsNumbers();*/
+
 }

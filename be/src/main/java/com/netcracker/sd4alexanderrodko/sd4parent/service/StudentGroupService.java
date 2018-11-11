@@ -2,6 +2,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.service;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,5 +15,7 @@ public interface StudentGroupService {
     Iterable<StudentGroup> getAllStudentGroups();
 
     void deleteStudentGroup(Long id);
+
+    List<Long> getNumbers();
 
 }

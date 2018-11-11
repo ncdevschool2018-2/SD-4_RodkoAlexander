@@ -44,4 +44,11 @@ public class StudentGroupDataServiceImpl implements StudentGroupDataService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + groupsServerUrl + "/" + id);
     }
+
+    @Override
+    public List<Long> getNumbers() {
+        RestTemplate restTemplate = new RestTemplate();
+        Long[] numbers = restTemplate.getForObject(backendServerUrl + groupsServerUrl + "/numbers", Long[].class);
+        return numbers == null ? Collections.emptyList() : Arrays.asList(numbers);
+    }
 }

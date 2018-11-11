@@ -9,4 +9,5 @@ public interface StudentGroupDataService {
     StudentGroupViewModel getStudentGroupById(Long id);
     StudentGroupViewModel saveStudentGroup(StudentGroupViewModel studentGroupViewModel);
     void deleteStudentGroup(Long id);
+    List<Long> getNumbers();
 }

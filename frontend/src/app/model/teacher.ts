@@ -1,13 +1,20 @@
 import {Account} from "./account";
 
 export class Teacher {
+
   number: number;
   firstName: string;
   lastName: string;
   account: Account;
 
-  constructor(){}
+  get fullName(): string {
+    return this.firstName + ' ' + this.lastName;
+  }
 
+
+  constructor(){
+    this.account = new Account();
+  }
 
   static clone(student: Teacher): Teacher{
     let cloned: Teacher = new Teacher();
@@ -17,5 +24,6 @@ export class Teacher {
     cloned.account = student.account;
     return cloned;
   }
+
 
 }

@@ -8,6 +8,6 @@ public interface AccountDataService {
 
     List<AccountViewModel> getAll();
     AccountViewModel getAccountById(Long id);
-    AccountViewModel saveAccount(AccountViewModel lessonViewModel);
+    AccountViewModel saveAccount(AccountViewModel accountViewModel);
     void deleteAccount(Long id);
 }

@@ -1,8 +1,8 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {Teacher} from "../model/teacher";
+import {Teacher} from "../../model/teacher";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
-import {TeacherService} from "./service/teacher.service";
+import {TeacherService} from "../../connect/teacher/teacher.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 
 @Component({

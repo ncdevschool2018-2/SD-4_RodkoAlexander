@@ -1,9 +1,9 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
-import {Account} from "../model/account";
+import {Account} from "../../model/account";
 import {Subscription} from "rxjs";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
-import {AccountService} from "./service/account.service";
+import {AccountService} from "../../connect/account/account.service";
 
 @Component({
   selector: 'app-account',

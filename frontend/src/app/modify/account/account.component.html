@@ -2,7 +2,7 @@
 <div class="container mt-lg-5">
   <div class="row">
     <div class="col">
-      <table class="table align-self-center table-sm">
+      <table class="table align-self-center table-sm table-bordered table-hover">
         <thead class="thead-dark">
         <tr>
           <th scope="col" style="width: 15%">Id</th>
@@ -14,9 +14,9 @@
         </thead>
         <tbody>
         <tr *ngFor="let account of accounts">
-          <td scope="row">{{account.id}}</td>
+          <td>{{account.id}}</td>
           <td>{{account.email}}</td>
-          <td type="password">{{account.password}}</td>
+          <td>{{account.password}}</td>
           <td>{{account.role}}</td>
           <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteAccount(account.id)">Delete</button>
             <button type="button" class="btn btn-secondary" (click)="_openModal(template, account)">Edit</button></div></td>
@@ -56,10 +56,6 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group">
-      <label>Id</label>
-      <input class="form-control" name="id" [(ngModel)]="accountToEdit.id" #id="ngModel" readonly/>
-    </div>
     <div class="form-group">
       <label>Email</label>
       <input class="form-control" name="email" [(ngModel)]="accountToEdit.email" #email="ngModel"

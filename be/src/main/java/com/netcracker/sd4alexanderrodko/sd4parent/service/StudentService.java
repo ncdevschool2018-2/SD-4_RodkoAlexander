@@ -15,4 +15,6 @@ public interface StudentService {
 
     void deleteStudent(Long id);
 
+    void saveStudentWithAccount(Student student);
+
 }

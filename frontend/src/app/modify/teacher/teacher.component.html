@@ -1,12 +1,8 @@
-<ng4-loading-spinner> </ng4-loading-spinner>
+<ng4-loading-spinner></ng4-loading-spinner>
 <div class="container mt-lg-5">
   <div class="row">
-
     <div class="col">
-
-      <h4>Teachers component:</h4>
-
-      <table class="table align-self-center">
+      <table class="table align-self-center table-sm table-bordered table-hover">
         <thead class="thead-dark">
         <tr>
           <th scope="col" style="width: 15%">Number</th>
@@ -18,12 +14,16 @@
         </thead>
         <tbody>
         <tr *ngFor="let teacher of teachers">
-          <td scope="row">{{teacher.number}}</td>
+          <td>{{teacher.number}}</td>
           <td>{{teacher.firstName}}</td>
-          <td type="password">{{teacher.lastName}}</td>
+          <td>{{teacher.lastName}}</td>
           <td>{{teacher.account.id}}</td>
-          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteTeacher(teacher.number)">Delete</button>
-            <button type="button" class="btn btn-secondary" (click)="_openModal(template, teacher)">Edit</button></div></td>
+          <td>
+            <div class="button-bar">
+              <button type="button" class="btn btn-danger" (click)="_deleteTeacher(teacher.number)">Delete</button>
+              <button type="button" class="btn btn-secondary" (click)="_openModal(template, teacher)">Edit</button>
+            </div>
+          </td>
         </tr>
 
         </tbody>
@@ -53,7 +53,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Teacher</h4>
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}} new Teacher</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -61,23 +61,20 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label>Id</label>
-      <input class="form-control" name="id" [(ngModel)]="teacherToEdit.number" #id="ngModel" readonly/>
-    </div>
-    <div class="form-group">
       <label>First name</label>
       <input class="form-control" name="firstName" [(ngModel)]="teacherToEdit.firstName" #firstName="ngModel"
-             required />
+             required/>
     </div>
     <div class="form-group">
       <label>LastName</label>
-      <input type="lastName" class="form-control" name="lastName" [(ngModel)]="teacherToEdit.lastName" #lastName="ngModel"/>
+      <input type="lastName" class="form-control" name="lastName" [(ngModel)]="teacherToEdit.lastName"
+             #lastName="ngModel"/>
     </div>
 
     <div class="form-group">
       <label>AccountId</label>
       <input class="form-control" name="account" [(ngModel)]="teacherToEdit.account.id" #account="ngModel"
-             required />
+             required/>
     </div>
 
   </div>
@@ -86,7 +83,6 @@
             [disabled]="firstName.invalid || lastName.invalid">{{editMode ? "Save": "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
-
   </div>
 </ng-template>
 

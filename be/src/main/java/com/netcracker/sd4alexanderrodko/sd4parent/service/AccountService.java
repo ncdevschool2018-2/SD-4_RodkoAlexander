@@ -15,4 +15,7 @@ public interface AccountService {
 
     void deleteAccount(Long id);
 
+    Optional<Long> getIdByEmail(String email);
+
+
 }
