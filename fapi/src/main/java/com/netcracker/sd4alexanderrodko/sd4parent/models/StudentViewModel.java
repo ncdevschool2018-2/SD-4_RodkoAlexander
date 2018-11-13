@@ -53,4 +53,16 @@ public class StudentViewModel {
     public void setAccount(AccountViewModel accountID) {
         this.account = accountID;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("StudentViewModel{");
+        sb.append("number=").append(number);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", groupNumber=").append(groupNumber);
+        sb.append(", account=").append(account);
+        sb.append('}');
+        return sb.toString();
+    }
 }

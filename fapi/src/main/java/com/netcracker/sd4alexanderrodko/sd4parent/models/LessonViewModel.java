@@ -1,13 +1,25 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import java.sql.Date;
+import java.util.Collection;
+
 public class LessonViewModel {
     private long id;
-    private String timeStart;
-    private String timeEnd;
+    private Date timeStart;
+    private Date timeEnd;
     private String description;
     private String room;
     private String type;
     private TeacherViewModel teacher;
+    private Collection<StudentGroupViewModel> groups;
+
+    public Collection<StudentGroupViewModel> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Collection<StudentGroupViewModel> groups) {
+        this.groups = groups;
+    }
 
     public LessonViewModel() {
     }
@@ -20,19 +32,19 @@ public class LessonViewModel {
         this.id = id;
     }
 
-    public String getTimeStart() {
+    public Date getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(String timeStart) {
+    public void setTimeStart(Date timeStart) {
         this.timeStart = timeStart;
     }
 
-    public String getTimeEnd() {
+    public Date getTimeEnd() {
         return timeEnd;
     }
 
-    public void setTimeEnd(String timeEnd) {
+    public void setTimeEnd(Date timeEnd) {
         this.timeEnd = timeEnd;
     }
 
@@ -66,5 +78,21 @@ public class LessonViewModel {
 
     public void setTeacher(TeacherViewModel teacher) {
         this.teacher = teacher;
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("LessonViewModel{");
+        sb.append("id=").append(id);
+        sb.append(", timeStart=").append(timeStart);
+        sb.append(", timeEnd=").append(timeEnd);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", room='").append(room).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append(", teacher=").append(teacher);
+        sb.append(", groups=").append(groups);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -11,6 +11,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BsDropdownModule, ModalModule, TooltipModule} from "ngx-bootstrap";
 import {ButtonsModule, CarouselModule, WavesModule} from "angular-bootstrap-md";
 import {BrowserModule} from "@angular/platform-browser";
+import {CalendarModule} from "primeng/primeng";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -26,6 +31,11 @@ import {BrowserModule} from "@angular/platform-browser";
     CarouselModule.forRoot(),
     WavesModule.forRoot(),
     ButtonsModule,
+    CalendarModule,
+    BrowserAnimationsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    NgSelectModule
   ],
   declarations: [
     AccountComponent,
@@ -40,4 +50,5 @@ import {BrowserModule} from "@angular/platform-browser";
     GroupComponent,
     LessonComponent]
 })
-export class ModifyModule { }
+export class ModifyModule {
+}

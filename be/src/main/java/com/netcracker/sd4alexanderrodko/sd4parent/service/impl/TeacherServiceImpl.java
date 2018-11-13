@@ -39,15 +39,5 @@ public class TeacherServiceImpl implements TeacherService {
         repository.deleteById(id);
     }
 
-    @Override
-    public void saveTeacherWithAccount(Teacher teacher) {
-            repository.saveTeacherWithAccount(
-                    teacher.getAccount().getEmail(),
-                    teacher.getAccount().getPassword(),
-                    teacher.getAccount().getRole(),
-                    teacher.getFirstName(),
-                    teacher.getLastName());
-
-    }
 
 }

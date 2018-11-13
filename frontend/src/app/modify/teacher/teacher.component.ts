@@ -82,10 +82,7 @@ export class TeacherComponent implements OnInit {
   private loadTeachers(): void {
     this.loadingService.show();
     this.subscriptions.push(this.teacherService.getTeachers().subscribe(teachers => {
-
       this.teachers = teachers as Teacher[];
-
-      console.log(this.teachers);
       this.loadingService.hide();
     }));
   }

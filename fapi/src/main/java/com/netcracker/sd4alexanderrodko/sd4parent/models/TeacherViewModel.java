@@ -40,4 +40,15 @@ public class TeacherViewModel {
     public void setAccount(AccountViewModel account) {
         this.account = account;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TeacherViewModel{");
+        sb.append("number=").append(number);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", account=").append(account);
+        sb.append('}');
+        return sb.toString();
+    }
 }

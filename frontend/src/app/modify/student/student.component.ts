@@ -18,7 +18,7 @@ export class StudentComponent implements OnInit {
   public editMode = false;
 
   public students: Student[];
-  public groups: string[];
+  public groups: number[];
   public studentToEdit: Student = new Student();
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
@@ -98,7 +98,7 @@ export class StudentComponent implements OnInit {
   private loadGroups(): void {
     this.loadingService.show();
     this.subscriptions.push(this.groupsService.getGroupNumbers().subscribe(group => {
-      this.groups = group as string[];
+      this.groups = group;
       this.loadingService.hide();
     }));
   }

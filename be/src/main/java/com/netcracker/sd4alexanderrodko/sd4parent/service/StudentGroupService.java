@@ -18,4 +18,6 @@ public interface StudentGroupService {
 
     List<Long> getNumbers();
 
+    Iterable<StudentGroup> getDescriptions();
+
 }

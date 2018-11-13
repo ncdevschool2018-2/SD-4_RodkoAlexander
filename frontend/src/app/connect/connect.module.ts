@@ -6,6 +6,7 @@ import {TeacherService} from "./teacher/teacher.service";
 import {LessonService} from "./lesson/lesson.service";
 import {GroupService} from "./group/group.service";
 import {HttpClientModule} from "@angular/common/http";
+import {VisitService} from "./visit/visit.service";
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule,
   ],
   declarations: [],
-  providers: [StudentService, AccountService, TeacherService, LessonService, GroupService]
+  providers: [StudentService, AccountService, TeacherService, LessonService, GroupService, VisitService]
 })
 export class ConnectModule {
 }

@@ -82,10 +82,7 @@ export class AccountComponent implements OnInit {
   private loadAccounts(): void {
     this.loadingService.show();
     this.subscriptions.push(this.accountService.getAccounts().subscribe(accounts => {
-
-      this.accounts = accounts as Account[];
-
-      console.log(this.accounts);
+      this.accounts = accounts;
       this.loadingService.hide();
     }));
   }

@@ -16,6 +16,7 @@ export class LessonService {
   }
 
   saveLesson(lesson: Lesson): Observable<Lesson> {
+    console.log(lesson);
     return this.http.post<Lesson>('/api/lessons', lesson);
   }
 

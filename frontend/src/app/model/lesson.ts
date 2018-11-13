@@ -1,4 +1,5 @@
 import {Teacher} from "./teacher";
+import {Group} from "./group";
 
 export class Lesson {
   id: number;
@@ -8,8 +9,13 @@ export class Lesson {
   room: string;
   type: string;
   teacher: Teacher;
+  groups: Group[];
+
   constructor(){
     this.teacher = new Teacher();
+    this.timeStart = new Date();
+    this.timeEnd = new Date();
+    this.groups = [];
   }
   static clone(lesson: Lesson): Lesson{
     let cloned: Lesson = new Lesson();

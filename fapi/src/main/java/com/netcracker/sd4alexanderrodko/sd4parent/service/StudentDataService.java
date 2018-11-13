@@ -9,6 +9,5 @@ public interface StudentDataService {
     List<StudentViewModel> getAll();
     StudentViewModel getStudentById(Long id);
     StudentViewModel saveStudent(StudentViewModel studentViewModel);
-    StudentViewModel saveStudentWithAccount(StudentViewModel studentViewModel);
     void deleteStudent(Long id);
 }

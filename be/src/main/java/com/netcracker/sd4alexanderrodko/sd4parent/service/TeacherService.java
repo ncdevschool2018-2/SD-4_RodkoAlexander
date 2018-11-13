@@ -15,6 +15,5 @@ public interface TeacherService {
 
     void deleteTeacher(Long id);
 
-    void saveTeacherWithAccount(Teacher teacher);
 
 }

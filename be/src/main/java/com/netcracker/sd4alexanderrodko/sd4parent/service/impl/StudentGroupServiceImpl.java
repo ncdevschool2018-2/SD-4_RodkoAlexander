@@ -45,4 +45,9 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         return repository.getNumbers();
     }
 
+    @Override
+    public Iterable<StudentGroup> getDescriptions() {
+        return repository.getDescription();
+    }
+
 }

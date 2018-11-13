@@ -40,6 +40,11 @@ public class StudentGroupController {
         return studentGroupService.getNumbers();
     }
 
+    @RequestMapping(value = "/descriptions", method = RequestMethod.GET)
+    public Iterable<StudentGroup> getStudentGroupsDescriptions() {
+        return studentGroupService.getDescriptions();
+    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public StudentGroup saveStudentGroup(@RequestBody StudentGroup studentGroup) {

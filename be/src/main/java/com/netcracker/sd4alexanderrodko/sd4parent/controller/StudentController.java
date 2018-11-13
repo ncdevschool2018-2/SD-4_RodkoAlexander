@@ -39,12 +39,6 @@ public class StudentController {
         return studentService.saveStudent(student);
     }
 
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public void saveStudentWithAccount(@RequestBody Student student) {
-        System.out.println(student.toString());
-        studentService.saveStudentWithAccount(student);
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@PathVariable(name = "id") Long id) {
         studentService.deleteStudent(id);

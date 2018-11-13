@@ -47,8 +47,4 @@ public class TeacherController {
         teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
     }
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public void saveStudentWithAccount(@RequestBody Teacher teacher) {
-        teacherService.saveTeacherWithAccount(teacher);
-    }
 }

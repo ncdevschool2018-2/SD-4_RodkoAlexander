@@ -81,10 +81,7 @@ export class GroupComponent implements OnInit {
   private loadGroups(): void {
     this.loadingService.show();
     this.subscriptions.push(this.groupService.getGroups().subscribe(groups => {
-
-      this.groups = groups as Group[];
-
-      console.log(this.groups);
+      this.groups = groups;
       this.loadingService.hide();
     }));
   }

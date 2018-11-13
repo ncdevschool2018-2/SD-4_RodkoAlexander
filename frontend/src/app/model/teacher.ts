@@ -7,13 +7,9 @@ export class Teacher {
   lastName: string;
   account: Account;
 
-  get fullName(): string {
-    return this.firstName + ' ' + this.lastName;
-  }
-
-
   constructor(){
     this.account = new Account();
+    this.account.role = "Teacher";
   }
 
   static clone(student: Teacher): Teacher{

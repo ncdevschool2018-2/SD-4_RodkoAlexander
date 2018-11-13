@@ -2,6 +2,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 
@@ -15,6 +16,19 @@ public class Lesson {
     private String room;
     private String type;
     private Teacher teacher;
+    private Collection<StudentGroup> groups;
+
+
+    @ManyToMany(
+            fetch = FetchType.LAZY
+    )
+    public Collection<StudentGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Collection<StudentGroup> groups) {
+        this.groups = groups;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

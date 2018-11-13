@@ -24,6 +24,7 @@ public class LessonDataController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<LessonViewModel> saveLesson(@RequestBody LessonViewModel lessonViewModel) {
+        System.out.println(lessonViewModel);
         if (lessonViewModel != null) {
             return ResponseEntity.ok(lessonDataService.saveLesson(lessonViewModel));
         }

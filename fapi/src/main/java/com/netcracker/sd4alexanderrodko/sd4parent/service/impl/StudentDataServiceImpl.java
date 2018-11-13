@@ -37,12 +37,6 @@ public class StudentDataServiceImpl implements StudentDataService {
     }
 
     @Override
-    public StudentViewModel saveStudentWithAccount(StudentViewModel studentViewModel) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + studentsServerUrl +"/save", studentViewModel, StudentViewModel.class).getBody();
-    }
-
-    @Override
     public void deleteStudent(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + studentsServerUrl + "/" + id);

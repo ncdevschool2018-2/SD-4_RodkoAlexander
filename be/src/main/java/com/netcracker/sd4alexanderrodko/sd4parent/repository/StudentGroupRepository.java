@@ -12,11 +12,15 @@ import java.util.List;
 @Repository
 public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long> {
 
-    @Query(value = "SELECT number FROM StudentGroup order by number")
+    @Query(value = "SELECT number FROM StudentGroup")
     List<Long> getNumbers();
 
+    @Query(value = "SELECT new StudentGroup (number,course,description) FROM StudentGroup")
+    Iterable<StudentGroup> getDescription();
 
-   /* @Query(value = "from StudentGroup sg")
-    List<StudentGroup> getGroupsNumbers();*/
+
+
+
+
 
 }

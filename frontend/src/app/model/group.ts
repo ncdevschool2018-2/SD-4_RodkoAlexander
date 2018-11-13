@@ -1,9 +1,17 @@
+import {Student} from "./student";
+import {Lesson} from "./lesson";
+
 export class Group {
   number: string;
   course: number;
   description: string;
+  students: Student[];
+  lessons: Lesson[];
 
-  constructor(){}
+  constructor(){
+    this.students = [];
+    this.lessons = [];
+  }
 
 
   static clone(group: Group): Group{

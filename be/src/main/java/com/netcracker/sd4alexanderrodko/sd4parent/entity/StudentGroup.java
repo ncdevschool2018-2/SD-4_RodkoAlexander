@@ -1,5 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,19 +10,41 @@ import java.util.Objects;
 @Entity
 @Table(name = "student_groups", schema = "backend", catalog = "")
 public class StudentGroup {
-    private long number;
+    private Long number;
     private Long course;
     private String description;
     private Collection<Student> students;
+    private Collection<Lesson> lessons;
+
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    public Collection<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Collection<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    public StudentGroup(Long number, Long course, String description) {
+        this.number = number;
+        this.course = course;
+        this.description = description;
+    }
+
+    public StudentGroup() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "number", nullable = false)
-    public long getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(long number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
@@ -49,9 +73,11 @@ public class StudentGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentGroup that = (StudentGroup) o;
-        return number == that.number &&
+        return Objects.equals(number, that.number) &&
                 Objects.equals(course, that.course) &&
-                Objects.equals(description, that.description);
+                Objects.equals(description, that.description) &&
+                Objects.equals(students, that.students) &&
+                Objects.equals(lessons, that.lessons);
     }
 
     @Override

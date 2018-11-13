@@ -39,15 +39,5 @@ public class StudentServiceImpl implements StudentService {
         repository.deleteById(id);
     }
 
-    @Override
-    public void saveStudentWithAccount(Student student) {
-        repository.saveStudentWithAccount(
-                student.getAccount().getEmail(),
-                student.getAccount().getPassword(),
-                student.getAccount().getRole(),
-                student.getFirstName(),
-                student.getLastName(),
-                student.getGroupNumber());
-    }
 
 }

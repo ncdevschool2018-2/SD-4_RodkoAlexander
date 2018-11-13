@@ -4,6 +4,10 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
 import {LessonService} from "../../connect/lesson/lesson.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
+import {TeacherService} from "../../connect/teacher/teacher.service";
+import {Teacher} from "../../model/teacher";
+import {GroupService} from "../../connect/group/group.service";
+import {Group} from "../../model/group";
 
 @Component({
   selector: 'app-lesson',
@@ -13,21 +17,39 @@ import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 export class LessonComponent implements OnInit {
 
   public editMode = false;
-
-  public lessons: Lesson[];
+  public selectedItems = [];
+  public dropdownSettings = {};
+  public lessonTypes = ['Laboratory', 'Practical', 'Lection'];
+  public lessons: Lesson[] = [];
+  public teachers: Teacher[] = [];
+  public groups: Group[] = [];
   public lessonToEdit: Lesson = new Lesson();
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
 
-
   constructor(private lessonService: LessonService,
+              private teacherService: TeacherService,
+              private groupService: GroupService,
               private loadingService: Ng4LoadingSpinnerService,
               private modalService: BsModalService) {
 
   }
 
+  multiSelectInit() {
+    this.selectedItems = [];
+    this.dropdownSettings = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+    };
+  }
+
   ngOnInit() {
+    this.loadGroups();
     this.loadLessons();
+    this.loadTeachers();
+    this.multiSelectInit();
   }
 
 
@@ -49,14 +71,14 @@ export class LessonComponent implements OnInit {
   }
 
   public _addLesson(): void {
-    this.loadingService.show();
     this.subscriptions.push(this.lessonService.saveLesson(this.lessonToEdit).subscribe(() => {
       this._updateLessons();
       this.refreshLessonToEdit();
       this._closeModal();
-      this.loadingService.hide();
 
     }));
+
+
   }
 
   public _updateLessons(): void {
@@ -81,12 +103,27 @@ export class LessonComponent implements OnInit {
   private loadLessons(): void {
     this.loadingService.show();
     this.subscriptions.push(this.lessonService.getLessons().subscribe(lessons => {
-
-
       this.lessons = lessons;
-
-      console.log(this.lessons);
+      console.log(lessons);
       this.loadingService.hide();
     }));
   }
+
+  private loadTeachers(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.teacherService.getTeachers().subscribe(teachers => {
+      this.teachers = teachers;
+      this.loadingService.hide();
+    }));
+  }
+
+  private loadGroups() {
+    this.loadingService.show();
+    this.subscriptions.push(this.groupService.getDescriptions().subscribe(gr => {
+      this.groups = gr;
+      this.loadingService.hide();
+    }));
+  }
+
+
 }

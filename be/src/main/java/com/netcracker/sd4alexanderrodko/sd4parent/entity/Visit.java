@@ -5,12 +5,12 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "students_to_lessons", schema = "backend", catalog = "")
-public class StudentToLesson {
+@Table(name = "visits", schema = "backend", catalog = "")
+public class Visit {
     private long id;
     private Byte visit;
-    private Lesson lessonsByLessonId;
-    private Student studentsByStudentNumber;
+    private Lesson lesson;
+    private Student student;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class StudentToLesson {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentToLesson that = (StudentToLesson) o;
+        Visit that = (Visit) o;
         return id == that.id &&
                 Objects.equals(visit, that.visit);
     }
@@ -49,21 +49,21 @@ public class StudentToLesson {
 
     @ManyToOne
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
-    public Lesson getLessonsByLessonId() {
-        return lessonsByLessonId;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setLessonsByLessonId(Lesson lessonsByLessonId) {
-        this.lessonsByLessonId = lessonsByLessonId;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 
     @ManyToOne
     @JoinColumn(name = "student_number", referencedColumnName = "number")
-    public Student getStudentsByStudentNumber() {
-        return studentsByStudentNumber;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudentsByStudentNumber(Student studentsByStudentNumber) {
-        this.studentsByStudentNumber = studentsByStudentNumber;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

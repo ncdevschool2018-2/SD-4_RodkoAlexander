@@ -5,7 +5,9 @@ export class Account {
   password: string;
   role: string;
 
-  constructor(){}
+  constructor(){
+    this.role = "Admin";
+  }
 
 
   static clone(account: Account): Account{

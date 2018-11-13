@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,4 +52,13 @@ public class StudentGroupDataServiceImpl implements StudentGroupDataService {
         Long[] numbers = restTemplate.getForObject(backendServerUrl + groupsServerUrl + "/numbers", Long[].class);
         return numbers == null ? Collections.emptyList() : Arrays.asList(numbers);
     }
+
+    @Override
+    public List<StudentGroupViewModel> getDescriptions() {
+        RestTemplate restTemplate = new RestTemplate();
+        StudentGroupViewModel[] numbers = restTemplate.getForObject(backendServerUrl + groupsServerUrl + "/descriptions", StudentGroupViewModel[].class);
+        return numbers == null ? Collections.emptyList() : Arrays.asList(numbers);
+    }
+
+
 }

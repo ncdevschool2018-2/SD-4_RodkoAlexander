@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,12 @@ public class StudentGroupDataController {
     public ResponseEntity<List<Long>> getStudentGroupsNumbers() {
         return ResponseEntity.ok(studentGroupDataService.getNumbers());
     }
+
+    @RequestMapping(value = "/descriptions", method = RequestMethod.GET)
+    public ResponseEntity<List<StudentGroupViewModel>> getStudentGroupsDescriptions() {
+        return ResponseEntity.ok(studentGroupDataService.getDescriptions());
+    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<StudentGroupViewModel> saveGroup(@RequestBody StudentGroupViewModel studentGroupViewModel ) {

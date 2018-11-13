@@ -29,14 +29,6 @@ public class StudentDataController {
         return null;
     }
 
-    @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public ResponseEntity<StudentViewModel> saveStudentWithAccount(@RequestBody StudentViewModel studentViewModel ) {
-        if (studentViewModel != null) {
-            return ResponseEntity.ok(studentDataService.saveStudentWithAccount(studentViewModel));
-        }
-        return null;
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteStudent(@PathVariable String id) {
         studentDataService.deleteStudent(Long.valueOf(id));

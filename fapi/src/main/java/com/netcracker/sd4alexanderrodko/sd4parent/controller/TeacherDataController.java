@@ -21,6 +21,7 @@ public class TeacherDataController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<TeacherViewModel> saveStudent(@RequestBody TeacherViewModel teacherViewModel ) {
+
         if (teacherViewModel != null) {
             return ResponseEntity.ok(teacherDataService.saveTeacher(teacherViewModel));
         }

@@ -1,4 +1,4 @@
-<ng4-loading-spinner> </ng4-loading-spinner>
+<ng4-loading-spinner></ng4-loading-spinner>
 <div class="container mt-lg-5">
   <div class="row">
     <div class="col">
@@ -18,14 +18,18 @@
         <tbody>
         <tr *ngFor="let lesson of lessons">
           <td scope="row">{{lesson.id}}</td>
-          <td>{{lesson.timeStart.toString()}}</td>
+          <td>{{lesson.timeStart}}</td>
           <td>{{lesson.timeEnd}}</td>
           <td>{{lesson.type}}</td>
           <td>{{lesson.room}}</td>
           <td>{{lesson.description}}</td>
-          <td>{{lesson.teacher.fullName}}</td>
-          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteLesson(lesson.id)">Delete</button>
-            <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button></div></td>
+          <td>{{lesson.teacher.lastName + " " + lesson.teacher.firstName}}</td>
+          <td>
+            <div class="button-bar">
+              <button type="button" class="btn btn-danger" (click)="_deleteLesson(lesson.id)">Delete</button>
+              <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button>
+            </div>
+          </td>
         </tr>
 
         </tbody>
@@ -55,7 +59,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}}  new Lesson</h4>
+    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}} new Lesson</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -63,45 +67,51 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label>timeStart</label>
-      <input class="form-control" name="timeStart" [(ngModel)]="lessonToEdit.timeStart" #timeStart="ngModel"/>
-      <div [hidden]="timeStart.valid || timeStart.untouched" class="alert alert-danger">
-        Please set timeStart
-      </div>
-    </div>
-    <div class="form-group">
-      <label>timeEnd</label>
-      <input class="form-control" name="timeEnd" [(ngModel)]="lessonToEdit.timeEnd" #timeEnd="ngModel"/>
-      <div [hidden]="timeEnd.valid || timeEnd.untouched" class="alert alert-danger">
-        Please set timeEnd
-      </div>
-    </div>
-    <div class="form-group">
       <label>Room</label>
       <input class="form-control control-box" name="room" [(ngModel)]="lessonToEdit.room" #room="ngModel"
-                required/>
+             required/>
       <div [hidden]="room.valid || room.untouched" class="alert alert-danger">
         Room
       </div>
     </div>
     <div class="form-group">
       <label>Description</label>
-      <input class="form-control control-box" name="description" [(ngModel)]="lessonToEdit.description" #description="ngModel"
-                required/>
+      <input class="form-control control-box" name="description" [(ngModel)]="lessonToEdit.description"
+             #description="ngModel"
+             required/>
       <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
         Room
       </div>
     </div>
     <div class="form-group">
       <label>Teacher</label>
-      <input class="form-control control-box" name="teacher" [(ngModel)]="lessonToEdit.teacher.fullName" #teacher="ngModel"
-                required/>
-      <div [hidden]="teacher.valid || teacher.untouched" class="alert alert-danger">
-        Room
-      </div>
+      <ng-select [(ngModel)]="lessonToEdit.teacher">
+        <ng-option *ngFor="let tch of teachers" [value]="tch" >{{tch.firstName + ' ' + tch.lastName}}</ng-option>
+      </ng-select>
     </div>
-
-
+    <div class="form-group">
+      <label>Starts</label>
+      <input class="form-control control-box" [(ngModel)]="lessonToEdit.timeStart"
+             [owlDateTimeTrigger]="start" [owlDateTime]="start">
+      <owl-date-time pickerMode="modal" #start></owl-date-time>
+    </div>
+    <div class="form-group">
+      <label>Ends</label>
+      <input class="form-control control-box"  [(ngModel)]="lessonToEdit.timeEnd"
+             [owlDateTimeTrigger]="end" [owlDateTime]="end">
+      <owl-date-time pickerMode="modal" #end></owl-date-time>
+    </div>
+    <div class="form-group">
+      <ng-select [(ngModel)]="lessonToEdit.groups" multiple="true" [items]="groups" bindLabel="description">
+       <!-- <ng-option  *ngFor="let gr of groups">{{gr.number + '. ' + gr.description}}</ng-option>-->
+      </ng-select>
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <ng-select [(ngModel)]="lessonToEdit.type">
+        <ng-option *ngFor="let type of lessonTypes" [value]="type" >{{type}}</ng-option>
+      </ng-select>
+    </div>
 
   </div>
   <div class="modal-footer">
