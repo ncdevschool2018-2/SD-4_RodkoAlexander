@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-
 @Component
 public class AccountServiceImpl implements AccountService {
 
@@ -38,10 +37,4 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(Long id) {
         repository.deleteById(id);
     }
-
-    @Override
-    public Optional<Long> getIdByEmail(String email) {
-        return repository.getIdByEmail(email);
-    }
-
 }

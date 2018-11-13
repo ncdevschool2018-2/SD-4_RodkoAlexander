@@ -39,9 +39,4 @@ public class LessonServiceImpl implements LessonService {
         repository.deleteById(id);
     }
 
-    @Override
-    public long getId(Lesson lesson) {
-       // return repository.
-        return 1;
-    }
 }

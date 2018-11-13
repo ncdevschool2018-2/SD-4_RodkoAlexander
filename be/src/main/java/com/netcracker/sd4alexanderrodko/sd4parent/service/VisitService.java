@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface VisitService {
 
-    Visit saveStudentToLesson(Visit visit);
+    Visit saveVisit(Visit visit);
 
-    Optional<Visit> getStudentToLessonById(Long id);
+    Optional<Visit> getVisitsById(Long id);
 
-    Iterable<Visit> getAllStudentToLessons();
+    Iterable<Visit> getAllVisits();
 
-    void deleteStudentToLesson(Long id);
+    void deleteVisitsById(Long id);
 
 }

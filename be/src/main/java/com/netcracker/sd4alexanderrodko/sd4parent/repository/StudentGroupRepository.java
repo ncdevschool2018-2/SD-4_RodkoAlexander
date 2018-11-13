@@ -22,5 +22,4 @@ public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long
 
 
 
-
 }

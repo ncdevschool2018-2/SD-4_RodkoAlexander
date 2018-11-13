@@ -15,7 +15,7 @@ public class Lesson {
     private String description;
     private String room;
     private String type;
-    private Teacher teacher;
+    private User teacher;
     private Collection<StudentGroup> groups;
 
 
@@ -109,13 +109,13 @@ public class Lesson {
         return Objects.hash(id, timeStart, timeEnd, description, room, type);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_number", referencedColumnName = "number")
-    public Teacher getTeacher() {
+    @OneToOne
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable=false, updatable=false )
+    public User getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
 }

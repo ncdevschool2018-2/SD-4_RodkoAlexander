@@ -1,7 +1,5 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -13,12 +11,11 @@ public class StudentGroup {
     private Long number;
     private Long course;
     private String description;
-    private Collection<Student> students;
+    private Collection<User> students;
     private Collection<Lesson> lessons;
 
 
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     public Collection<Lesson> getLessons() {
         return lessons;
@@ -85,12 +82,14 @@ public class StudentGroup {
         return Objects.hash(number, course, description);
     }
 
-    @OneToMany(mappedBy = "groupNumber")
-    public Collection<Student> getStudents() {
+    @OneToMany(
+            cascade = CascadeType.ALL
+    )
+    public Collection<User> getStudents() {
         return students;
     }
 
-    public void setStudents(Collection<Student> students) {
+    public void setStudents(Collection<User> students) {
         this.students = students;
     }
 }

@@ -15,9 +15,9 @@ public interface StudentGroupService {
     Iterable<StudentGroup> getAllStudentGroups();
 
     void deleteStudentGroup(Long id);
-
+/*
     List<Long> getNumbers();
 
-    Iterable<StudentGroup> getDescriptions();
+    Iterable<StudentGroup> getDescriptions();*/
 
 }

@@ -19,22 +19,22 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public Visit saveStudentToLesson(Visit visit) {
+    public Visit saveVisit(Visit visit) {
         return repository.save(visit);
     }
 
     @Override
-    public Optional<Visit> getStudentToLessonById(Long id) {
+    public Optional<Visit> getVisitsById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public Iterable<Visit> getAllStudentToLessons() {
+    public Iterable<Visit> getAllVisits() {
         return repository.findAll();
     }
 
     @Override
-    public void deleteStudentToLesson(Long id) {
+    public void deleteVisitsById(Long id) {
         repository.deleteById(id);
     }
 }
