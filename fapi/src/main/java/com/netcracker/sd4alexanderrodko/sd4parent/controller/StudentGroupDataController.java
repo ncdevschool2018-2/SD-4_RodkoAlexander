@@ -2,13 +2,11 @@ package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
 import com.netcracker.sd4alexanderrodko.sd4parent.models.StudentGroupViewModel;
-import com.netcracker.sd4alexanderrodko.sd4parent.models.StudentViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController

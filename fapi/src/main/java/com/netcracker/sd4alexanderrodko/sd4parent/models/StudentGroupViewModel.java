@@ -3,29 +3,20 @@ package com.netcracker.sd4alexanderrodko.sd4parent.models;
 import java.util.Collection;
 
 public class StudentGroupViewModel {
-    private long number;
+    private Long number;
     private Long course;
     private String description;
-    private Collection<StudentViewModel> students;
+    private Collection<UserViewModel> students;
     private Collection<LessonViewModel> lessons;
-
-
-    public Collection<LessonViewModel> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(Collection<LessonViewModel> lessons) {
-        this.lessons = lessons;
-    }
 
     public StudentGroupViewModel() {
     }
 
-    public long getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(long number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
@@ -45,23 +36,19 @@ public class StudentGroupViewModel {
         this.description = description;
     }
 
-    public Collection<StudentViewModel> getStudents() {
+    public Collection<UserViewModel> getStudents() {
         return students;
     }
 
-    public void setStudents(Collection<StudentViewModel> students) {
+    public void setStudents(Collection<UserViewModel> students) {
         this.students = students;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("StudentGroupViewModel{");
-        sb.append("number=").append(number);
-        sb.append(", course=").append(course);
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", students=").append(students);
-        sb.append(", lessons=").append(lessons);
-        sb.append('}');
-        return sb.toString();
+    public Collection<LessonViewModel> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Collection<LessonViewModel> lessons) {
+        this.lessons = lessons;
     }
 }

@@ -16,7 +16,7 @@ public class VisitDataServiceImpl implements VisitDataService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
 
-    @Value("${svisits.server.url}")
+    @Value("${visits.server.url}")
     private String studentsVisitsServerUrl;
 
     @Override

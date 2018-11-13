@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/svisits")
+@RequestMapping("/api/visits")
 public class VisitController {
 
     private VisitService visitService;
