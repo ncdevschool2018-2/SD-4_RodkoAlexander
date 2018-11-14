@@ -20,7 +20,7 @@ export class LessonService {
     return this.http.post<Lesson>('/api/lessons', lesson);
   }
 
-  deleteLesson(lessonId: string): Observable<void> {
-    return this.http.delete<void>('/api/lessons/' + lessonId);
+  deleteLesson(id: number): Observable<void> {
+    return this.http.delete<void>('/api/lessons/' + id);
   }
 }

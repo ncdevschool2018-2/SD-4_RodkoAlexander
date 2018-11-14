@@ -1,15 +1,15 @@
 import {Lesson} from "./lesson";
-import {Student} from "./student";
+import {Account} from "./account";
 
 export class Visit {
   id: number;
   visit: boolean;
   lesson: Lesson;
-  student: Student;
+  student: Account;
 
   constructor() {
     this.lesson = new Lesson();
-    this.student = new Student();
+    this.student = new Account();
   }
 
 

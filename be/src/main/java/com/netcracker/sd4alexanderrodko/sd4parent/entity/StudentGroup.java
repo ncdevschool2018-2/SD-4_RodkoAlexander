@@ -11,7 +11,7 @@ public class StudentGroup {
     private Long number;
     private Long course;
     private String description;
-    private Collection<User> students;
+    private Collection<Account> students;
     private Collection<Lesson> lessons;
 
 
@@ -85,11 +85,11 @@ public class StudentGroup {
     @OneToMany(
             cascade = CascadeType.ALL
     )
-    public Collection<User> getStudents() {
+    public Collection<Account> getStudents() {
         return students;
     }
 
-    public void setStudents(Collection<User> students) {
+    public void setStudents(Collection<Account> students) {
         this.students = students;
     }
 }

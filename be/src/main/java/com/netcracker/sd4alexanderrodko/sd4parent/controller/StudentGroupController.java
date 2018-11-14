@@ -35,7 +35,7 @@ public class StudentGroupController {
         return studentGroupService.getAllStudentGroups();
     }
 
-/*
+    
     @RequestMapping(value = "/numbers", method = RequestMethod.GET)
     public List<Long> getStudentGroupsNumbers() {
         return studentGroupService.getNumbers();
@@ -45,7 +45,6 @@ public class StudentGroupController {
     public Iterable<StudentGroup> getStudentGroupsDescriptions() {
         return studentGroupService.getDescriptions();
     }
-*/
 
 
     @RequestMapping(method = RequestMethod.POST)

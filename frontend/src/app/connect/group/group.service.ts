@@ -16,7 +16,7 @@ export class GroupService {
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>('/api/groups');
   }
-  getGroupNumbers(): Observable<number[]> {
+  getNumbers(): Observable<number[]> {
     return this.http.get<number[]>('/api/groups/numbers');
   }
 
@@ -24,8 +24,8 @@ export class GroupService {
     return this.http.post<Group>('/api/groups', group);
   }
 
-  deleteGroup(groupId: string): Observable<void> {
-    return this.http.delete<void>('/api/groups/' + groupId);
+  deleteGroup(id: number): Observable<void> {
+    return this.http.delete<void>('/api/groups/' + id);
   }
   getDescriptions(): Observable<Group[]> {
     return this.http.get<Group[]>('/api/groups/descriptions');

@@ -1,10 +1,8 @@
 import {Routes} from "@angular/router";
-import {TeacherComponent} from "./modify/teacher/teacher.component";
 import {StartComponent} from "./user-interface/start/start.component";
-import {AccountComponent} from "./modify/account/account.component";
-import {StudentComponent} from "./modify/student/student.component";
-import {GroupComponent} from "./modify/group/group.component";
-import {LessonComponent} from "./modify/lesson/lesson.component";
+import {AccountComponent} from "./modify/table/account/account.component";
+import {GroupComponent} from "./modify/table/group/group.component";
+import {LessonComponent} from "./modify/table/lesson/lesson.component";
 
 const routes: Routes = [
   {
@@ -24,24 +22,6 @@ const routes: Routes = [
   {
     path: 'accounts',
     component: AccountComponent
-  },
-  {
-    path: 'teachers',
-    redirectTo: 'teachers',
-    pathMatch: 'full',
-  },
-  {
-    path: 'teachers',
-    component: TeacherComponent
-  },
-  {
-    path: 'students',
-    redirectTo: 'students',
-    pathMatch: 'full',
-  },
-  {
-    path: 'students',
-    component: StudentComponent
   },
   {
     path: 'groups',

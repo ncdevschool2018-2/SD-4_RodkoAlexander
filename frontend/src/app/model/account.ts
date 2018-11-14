@@ -1,12 +1,14 @@
+import {User} from "./user";
+
 export class Account {
 
   id: number;
   email: string;
   password: string;
-  role: string;
+  user: User;
 
   constructor(){
-    this.role = "Admin";
+    this.user = new User();
   }
 
 
@@ -15,7 +17,7 @@ export class Account {
     cloned.id = account.id;
     cloned.email = account.email;
     cloned.password = account.password;
-    cloned.role = account.role;
+    cloned.user = account.user;
     return cloned;
   }
 

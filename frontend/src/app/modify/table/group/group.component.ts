@@ -1,9 +1,9 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
-import {GroupService} from "../../connect/group/group.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
-import {Group} from "../../model/group";
+import {Group} from "../../../model/group";
+import {GroupService} from "../../../connect/group/group.service";
 
 @Component({
   selector: 'app-group',
@@ -63,9 +63,9 @@ export class GroupComponent implements OnInit {
     this.loadGroups();
   }
 
-  public _deleteGroup(groupId: string): void {
+  public _deleteGroup(id: number): void {
     this.loadingService.show();
-    this.subscriptions.push(this.groupService.deleteGroup(groupId).subscribe(() => {
+    this.subscriptions.push(this.groupService.deleteGroup(id).subscribe(() => {
       this._updateGroups();
     }));
   }

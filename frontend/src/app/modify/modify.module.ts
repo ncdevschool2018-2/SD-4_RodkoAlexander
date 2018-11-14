@@ -1,10 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AccountComponent} from "./account/account.component";
-import {StudentComponent} from "./student/student.component";
-import {TeacherComponent} from "./teacher/teacher.component";
-import {GroupComponent} from "./group/group.component";
-import {LessonComponent} from "./lesson/lesson.component";
+import {AccountComponent} from "./table/account/account.component";
+import {GroupComponent} from "./table/group/group.component";
+import {LessonComponent} from "./table/lesson/lesson.component";
 import {Ng4LoadingSpinnerModule} from "ng4-loading-spinner";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -14,8 +12,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {CalendarModule} from "primeng/primeng";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
-import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
-import { NgSelectModule } from '@ng-select/ng-select';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -39,14 +36,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
   ],
   declarations: [
     AccountComponent,
-    StudentComponent,
-    TeacherComponent,
     GroupComponent,
     LessonComponent],
   exports: [
     AccountComponent,
-    StudentComponent,
-    TeacherComponent,
     GroupComponent,
     LessonComponent]
 })

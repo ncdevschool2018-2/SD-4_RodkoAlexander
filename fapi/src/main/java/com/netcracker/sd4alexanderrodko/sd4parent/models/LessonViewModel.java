@@ -11,7 +11,7 @@ public class LessonViewModel {
     private String description;
     private String room;
     private String type;
-    private UserViewModel teacher;
+    private AccountViewModel teacher;
     private Collection<StudentGroupViewModel> groups;
 
     public LessonViewModel() {
@@ -65,11 +65,11 @@ public class LessonViewModel {
         this.type = type;
     }
 
-    public UserViewModel getTeacher() {
+    public AccountViewModel getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(UserViewModel teacher) {
+    public void setTeacher(AccountViewModel teacher) {
         this.teacher = teacher;
     }
 

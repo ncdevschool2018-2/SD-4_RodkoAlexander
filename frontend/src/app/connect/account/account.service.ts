@@ -19,8 +19,8 @@ export class AccountService {
     return this.http.post<Account>('/api/accounts', account);
   }
 
-  deleteAccount(accountId: string): Observable<void> {
-    return this.http.delete<void>('/api/accounts/' + accountId);
+  deleteAccount(id: number): Observable<void> {
+    return this.http.delete<void>('/api/accounts/' + id);
   }
 
 }

@@ -1,5 +1,5 @@
-import {Teacher} from "./teacher";
 import {Group} from "./group";
+import {Account} from "./account";
 
 export class Lesson {
   id: number;
@@ -8,11 +8,11 @@ export class Lesson {
   description: string;
   room: string;
   type: string;
-  teacher: Teacher;
+  teacher: Account;
   groups: Group[];
 
   constructor(){
-    this.teacher = new Teacher();
+    this.teacher = new Account();
     this.timeStart = new Date();
     this.timeEnd = new Date();
     this.groups = [];

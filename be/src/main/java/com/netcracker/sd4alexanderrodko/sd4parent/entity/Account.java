@@ -42,7 +42,7 @@ public class Account {
     }
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id",nullable = false)
     @MapsId
     public User getUser() {

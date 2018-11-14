@@ -40,7 +40,7 @@ public class StudentGroupServiceImpl implements StudentGroupService {
         repository.deleteById(id);
     }
 
-    /*@Override
+    @Override
     public List<Long> getNumbers() {
         return repository.getNumbers();
     }
@@ -48,6 +48,6 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Override
     public Iterable<StudentGroup> getDescriptions() {
         return repository.getDescription();
-    }*/
+    }
 
 }

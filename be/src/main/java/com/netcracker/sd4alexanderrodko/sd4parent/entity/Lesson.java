@@ -15,7 +15,7 @@ public class Lesson {
     private String description;
     private String room;
     private String type;
-    private User teacher;
+    private Account teacher;
     private Collection<StudentGroup> groups;
 
 
@@ -111,11 +111,11 @@ public class Lesson {
 
     @OneToOne
     @JoinColumn(name = "id", referencedColumnName = "id", insertable=false, updatable=false )
-    public User getTeacher() {
+    public Account getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(User teacher) {
+    public void setTeacher(Account teacher) {
         this.teacher = teacher;
     }
 }

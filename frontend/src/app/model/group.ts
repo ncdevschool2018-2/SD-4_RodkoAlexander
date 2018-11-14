@@ -1,11 +1,11 @@
-import {Student} from "./student";
 import {Lesson} from "./lesson";
+import {Account} from "./account";
 
 export class Group {
-  number: string;
+  number: number;
   course: number;
   description: string;
-  students: Student[];
+  students: Account[];
   lessons: Lesson[];
 
   constructor(){
