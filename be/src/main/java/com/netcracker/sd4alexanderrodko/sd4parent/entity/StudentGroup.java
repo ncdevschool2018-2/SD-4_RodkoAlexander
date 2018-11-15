@@ -1,5 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -28,6 +30,7 @@ public class StudentGroup {
     }
 
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     public Collection<Lesson> getLessons() {
         return lessons;

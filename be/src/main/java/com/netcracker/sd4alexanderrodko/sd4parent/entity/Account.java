@@ -1,5 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 
@@ -13,6 +15,8 @@ public class Account {
     private User user;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -42,9 +46,9 @@ public class Account {
     }
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id",nullable = false)
-    @MapsId
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     public User getUser() {
         return user;
     }

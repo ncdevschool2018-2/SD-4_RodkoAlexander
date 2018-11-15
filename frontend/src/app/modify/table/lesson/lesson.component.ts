@@ -6,6 +6,8 @@ import {LessonService} from "../../../connect/lesson/lesson.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
+import {UserService} from "../../../connect/user/user.service";
+import {User} from "../../../model/user";
 
 @Component({
   selector: 'app-lesson',
@@ -19,6 +21,7 @@ export class LessonComponent implements OnInit {
   public dropdownSettings = {};
   public lessonTypes = ['Laboratory', 'Practical', 'Lection'];
   public lessons: Lesson[] = [];
+  public teachers: User[] = [];
   public groups: Group[] = [];
   public lessonToEdit: Lesson = new Lesson();
   public modalEditor: BsModalRef;
@@ -26,6 +29,7 @@ export class LessonComponent implements OnInit {
 
   constructor(private lessonService: LessonService,
               private groupService: GroupService,
+              private userService: UserService,
               private loadingService: Ng4LoadingSpinnerService,
               private modalService: BsModalService) {
 
@@ -44,6 +48,7 @@ export class LessonComponent implements OnInit {
   ngOnInit() {
     this.loadGroups();
     this.loadLessons();
+    this.loadTeachers();
     this.multiSelectInit();
   }
 
@@ -112,6 +117,12 @@ export class LessonComponent implements OnInit {
       this.loadingService.hide();
     }));
   }
-
+  private loadTeachers() {
+    this.loadingService.show();
+    this.subscriptions.push(this.userService.getTeachers().subscribe(teachers => {
+      this.teachers = teachers;
+      this.loadingService.hide();
+    }));
+  }
 
 }

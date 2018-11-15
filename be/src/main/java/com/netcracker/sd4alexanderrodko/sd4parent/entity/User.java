@@ -1,5 +1,8 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -10,6 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String role;
+    private Account account;
     private long groupNumber;
 
     @Basic
@@ -23,8 +27,7 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name="id")
     public long getId() {
         return id;
     }
@@ -63,4 +66,17 @@ public class User {
         this.role = role;
     }
 
+
+    /*@JsonIgnore*/
+    @JsonBackReference
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name = "id")
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }
