@@ -35,6 +35,21 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
+    public Iterable<User> getTeachers() {
+        return userService.getTeachers();
+    }
+
+    @RequestMapping(value = "/administrators", method = RequestMethod.GET)
+    public Iterable<User> getAdministrators() {
+        return userService.getAdministrators();
+    }
+
+    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    public Iterable<User> getStudents() {
+        return userService.getStudents();
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);

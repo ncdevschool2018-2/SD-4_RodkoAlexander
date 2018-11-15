@@ -10,7 +10,7 @@ public class Visit {
     private long id;
     private Byte visit;
     private Lesson lesson;
-    private Account student;
+    private User student;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,11 +59,11 @@ public class Visit {
 
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    public Account getStudent() {
+    public User getStudent() {
         return student;
     }
 
-    public void setStudent(Account student) {
+    public void setStudent(User student) {
         this.student = student;
     }
 }

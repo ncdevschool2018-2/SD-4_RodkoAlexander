@@ -2,6 +2,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +31,17 @@ public class StudentGroupController {
         }
     }
 
+    @RequestMapping(value = "/{groupNumber}/students", method = RequestMethod.GET)
+    public Iterable<User> getStudentsFromGroup(@PathVariable(name = "groupNumber") Long groupNumber) {
+        return studentGroupService.getStudents(groupNumber);
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<StudentGroup> getStudentGroups() {
         return studentGroupService.getAllStudentGroups();
     }
 
-    
+
     @RequestMapping(value = "/numbers", method = RequestMethod.GET)
     public List<Long> getStudentGroupsNumbers() {
         return studentGroupService.getNumbers();

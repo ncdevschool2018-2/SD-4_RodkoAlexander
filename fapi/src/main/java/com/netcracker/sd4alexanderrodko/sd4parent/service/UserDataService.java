@@ -12,4 +12,10 @@ public interface UserDataService {
     Iterable<UserViewModel> getAllUsers();
 
     void deleteUser(Long id);
+
+    Iterable<UserViewModel> getStudents();
+
+    Iterable<UserViewModel> getTeachers();
+
+    Iterable<UserViewModel> getAdministrators();
 }

@@ -1,6 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +20,7 @@ public interface StudentGroupService {
     List<Long> getNumbers();
 
     Iterable<StudentGroup> getDescriptions();
+
+    Iterable<User> getStudents(long groupNumber);
 
 }

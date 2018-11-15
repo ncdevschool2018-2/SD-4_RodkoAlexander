@@ -4,6 +4,8 @@ public class VisitViewModel {
     private long id;
     private Byte visit;
     private LessonViewModel lesson;
+    private UserViewModel student;
+
 
     public VisitViewModel() {
     }
@@ -32,15 +34,13 @@ public class VisitViewModel {
         this.lesson = lesson;
     }
 
-    public AccountViewModel getStudent() {
+    public UserViewModel getStudent() {
         return student;
     }
 
-    public void setStudent(AccountViewModel student) {
+    public void setStudent(UserViewModel student) {
         this.student = student;
     }
-
-    private AccountViewModel student;
 
 
 }

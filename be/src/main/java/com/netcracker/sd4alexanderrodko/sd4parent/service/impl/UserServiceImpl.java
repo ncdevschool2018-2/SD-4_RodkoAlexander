@@ -19,22 +19,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User User) {
-        return null;
+    public User saveUser(User user) {
+        return repository.save(user);
     }
 
     @Override
     public Optional<User> getUserById(Long id) {
-        return Optional.empty();
+        return repository.findById(id);
     }
 
     @Override
     public Iterable<User> getAllUsers() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public void deleteUser(Long id) {
+        repository.deleteById(id);
+    }
 
+    @Override
+    public Iterable<User> getStudents() {
+        return repository.getStudents();
+    }
+
+    @Override
+    public Iterable<User> getTeachers() {
+        return repository.getTeachers();
+    }
+
+    @Override
+    public Iterable<User> getAdministrators() {
+        return repository.getAdministrators();
     }
 }

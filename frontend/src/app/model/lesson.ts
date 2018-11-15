@@ -1,5 +1,5 @@
 import {Group} from "./group";
-import {Account} from "./account";
+import {User} from "./user";
 
 export class Lesson {
   id: number;
@@ -8,16 +8,17 @@ export class Lesson {
   description: string;
   room: string;
   type: string;
-  teacher: Account;
+  teacher: User;
   groups: Group[];
 
-  constructor(){
-    this.teacher = new Account();
+  constructor() {
+    this.teacher = new User();
     this.timeStart = new Date();
     this.timeEnd = new Date();
     this.groups = [];
   }
-  static clone(lesson: Lesson): Lesson{
+
+  static clone(lesson: Lesson): Lesson {
     let cloned: Lesson = new Lesson();
     cloned.id = lesson.id;
     cloned.timeStart = lesson.timeStart;

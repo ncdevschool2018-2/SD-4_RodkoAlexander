@@ -1,6 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service.impl;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.models.StudentGroupViewModel;
+import com.netcracker.sd4alexanderrodko.sd4parent.models.UserViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupDataService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,13 @@ public class StudentGroupDataServiceImpl implements StudentGroupDataService {
         RestTemplate restTemplate = new RestTemplate();
         StudentGroupViewModel[] numbers = restTemplate.getForObject(backendServerUrl + groupsServerUrl + "/descriptions", StudentGroupViewModel[].class);
         return numbers == null ? Collections.emptyList() : Arrays.asList(numbers);
+    }
+
+    @Override
+    public List<UserViewModel> getStudents(long groupNumber) {
+        RestTemplate restTemplate = new RestTemplate();
+        UserViewModel[] userViewModels = restTemplate.getForObject(backendServerUrl + groupsServerUrl + "/" + groupNumber + "/students", UserViewModel[].class);
+        return userViewModels == null ? Collections.emptyList() : Arrays.asList(userViewModels);
     }
 
 

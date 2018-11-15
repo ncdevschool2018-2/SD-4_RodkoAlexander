@@ -1,7 +1,6 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
-import com.netcracker.sd4alexanderrodko.sd4parent.models.AccountViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.models.LessonViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.LessonDataService;
 import org.springframework.beans.factory.annotation.Autowired;

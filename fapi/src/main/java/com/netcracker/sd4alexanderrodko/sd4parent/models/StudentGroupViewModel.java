@@ -6,7 +6,7 @@ public class StudentGroupViewModel {
     private Long number;
     private Long course;
     private String description;
-    private Collection<AccountViewModel> students;
+    private Collection<UserViewModel> students;
     private Collection<LessonViewModel> lessons;
 
     public StudentGroupViewModel() {
@@ -36,11 +36,11 @@ public class StudentGroupViewModel {
         this.description = description;
     }
 
-    public Collection<AccountViewModel> getStudents() {
+    public Collection<UserViewModel> getStudents() {
         return students;
     }
 
-    public void setStudents(Collection<AccountViewModel> students) {
+    public void setStudents(Collection<UserViewModel> students) {
         this.students = students;
     }
 

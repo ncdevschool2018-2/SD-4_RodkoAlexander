@@ -44,4 +44,25 @@ public class UserDataServiceImpl implements UserDataService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + userServerUrl + "/" + id);
     }
+
+    @Override
+    public Iterable<UserViewModel> getStudents() {
+        RestTemplate restTemplate = new RestTemplate();
+        UserViewModel[] userViewModels = restTemplate.getForObject(backendServerUrl + userServerUrl + "/students", UserViewModel[].class);
+        return userViewModels == null ? Collections.emptyList() : Arrays.asList(userViewModels);
+    }
+
+    @Override
+    public Iterable<UserViewModel> getTeachers() {
+        RestTemplate restTemplate = new RestTemplate();
+        UserViewModel[] userViewModels = restTemplate.getForObject(backendServerUrl + userServerUrl + "/teachers", UserViewModel[].class);
+        return userViewModels == null ? Collections.emptyList() : Arrays.asList(userViewModels);
+    }
+
+    @Override
+    public Iterable<UserViewModel> getAdministrators() {
+        RestTemplate restTemplate = new RestTemplate();
+        UserViewModel[] userViewModels = restTemplate.getForObject(backendServerUrl + userServerUrl + "/administrators", UserViewModel[].class);
+        return userViewModels == null ? Collections.emptyList() : Arrays.asList(userViewModels);
+    }
 }

@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Group} from "../../model/group";
-import {forEach} from "@angular/router/src/utils/collection";
-import {stringDistance} from "codelyzer/util/utils";
+import {User} from "../../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,9 @@ export class GroupService {
   getGroups(): Observable<Group[]> {
     return this.http.get<Group[]>('/api/groups');
   }
-  getNumbers(): Observable<number[]> {
-    return this.http.get<number[]>('/api/groups/numbers');
+
+  getStudents(id: number): Observable<User[]> {
+    return this.http.get<User[]>('/api/groups/' + id + '/students');
   }
 
   saveGroup(group: Group): Observable<Group> {
@@ -27,6 +27,7 @@ export class GroupService {
   deleteGroup(id: number): Observable<void> {
     return this.http.delete<void>('/api/groups/' + id);
   }
+
   getDescriptions(): Observable<Group[]> {
     return this.http.get<Group[]>('/api/groups/descriptions');
   }

@@ -86,12 +86,12 @@
     <div class="form-group">
       <label>Role</label>
       <ng-select [(ngModel)]="accountToEdit.user.role">
-        <ng-option *ngFor="let selected of roleTypes" [value]="selected" >{{selected}}</ng-option>
+        <ng-option *ngFor="let selected of roleTypes" [value]="selected">{{selected}}</ng-option>
       </ng-select>
       <div>
         <label [hidden]="accountToEdit.user.role!='Student'">Group</label>
-        <ng-select [hidden]="accountToEdit.user.role!='Student'" [(ngModel)]="groupForStudent">
-          <ng-option *ngFor="let gr of groups" [value]="gr" >{{gr.number + ". " + gr.description}}</ng-option>
+        <ng-select [hidden]="accountToEdit.user.role!='Student'" [(ngModel)]="accountToEdit.user.groupNumber">
+          <ng-option *ngFor="let gr of groups" [value]="gr.number">{{gr.number + ". " + gr.description}}</ng-option>
         </ng-select>
       </div>
     </div>
@@ -105,7 +105,8 @@
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" class="form-control" name="password" [(ngModel)]="accountToEdit.password" #password="ngModel"
+      <input type="password" class="form-control" name="password" [(ngModel)]="accountToEdit.password"
+             #password="ngModel"
              required/>
       <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
         Password

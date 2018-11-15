@@ -1,6 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service.impl;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 import com.netcracker.sd4alexanderrodko.sd4parent.repository.StudentGroupRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,11 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     @Override
     public Iterable<StudentGroup> getDescriptions() {
         return repository.getDescription();
+    }
+
+    @Override
+    public Iterable<User> getStudents(long groupNumber) {
+        return repository.getStudents(groupNumber);
     }
 
 }

@@ -11,9 +11,21 @@ public class StudentGroup {
     private Long number;
     private Long course;
     private String description;
-    private Collection<Account> students;
+    private Collection<User> students;
     private Collection<Lesson> lessons;
 
+    public StudentGroup() {
+    }
+
+    public StudentGroup(Collection<User> students) {
+        this.students = students;
+    }
+
+    public StudentGroup(Long number, Long course, String description) {
+        this.number = number;
+        this.course = course;
+        this.description = description;
+    }
 
 
     @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
@@ -23,15 +35,6 @@ public class StudentGroup {
 
     public void setLessons(Collection<Lesson> lessons) {
         this.lessons = lessons;
-    }
-
-    public StudentGroup(Long number, Long course, String description) {
-        this.number = number;
-        this.course = course;
-        this.description = description;
-    }
-
-    public StudentGroup() {
     }
 
     @Id
@@ -61,6 +64,15 @@ public class StudentGroup {
         return description;
     }
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "groupNumber")
+    public Collection<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Collection<User> students) {
+        this.students = students;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -80,16 +92,5 @@ public class StudentGroup {
     @Override
     public int hashCode() {
         return Objects.hash(number, course, description);
-    }
-
-    @OneToMany(
-            cascade = CascadeType.ALL
-    )
-    public Collection<Account> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Collection<Account> students) {
-        this.students = students;
     }
 }

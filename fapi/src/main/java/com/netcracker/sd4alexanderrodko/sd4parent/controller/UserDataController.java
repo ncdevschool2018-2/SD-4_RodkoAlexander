@@ -31,4 +31,19 @@ public class UserDataController {
     public void deleteUser(@PathVariable String id) {
         userDataService.deleteUser(Long.valueOf(id));
     }
+
+    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
+    public ResponseEntity<Iterable<UserViewModel>> getTeachers() {
+        return ResponseEntity.ok(userDataService.getTeachers());
+    }
+
+    @RequestMapping(value = "/administrators", method = RequestMethod.GET)
+    public ResponseEntity<Iterable<UserViewModel>> getAdministrators() {
+        return ResponseEntity.ok(userDataService.getAdministrators());
+    }
+
+    @RequestMapping(value = "/students", method = RequestMethod.GET)
+    public ResponseEntity<Iterable<UserViewModel>> getStudents() {
+        return ResponseEntity.ok(userDataService.getStudents());
+    }
 }

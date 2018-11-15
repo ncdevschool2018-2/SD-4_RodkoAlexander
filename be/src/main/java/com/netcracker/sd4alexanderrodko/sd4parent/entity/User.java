@@ -6,13 +6,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users", schema = "backend", catalog = "")
 public class User {
-
-
-
     private long id;
     private String firstName;
     private String lastName;
     private String role;
+    private long groupNumber;
+
+    @Basic
+    @Column(name = "groupNumber", nullable = true)
+    public long getGroupNumber() {
+        return groupNumber;
+    }
+
+    public void setGroupNumber(long groupNumber) {
+        this.groupNumber = groupNumber;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

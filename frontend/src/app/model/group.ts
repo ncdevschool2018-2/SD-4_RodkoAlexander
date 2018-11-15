@@ -1,20 +1,20 @@
 import {Lesson} from "./lesson";
-import {Account} from "./account";
+import {User} from "./user";
 
 export class Group {
   number: number;
   course: number;
   description: string;
-  students: Account[];
+  students: User[];
   lessons: Lesson[];
 
-  constructor(){
+  constructor() {
     this.students = [];
     this.lessons = [];
   }
 
 
-  static clone(group: Group): Group{
+  static clone(group: Group): Group {
     let cloned: Group = new Group();
     cloned.number = group.number;
     cloned.course = group.course;

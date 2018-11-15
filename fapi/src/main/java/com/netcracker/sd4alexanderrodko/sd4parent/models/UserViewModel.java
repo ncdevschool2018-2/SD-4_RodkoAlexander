@@ -6,9 +6,19 @@ public class UserViewModel {
     private String firstName;
     private String lastName;
     private String role;
+    private long groupNumber;
 
     public UserViewModel() {
+
     }
+    public long getGroupNumber() {
+        return groupNumber;
+    }
+
+    public void setGroupNumber(long groupNumber) {
+        this.groupNumber = groupNumber;
+    }
+
 
     public long getId() {
         return id;

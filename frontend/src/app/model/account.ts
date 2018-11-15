@@ -7,12 +7,12 @@ export class Account {
   password: string;
   user: User;
 
-  constructor(){
+  constructor() {
     this.user = new User();
   }
 
 
-  static clone(account: Account): Account{
+  static clone(account: Account): Account {
     let cloned: Account = new Account();
     cloned.id = account.id;
     cloned.email = account.email;
