@@ -1,6 +1,7 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service.impl;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.models.AccountViewModel;
+import com.netcracker.sd4alexanderrodko.sd4parent.models.StudentViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.AccountDataService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ import java.util.List;
 public class AccountDataServiceImpl implements AccountDataService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
-
     @Value("${accounts.server.url}")
     private String accountsServerUrl;
+    @Value("${students.addition.uri}")
+    private String studentsAdditionUri;
+
 
     @Override
     public List<AccountViewModel> getAll() {
@@ -31,9 +34,14 @@ public class AccountDataServiceImpl implements AccountDataService {
 
     @Override
     public AccountViewModel saveAccount(AccountViewModel accountViewModel) {
-
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForEntity(backendServerUrl + accountsServerUrl, accountViewModel, AccountViewModel.class).getBody();
+    }
+
+    @Override
+    public AccountViewModel saveStudent(StudentViewModel studentViewModel) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForEntity(backendServerUrl + accountsServerUrl + studentsAdditionUri, studentViewModel, AccountViewModel.class).getBody();
     }
 
     @Override
@@ -41,5 +49,11 @@ public class AccountDataServiceImpl implements AccountDataService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + accountsServerUrl + "/" + id);
     }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
 
 }

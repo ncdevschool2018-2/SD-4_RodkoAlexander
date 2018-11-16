@@ -6,6 +6,7 @@ import {AccountService} from "../../../connect/account/account.service";
 import {Account} from "../../../model/account";
 import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
+import {AccountToStudentPipe} from "../../account-to-student.pipe";
 
 @Component({
   selector: 'app-account',
@@ -17,6 +18,7 @@ export class AccountComponent implements OnInit {
 
   public editMode = false;
   public roleTypes: string[] = ["Teacher", "Student", "Administrator"];
+  public groupNumber: number;
   public groups: Group[];
   public accounts: Account[];
   public accountToEdit: Account = new Account();
@@ -26,6 +28,7 @@ export class AccountComponent implements OnInit {
 
   constructor(private accountService: AccountService,
               private groupService: GroupService,
+              private accountToStudentPipe: AccountToStudentPipe,
               private loadingService: Ng4LoadingSpinnerService,
               private modalService: BsModalService) {
 
@@ -56,17 +59,22 @@ export class AccountComponent implements OnInit {
 
   public _addAccount(): void {
     this.loadingService.show();
-    console.log(this.accountToEdit);
-    if (this.accountToEdit.user.role != "Student") {
-      this.accountToEdit.user.groupNumber = null;
+    if (this.accountToEdit.role == "Student") {
+      this.subscriptions.push(this.accountService.saveStudent(
+        this.accountToStudentPipe.transform(this.accountToEdit,this.groupNumber)).subscribe(() => {
+        this._updateAccounts();
+        this.refreshAccountToEdit();
+        this._closeModal();
+        this.loadingService.hide();
+      }));
+    } else {
+      this.subscriptions.push(this.accountService.saveAccount(this.accountToEdit).subscribe(() => {
+        this._updateAccounts();
+        this.refreshAccountToEdit();
+        this._closeModal();
+        this.loadingService.hide();
+      }));
     }
-    this.subscriptions.push(this.accountService.saveAccount(this.accountToEdit).subscribe(() => {
-      this._updateAccounts();
-      this.refreshAccountToEdit();
-      this._closeModal();
-      this.loadingService.hide();
-
-    }));
   }
 
   public _updateAccounts(): void {

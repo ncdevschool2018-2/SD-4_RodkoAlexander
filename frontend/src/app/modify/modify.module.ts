@@ -13,6 +13,9 @@ import {CalendarModule} from "primeng/primeng";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
 import {NgSelectModule} from '@ng-select/ng-select';
+import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
+import { StudentScheduleComponent } from './student-schedule/student-schedule.component';
+import { AccountToStudentPipe } from './account-to-student.pipe';
 
 @NgModule({
   imports: [
@@ -37,11 +40,15 @@ import {NgSelectModule} from '@ng-select/ng-select';
   declarations: [
     AccountComponent,
     GroupComponent,
-    LessonComponent],
+    LessonComponent,
+    TeacherScheduleComponent,
+    StudentScheduleComponent,
+    AccountToStudentPipe],
   exports: [
     AccountComponent,
     GroupComponent,
-    LessonComponent]
+    LessonComponent],
+  providers:[AccountToStudentPipe]
 })
 export class ModifyModule {
 }

@@ -2,8 +2,6 @@ export class User {
   id: number;
   firstName: string;
   lastName: string;
-  role: string;
-  groupNumber: number;
 
   constructor() {
   }
@@ -14,8 +12,6 @@ export class User {
     cloned.id = user.id;
     cloned.firstName = user.firstName;
     cloned.lastName = user.lastName;
-    cloned.role = user.role;
-    cloned.groupNumber = user.groupNumber;
     return cloned;
   }
 

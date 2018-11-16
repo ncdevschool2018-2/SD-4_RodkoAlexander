@@ -4,7 +4,7 @@
     <img src="/src/assets/images/app_icons/android-icon-36x36.png" width="30" height="30"
          class="d-inline-block align-top" alt="">
   </a>
-  <div class="collapse navbar-collapse" number="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="accounts">Accounts</a>
@@ -41,7 +41,7 @@
       <label>Email</label>
       <input class="form-control" name="email" [(ngModel)]="accountToLogin.email" #email="ngModel" required
       pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"/>
-      <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+      <div [hidden]="email.untouched || email.valid" class="alert alert-danger">
         Please, input email
       </div>
     </div>

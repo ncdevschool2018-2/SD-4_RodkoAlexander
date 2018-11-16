@@ -21,6 +21,10 @@ public interface StudentGroupService {
 
     Iterable<StudentGroup> getDescriptions();
 
+    Optional<StudentGroup> getStudentGroupWithStudentsById(long id);
+
     Iterable<User> getStudents(long groupNumber);
+
+    long count();
 
 }

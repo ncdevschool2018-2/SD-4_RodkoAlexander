@@ -1,7 +1,6 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -12,22 +11,10 @@ public class User {
     private long id;
     private String firstName;
     private String lastName;
-    private String role;
     private Account account;
-    private long groupNumber;
-
-    @Basic
-    @Column(name = "groupNumber", nullable = true)
-    public long getGroupNumber() {
-        return groupNumber;
-    }
-
-    public void setGroupNumber(long groupNumber) {
-        this.groupNumber = groupNumber;
-    }
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -56,20 +43,8 @@ public class User {
         this.lastName = lastName;
     }
 
-    @Basic
-    @Column(name = "role", nullable = true, length = 256)
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
-    /*@JsonIgnore*/
     @JsonBackReference
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "id")
     public Account getAccount() {
@@ -78,5 +53,16 @@ public class User {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        // sb.append(", groupNumber=").append(groupNumber);
+        sb.append('}');
+        return sb.toString();
     }
 }

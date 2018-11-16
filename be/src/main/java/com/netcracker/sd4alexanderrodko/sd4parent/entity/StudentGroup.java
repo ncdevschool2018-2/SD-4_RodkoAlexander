@@ -8,7 +8,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "student_groups", schema = "backend", catalog = "")
+@Table(name = "university_groups", schema = "backend", catalog = "")
 public class StudentGroup {
     private Long number;
     private Long course;
@@ -17,6 +17,11 @@ public class StudentGroup {
     private Collection<Lesson> lessons;
 
     public StudentGroup() {
+    }
+
+    public StudentGroup(long number, Collection<User> students) {
+        this.students = students;
+        this.number = number;
     }
 
     public StudentGroup(Collection<User> students) {
@@ -31,7 +36,7 @@ public class StudentGroup {
 
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Collection<Lesson> getLessons() {
         return lessons;
     }
@@ -67,7 +72,7 @@ public class StudentGroup {
         return description;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "groupNumber")
+    @OneToMany(cascade = CascadeType.ALL)
     public Collection<User> getStudents() {
         return students;
     }

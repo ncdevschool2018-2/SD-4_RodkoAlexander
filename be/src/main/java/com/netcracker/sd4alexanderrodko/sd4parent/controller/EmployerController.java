@@ -11,18 +11,18 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/accounts")
-public class AccountController {
+public class EmployerController {
 
-    private AccountService accountService;
+    private AccountService service;
 
     @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
+    public EmployerController(AccountService service) {
+        this.service = service;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Account> getAccountById(@PathVariable(name = "id") Long id) {
-        Optional<Account> account = accountService.getAccountById(id);
+        Optional<Account> account = service.getAccountById(id);
         if (account.isPresent()) {
             return ResponseEntity.ok(account.get());
         } else {
@@ -32,18 +32,31 @@ public class AccountController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public Iterable<Account> getAccounts() {
-        return accountService.getAllAccounts();
+        return service.getAllAccounts();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Account saveAccount(@RequestBody Account account) {
-        return accountService.saveAccount(account);
+    public Account saveAccount(@RequestBody Account employer) {
+        return service.saveAccount(employer);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteAccount(@PathVariable(name = "id") Long id) {
-        accountService.deleteAccount(id);
+        service.deleteAccount(id);
         return ResponseEntity.noContent().build();
     }
+    @RequestMapping(value = "/teachers", method = RequestMethod.GET)
+    public Iterable<Account> getTeachers() {
+        return service.getTeachers();
+    }
 
+    @RequestMapping(value = "/administrators", method = RequestMethod.GET)
+    public Iterable<Account> getAdministrators() {
+        return service.getAdministrators();
+    }
+
+    @RequestMapping(value = "/employers", method = RequestMethod.GET)
+    public Iterable<Account> getEmployers() {
+        return service.getEmployers();
+    }
 }

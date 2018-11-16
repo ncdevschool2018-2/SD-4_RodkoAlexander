@@ -15,4 +15,6 @@ public interface LessonService {
 
     void deleteLesson(Long id);
 
+    long count();
+
 }

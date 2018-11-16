@@ -15,4 +15,5 @@ public interface VisitService {
 
     void deleteVisitsById(Long id);
 
+    long count();
 }

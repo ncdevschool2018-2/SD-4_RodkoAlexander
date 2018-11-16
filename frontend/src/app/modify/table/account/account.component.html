@@ -7,7 +7,6 @@
         <tr>
           <th scope="col" style="width: 15%">Id</th>
           <th scope="col" style="width: 30%">Email</th>
-          <th scope="col" style="width: 20%">Password</th>
           <th scope="col" style="width: 20%">First name</th>
           <th scope="col" style="width: 20%">Last name</th>
           <th scope="col" style="width: 20%">Role</th>
@@ -18,10 +17,9 @@
         <tr *ngFor="let account of accounts">
           <td>{{account.id}}</td>
           <td>{{account.email}}</td>
-          <td>{{account.password}}</td>
           <td>{{account.user.firstName}}</td>
           <td>{{account.user.lastName}}</td>
-          <td>{{account.user.role}}</td>
+          <td>{{account.role}}</td>
 
           <td>
             <div class="button-bar">
@@ -66,31 +64,33 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label>First name</label>
-      <input class="form-control" name="firstName" [(ngModel)]="accountToEdit.user.firstName"
-             #firstName="ngModel"
-             required/>
-      <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
-        First Name
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Last name</label>
-      <input class="form-control" name="lastName" [(ngModel)]="accountToEdit.user.lastName"
-             #lastName="ngModel"
-             required/>
-      <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
-        Last Name
-      </div>
-    </div>
-    <div class="form-group">
       <label>Role</label>
-      <ng-select [(ngModel)]="accountToEdit.user.role">
+      <ng-select [(ngModel)]="accountToEdit.role">
         <ng-option *ngFor="let selected of roleTypes" [value]="selected">{{selected}}</ng-option>
       </ng-select>
       <div>
-        <label [hidden]="accountToEdit.user.role!='Student'">Group</label>
-        <ng-select [hidden]="accountToEdit.user.role!='Student'" [(ngModel)]="accountToEdit.user.groupNumber">
+      </div>
+      <div class="form-group">
+        <label>First name</label>
+        <input class="form-control" name="firstName" [(ngModel)]="accountToEdit.user.firstName"
+        #firstName="ngModel"
+        required/>
+        <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
+          First Name
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Last name</label>
+        <input class="form-control" name="lastName" [(ngModel)]="accountToEdit.user.lastName"
+        #lastName="ngModel"
+        required/>
+        <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
+          Last Name
+        </div>
+      </div>
+      <div class="form-group">
+        <label [hidden]="accountToEdit.role!='Student'">Group</label>
+        <ng-select [hidden]="accountToEdit.role!='Student'" [(ngModel)]="groupNumber">
           <ng-option *ngFor="let gr of groups" [value]="gr.number">{{gr.number + ". " + gr.description}}</ng-option>
         </ng-select>
       </div>

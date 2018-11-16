@@ -52,8 +52,18 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     }
 
     @Override
+    public Optional<StudentGroup> getStudentGroupWithStudentsById(long id) {
+        return repository.findById(id);
+    }
+
+    @Override
     public Iterable<User> getStudents(long groupNumber) {
         return repository.getStudents(groupNumber);
+    }
+
+    @Override
+    public long count() {
+        return repository.count();
     }
 
 }

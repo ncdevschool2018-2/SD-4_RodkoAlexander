@@ -1,6 +1,6 @@
 package com.netcracker.sd4alexanderrodko.sd4parent;
 
-import org.springframework.boot.SpringApplication;
+import 	org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
