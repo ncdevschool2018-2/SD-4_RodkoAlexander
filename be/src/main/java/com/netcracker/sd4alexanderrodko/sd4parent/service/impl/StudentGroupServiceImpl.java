@@ -1,5 +1,6 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service.impl;
 
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.Lesson;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 import com.netcracker.sd4alexanderrodko.sd4parent.repository.StudentGroupRepository;
@@ -27,23 +28,8 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     }
 
     @Override
-    public Optional<StudentGroup> getStudentGroupById(Long id) {
-        return repository.findById(id);
-    }
-
-    @Override
-    public Iterable<StudentGroup> getAllStudentGroups() {
-        return repository.findAll();
-    }
-
-    @Override
     public void deleteStudentGroup(Long id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public List<Long> getNumbers() {
-        return repository.getNumbers();
     }
 
     @Override
@@ -52,18 +38,17 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     }
 
     @Override
-    public Optional<StudentGroup> getStudentGroupWithStudentsById(long id) {
-        return repository.findById(id);
+    public Optional<StudentGroup> getGroupWithStudentsById(long groupId) {
+        return repository.getGroupWithStudentsById(groupId);
     }
 
     @Override
-    public Iterable<User> getStudents(long groupNumber) {
-        return repository.getStudents(groupNumber);
+    public Iterable<Lesson> getLessonsByGroupId(long groupId) {
+        return repository.getLessonsByGroupId(groupId);
     }
 
     @Override
-    public long count() {
-        return repository.count();
+    public Iterable<User> getStudentsByGroupId(long groupId) {
+        return repository.getStudentsByGroupId(groupId);
     }
-
 }

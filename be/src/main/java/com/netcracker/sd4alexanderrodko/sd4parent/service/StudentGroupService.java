@@ -1,9 +1,11 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.service;
 
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.Lesson;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -11,20 +13,13 @@ public interface StudentGroupService {
 
     StudentGroup saveStudentGroup(StudentGroup studentGroup);
 
-    Optional<StudentGroup> getStudentGroupById(Long id);
-
-    Iterable<StudentGroup> getAllStudentGroups();
-
     void deleteStudentGroup(Long id);
-
-    List<Long> getNumbers();
 
     Iterable<StudentGroup> getDescriptions();
 
-    Optional<StudentGroup> getStudentGroupWithStudentsById(long id);
+    Optional<StudentGroup> getGroupWithStudentsById(long groupNumber);
 
-    Iterable<User> getStudents(long groupNumber);
+    Iterable<Lesson> getLessonsByGroupId(long groupNumber);
 
-    long count();
-
+    Iterable<User> getStudentsByGroupId(long groupId);
 }

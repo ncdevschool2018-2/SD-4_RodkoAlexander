@@ -14,26 +14,15 @@ import java.util.List;
 public class StudentGroupDataController {
 
     @Autowired
-    StudentGroupDataService studentGroupDataService;
+    private StudentGroupDataService studentGroupDataService;
 
     @RequestMapping
-    public ResponseEntity<List<StudentGroupViewModel>> getAllGroups() {
-        return ResponseEntity.ok(studentGroupDataService.getAll());
-    }
-
-    @RequestMapping(value = "/numbers", method = RequestMethod.GET)
-    public ResponseEntity<List<Long>> getStudentGroupsNumbers() {
-        return ResponseEntity.ok(studentGroupDataService.getNumbers());
-    }
-
-    @RequestMapping(value = "/descriptions", method = RequestMethod.GET)
-    public ResponseEntity<List<StudentGroupViewModel>> getStudentGroupsDescriptions() {
+    public ResponseEntity<List<StudentGroupViewModel>> getGroupsWithDescriptions() {
         return ResponseEntity.ok(studentGroupDataService.getDescriptions());
     }
 
-
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<StudentGroupViewModel> saveGroup(@RequestBody StudentGroupViewModel studentGroupViewModel ) {
+    public ResponseEntity<StudentGroupViewModel> saveStudentGroup(@RequestBody StudentGroupViewModel studentGroupViewModel) {
         if (studentGroupViewModel != null) {
             return ResponseEntity.ok(studentGroupDataService.saveStudentGroup(studentGroupViewModel));
         }
@@ -41,7 +30,8 @@ public class StudentGroupDataController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteGroup(@PathVariable String id) {
-        studentGroupDataService.deleteStudentGroup(Long.valueOf(id));
+    public void deleteStudentGroup(@PathVariable long id) {
+        studentGroupDataService.deleteStudentGroup(id);
     }
+
 }

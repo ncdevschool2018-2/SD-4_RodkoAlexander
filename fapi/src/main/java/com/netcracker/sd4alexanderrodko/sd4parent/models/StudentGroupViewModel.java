@@ -3,7 +3,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.models;
 import java.util.Collection;
 
 public class StudentGroupViewModel {
-    private Long number;
+    private Long id;
     private Long course;
     private String description;
     private Collection<UserViewModel> students;
@@ -12,12 +12,12 @@ public class StudentGroupViewModel {
     public StudentGroupViewModel() {
     }
 
-    public Long getNumber() {
-        return number;
+    public Long getId() {
+        return id;
     }
 
-    public void setNumber(Long number) {
-        this.number = number;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getCourse() {

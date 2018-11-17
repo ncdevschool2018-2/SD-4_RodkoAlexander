@@ -1,6 +1,8 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "university_groups", schema = "backend", catalog = "")
 public class StudentGroup {
-    private Long number;
+    private Long id;
     private Long course;
     private String description;
     private Collection<User> students;
@@ -19,24 +21,19 @@ public class StudentGroup {
     public StudentGroup() {
     }
 
-    public StudentGroup(long number, Collection<User> students) {
-        this.students = students;
-        this.number = number;
-    }
-
-    public StudentGroup(Collection<User> students) {
-        this.students = students;
-    }
-
-    public StudentGroup(Long number, Long course, String description) {
-        this.number = number;
+    public StudentGroup(Long id, Long course, String description) {
+        this.id = id;
         this.course = course;
         this.description = description;
     }
-
-
+    public StudentGroup(Long id, Long course, String description,Collection<User> students) {
+        this.id = id;
+        this.course = course;
+        this.description = description;
+        this.students = students;
+    }
     @JsonIgnore
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Collection<Lesson> getLessons() {
         return lessons;
     }
@@ -47,13 +44,13 @@ public class StudentGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "number", nullable = false)
-    public Long getNumber() {
-        return number;
+    @Column(name = "id", nullable = false)
+    public Long getId() {
+        return id;
     }
 
-    public void setNumber(Long number) {
-        this.number = number;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Basic
@@ -90,7 +87,7 @@ public class StudentGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentGroup that = (StudentGroup) o;
-        return Objects.equals(number, that.number) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(course, that.course) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(students, that.students) &&
@@ -99,6 +96,6 @@ public class StudentGroup {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, course, description);
+        return Objects.hash(id, course, description);
     }
 }

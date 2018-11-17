@@ -14,6 +14,4 @@ public interface VisitService {
     Iterable<Visit> getAllVisits();
 
     void deleteVisitsById(Long id);
-
-    long count();
 }

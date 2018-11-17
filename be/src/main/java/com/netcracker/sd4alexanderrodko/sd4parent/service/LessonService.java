@@ -9,12 +9,9 @@ public interface LessonService {
 
     Lesson saveLesson(Lesson lesson);
 
-    Optional<Lesson> getLessonById(Long id);
-
     Iterable<Lesson> getAllLessons();
 
     void deleteLesson(Long id);
 
-    long count();
-
+    Iterable<Lesson> getLessonsByTeacher(long teacherId);
 }

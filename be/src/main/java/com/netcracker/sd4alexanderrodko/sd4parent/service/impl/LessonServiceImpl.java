@@ -25,11 +25,6 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Optional<Lesson> getLessonById(Long id) {
-        return repository.findById(id);
-    }
-
-    @Override
     public Iterable<Lesson> getAllLessons() {
         return repository.findAll();
     }
@@ -39,9 +34,11 @@ public class LessonServiceImpl implements LessonService {
         repository.deleteById(id);
     }
 
+
     @Override
-    public long count() {
-        return repository.count();
+    public Iterable<Lesson> getLessonsByTeacher(long teacherId) {
+        return repository.getLessonsByTeacherId(teacherId);
     }
+
 
 }

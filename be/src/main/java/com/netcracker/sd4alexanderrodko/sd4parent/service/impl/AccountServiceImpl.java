@@ -19,43 +19,23 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account saveAccount(Account account) {
-        return repository.save(account);
+    public Account saveEmployer(Account employer) {
+        return repository.save(employer);
     }
 
     @Override
-    public Optional<Account> getAccountById(Long id) {
+    public Optional<Account> getEmployerById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public Iterable<Account> getAllAccounts() {
-        return repository.findAll();
-    }
-
-    @Override
-    public void deleteAccount(Long id) {
+    public void deleteEmployer(Long id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public long count() {
-        return repository.count();
-    }
-
-    @Override
-    public Iterable<Account> getStudents() {
-        return repository.getStudents();
     }
 
     @Override
     public Iterable<Account> getTeachers() {
         return repository.getTeachers();
-    }
-
-    @Override
-    public Iterable<Account> getAdministrators() {
-        return repository.getAdministrators();
     }
 
     @Override

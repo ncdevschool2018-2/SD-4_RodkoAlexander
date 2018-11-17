@@ -1,15 +1,13 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.Lesson;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -21,32 +19,14 @@ public class StudentGroupController {
         this.studentGroupService = studentGroupService;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<StudentGroup> getStudentGroupById(@PathVariable(name = "id") Long id) {
-        Optional<StudentGroup> studentGroup = studentGroupService.getStudentGroupById(id);
-        if (studentGroup.isPresent()) {
-            return ResponseEntity.ok(studentGroup.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @RequestMapping(value = "/{groupId}/students", method = RequestMethod.GET)
+    public Iterable<User> getStudentsFromGroup(@PathVariable(name = "groupId") Long groupId) {
+        return studentGroupService.getStudentsByGroupId(groupId);
     }
-
-    @RequestMapping(value = "/{groupNumber}/students", method = RequestMethod.GET)
-    public Iterable<User> getStudentsFromGroup(@PathVariable(name = "groupNumber") Long groupNumber) {
-        return studentGroupService.getStudents(groupNumber);
+    @RequestMapping(value = "/{groupId}/lessons", method = RequestMethod.GET)
+    public Iterable<Lesson> getLessonByGroupId(@PathVariable(name = "groupId") Long groupId) {
+        return studentGroupService.getLessonsByGroupId(groupId);
     }
-
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public Iterable<StudentGroup> getStudentGroups() {
-        return studentGroupService.getAllStudentGroups();
-    }
-
-
-    @RequestMapping(value = "/numbers", method = RequestMethod.GET)
-    public List<Long> getStudentGroupsNumbers() {
-        return studentGroupService.getNumbers();
-    }
-
     @RequestMapping(value = "/descriptions", method = RequestMethod.GET)
     public Iterable<StudentGroup> getStudentGroupsDescriptions() {
         return studentGroupService.getDescriptions();

@@ -6,21 +6,15 @@ import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 import java.util.Optional;
 
 public interface AccountService {
-    Account saveAccount(Account account);
 
-    Optional<Account> getAccountById(Long id);
+    Account saveEmployer(Account employer);
 
-    Iterable<Account> getAllAccounts();
+    Optional<Account> getEmployerById(Long id);
+
+    void deleteEmployer(Long id);
 
     Iterable<Account> getEmployers();
 
-    void deleteAccount(Long id);
-
-    long count();
-
-    Iterable<Account> getStudents();
-
     Iterable<Account> getTeachers();
 
-    Iterable<Account> getAdministrators();
 }

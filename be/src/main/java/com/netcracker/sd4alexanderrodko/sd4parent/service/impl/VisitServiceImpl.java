@@ -37,9 +37,4 @@ public class VisitServiceImpl implements VisitService {
     public void deleteVisitsById(Long id) {
         repository.deleteById(id);
     }
-
-    @Override
-    public long count() {
-        return repository.count();
-    }
 }

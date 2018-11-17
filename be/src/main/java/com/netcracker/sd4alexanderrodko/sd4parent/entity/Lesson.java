@@ -1,5 +1,9 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -19,8 +23,10 @@ public class Lesson {
     private Collection<StudentGroup> groups;
 
 
+    @JsonIgnore
     @ManyToMany(
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            mappedBy = "lessons"
     )
     public Collection<StudentGroup> getGroups() {
         return groups;
@@ -110,7 +116,7 @@ public class Lesson {
     }
 
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable=false, updatable=false )
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id", insertable=false, updatable=false )
     public User getTeacher() {
         return teacher;
     }

@@ -1,6 +1,5 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
 

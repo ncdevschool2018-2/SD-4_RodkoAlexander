@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/lessons")
 public class LessonController {
@@ -19,14 +17,9 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Lesson> getLessonById(@PathVariable(name = "id") Long id) {
-        Optional<Lesson> lesson = lessonService.getLessonById(id);
-        if (lesson.isPresent()) {
-            return ResponseEntity.ok(lesson.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @RequestMapping(value = "/teacher/{teacherId}", method = RequestMethod.GET)
+    public Iterable<Lesson> getLessonByTeacherId(@PathVariable(name = "teacherId") Long teacherId) {
+        return lessonService.getLessonsByTeacher(teacherId);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)

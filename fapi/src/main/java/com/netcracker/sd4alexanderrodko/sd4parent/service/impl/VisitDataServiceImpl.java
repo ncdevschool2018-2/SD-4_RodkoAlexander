@@ -27,19 +27,19 @@ public class VisitDataServiceImpl implements VisitDataService {
     }
 
     @Override
-    public VisitViewModel getStudentToLessonById(Long id) {
+    public VisitViewModel getVisitById(Long id) {
         return null;
     }
 
     @Override
-    public VisitViewModel saveStudentToLesson(VisitViewModel visitViewModel) {
+    public VisitViewModel saveVisit(VisitViewModel visitViewModel) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForEntity(backendServerUrl + studentsVisitsServerUrl, visitViewModel, VisitViewModel.class).getBody();
 
     }
 
     @Override
-    public void deleteStudentToLesson(Long id) {
+    public void deleteVisit(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendServerUrl + studentsVisitsServerUrl + "/" + id);
     }

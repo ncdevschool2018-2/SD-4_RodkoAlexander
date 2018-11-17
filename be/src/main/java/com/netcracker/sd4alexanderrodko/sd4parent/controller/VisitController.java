@@ -21,7 +21,7 @@ public class VisitController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Visit> getStudentToLessonById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Visit> getVisitById(@PathVariable(name = "id") Long id) {
         Optional<Visit> studentToLesson = visitService.getVisitsById(id);
         if (studentToLesson.isPresent()) {
             return ResponseEntity.ok(studentToLesson.get());
@@ -31,17 +31,17 @@ public class VisitController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public Iterable<Visit> getStudentToLessons() {
+    public Iterable<Visit> getVisits() {
         return visitService.getAllVisits();
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Visit saveStudentToLesson(@RequestBody Visit visit) {
+    public Visit saveVisits(@RequestBody Visit visit) {
         return visitService.saveVisit(visit);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStudentToLesson(@PathVariable(name = "id") Long id) {
+    public ResponseEntity deleteVisit(@PathVariable(name = "id") Long id) {
         visitService.deleteVisitsById(id);
         return ResponseEntity.noContent().build();
     }
