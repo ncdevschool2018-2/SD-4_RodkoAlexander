@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
-    @Query(value = "SELECT lesson FROM Lesson lesson where lesson.teacher.id = :teacherId  ")
+    @Query(value = "FROM Lesson where teacher.id = :teacherId  ")
     Iterable<Lesson> getLessonsByTeacherId(@Param("teacherId") long teacherId);
 }

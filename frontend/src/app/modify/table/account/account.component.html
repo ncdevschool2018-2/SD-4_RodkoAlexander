@@ -24,7 +24,7 @@
           <td>
             <div class="button-bar">
               <button type="button" class="btn btn-danger" (click)="_deleteAccount(account.id)">Delete</button>
-              <button type="button" class="btn btn-secondary" (click)="_openModal(template, account)">Edit</button>
+              <button type="button" class="btn btn-secondary" (click)="_openModal(create, account)">Edit</button>
             </div>
           </td>
         </tr>
@@ -45,7 +45,7 @@
     </div>
     <div class="col">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-              (click)="_openModal(template,accountToEdit)">
+              (click)="_openModal(create)">
         Create new account
       </button>
     </div>
@@ -54,7 +54,7 @@
 </div>
 
 
-<ng-template #template>
+<ng-template #create>
   <div class="modal-header">
     <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}} new Account</h4>
     <button type="button" class="close pull-right"
@@ -64,8 +64,8 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label>Role</label>
-      <ng-select [(ngModel)]="accountToEdit.role">
+      <label [hidden]="editMode" >Role</label>
+      <ng-select [hidden]="editMode" [(ngModel)]="accountToEdit.role">
         <ng-option *ngFor="let selected of roleTypes" [value]="selected">{{selected}}</ng-option>
       </ng-select>
       <div>
@@ -90,8 +90,8 @@
       </div>
       <div class="form-group">
         <label [hidden]="accountToEdit.role!='Student'">Group</label>
-        <ng-select [hidden]="accountToEdit.role!='Student'" [(ngModel)]="groupNumber">
-          <ng-option *ngFor="let gr of groups" [value]="gr.number">{{gr.number + ". " + gr.description}}</ng-option>
+        <ng-select [hidden]="accountToEdit.role!='Student'" [(ngModel)]="groupId">
+          <ng-option *ngFor="let gr of groups" [value]="gr.id">{{gr.id + ". " + gr.description}}</ng-option>
         </ng-select>
       </div>
     </div>
@@ -121,4 +121,6 @@
 
   </div>
 </ng-template>
+
+
 

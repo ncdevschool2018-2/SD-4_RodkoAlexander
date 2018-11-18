@@ -7,17 +7,12 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="accounts">Accounts</a>
+        <a class="nav-link" href="modify">Modify</a>
       </li>
     </ul>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="groups">Groups</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="lessons">Lessons</a>
+        <a class="nav-link" href="schedule">Schedule</a>
       </li>
     </ul>
     <div class="form-inline my-2 my-lg-0">
@@ -39,22 +34,21 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Email</label>
-      <input class="form-control" name="email" [(ngModel)]="accountToLogin.email" #email="ngModel" required
-      pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"/>
-      <div [hidden]="email.untouched || email.valid" class="alert alert-danger">
-        Please, input email
+      <input class="form-control" name="email" [(ngModel)]="accountToLogin.email" #email="ngModel"
+             required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"/>
+      <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+        Please set email
       </div>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input class="form-control control-box" type="password" name="password" [(ngModel)]="accountToLogin.password" #password="ngModel"
-                required/>
+      <input type="password" class="form-control" name="password" [(ngModel)]="accountToLogin.password"
+             #password="ngModel"
+             required/>
       <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-        Please, input password
+        Password
       </div>
     </div>
-
-
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="_closeModal()"

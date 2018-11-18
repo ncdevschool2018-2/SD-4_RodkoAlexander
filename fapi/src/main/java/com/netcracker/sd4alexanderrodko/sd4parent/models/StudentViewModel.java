@@ -3,7 +3,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.models;
 public class StudentViewModel {
 
     private AccountViewModel account;
-    private long groupNumber;
+    private long groupId;
 
     public StudentViewModel() {
     }
@@ -17,11 +17,11 @@ public class StudentViewModel {
         this.account = account;
     }
 
-    public long getGroupNumber() {
-        return groupNumber;
+    public long getGroupId() {
+        return groupId;
     }
 
-    public void setGroupNumber(long groupNumber) {
-        this.groupNumber = groupNumber;
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
 }

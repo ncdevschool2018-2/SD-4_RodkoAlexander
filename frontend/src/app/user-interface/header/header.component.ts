@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
 
   private modalEditor: BsModalRef;
-  public accountToLogin: Account;
+  public accountToLogin: Account = new Account();
   constructor(private modalService: BsModalService) {
   }
 

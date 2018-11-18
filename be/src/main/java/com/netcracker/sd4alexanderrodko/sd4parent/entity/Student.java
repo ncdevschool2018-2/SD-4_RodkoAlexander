@@ -2,7 +2,10 @@ package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
 public class Student {
     private Account account;
-    private long groupNumber;
+    private long groupId;
+
+    public Student() {
+    }
 
     public Account getAccount() {
         return account;
@@ -12,20 +15,12 @@ public class Student {
         this.account = account;
     }
 
-    public long getGroupNumber() {
-        return groupNumber;
+    public long getGroupId() {
+        return groupId;
     }
 
-    public void setGroupNumber(long groupNumber) {
-        this.groupNumber = groupNumber;
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Student{");
-        sb.append("account=").append(account);
-        sb.append(", groupNumber=").append(groupNumber);
-        sb.append('}');
-        return sb.toString();
-    }
 }

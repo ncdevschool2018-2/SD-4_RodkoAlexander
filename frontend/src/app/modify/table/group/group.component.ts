@@ -4,6 +4,8 @@ import {Subscription} from "rxjs";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {Group} from "../../../model/group";
 import {GroupService} from "../../../connect/group/group.service";
+import {User} from "../../../model/user";
+import {UserService} from "../../../connect/user/user.service";
 
 @Component({
   selector: 'app-group',
@@ -16,11 +18,13 @@ export class GroupComponent implements OnInit {
 
   public groups: Group[];
   public groupToEdit: Group = new Group();
+  public groupStudents: User[];
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
 
 
   constructor(private groupService: GroupService,
+              private userService: UserService,
               private loadingService: Ng4LoadingSpinnerService,
               private modalService: BsModalService) {
 
@@ -84,5 +88,19 @@ export class GroupComponent implements OnInit {
       this.groups = groups;
       this.loadingService.hide();
     }));
+  }
+
+  private loadStudentsFromGroup(groupId: number): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.userService.getStudentsFromGroup(groupId).subscribe(students => {
+      console.log(this.groupStudents);
+      this.groupStudents = students;
+      this.loadingService.hide();
+    }));
+  }
+
+  public _students(template: TemplateRef<any>,groupId :number): void {
+    this.loadStudentsFromGroup(groupId);
+    this.modalEditor = this.modalService.show(template);
   }
 }

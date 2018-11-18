@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LessonService } from './lesson.service';
+import { ScheduleService } from './schedule.service';
 
-describe('LessonService', () => {
+describe('ScheduleService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: LessonService = TestBed.get(LessonService);
+    const service: ScheduleService = TestBed.get(ScheduleService);
     expect(service).toBeTruthy();
   });
 });

@@ -15,6 +15,6 @@ public interface AccountService {
 
     Iterable<Account> getEmployers();
 
-    Iterable<Account> getTeachers();
+    Iterable<User> getTeachers();
 
 }

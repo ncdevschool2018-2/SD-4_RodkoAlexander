@@ -2,7 +2,7 @@ import {Lesson} from "./lesson";
 import {User} from "./user";
 
 export class Group {
-  number: number;
+  id: number;
   course: number;
   description: string;
   students: User[];
@@ -16,7 +16,7 @@ export class Group {
 
   static clone(group: Group): Group {
     let cloned: Group = new Group();
-    cloned.number = group.number;
+    cloned.id = group.id;
     cloned.course = group.course;
     cloned.description = group.description;
     return cloned;

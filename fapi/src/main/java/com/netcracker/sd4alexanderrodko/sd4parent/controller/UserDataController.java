@@ -33,13 +33,13 @@ public class UserDataController {
     }
 
 
-    @RequestMapping(path = "/students",method = RequestMethod.DELETE)
-    public void deleteStudent(long groupId, long studentId) {
+    @RequestMapping(path = "/students/{gr}/{id}",method = RequestMethod.DELETE)
+    public void deleteStudent(@PathVariable(name = "gr")long groupId,@PathVariable(name = "id") long studentId) {
         userDataService.deleteStudent(groupId,studentId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public void deleteEmployer(long employerId) {
+    @RequestMapping(path = "/{id}",method = RequestMethod.DELETE)
+    public void deleteEmployer(@PathVariable(name = "id") long employerId) {
         userDataService.deleteEmployer(employerId);
     }
 
@@ -49,12 +49,8 @@ public class UserDataController {
     }
 
     @RequestMapping("/teachers")
-    public List<AccountViewModel> getTeachers() {
+    public List<UserViewModel> getTeachers() {
         return userDataService.getTeachers();
     }
 
-    @RequestMapping("/{groupId}/students")
-    public List<UserViewModel> getStudentsFromGroup(@PathVariable long groupId) {
-        return userDataService.getStudentsFromGroup(groupId);
-    }
 }

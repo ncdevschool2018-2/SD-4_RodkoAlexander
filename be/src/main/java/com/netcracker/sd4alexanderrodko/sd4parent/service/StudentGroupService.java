@@ -17,9 +17,9 @@ public interface StudentGroupService {
 
     Iterable<StudentGroup> getDescriptions();
 
-    Optional<StudentGroup> getGroupWithStudentsById(long groupNumber);
+    Optional<StudentGroup> getGroupWithStudentsByid(long id);
 
-    Iterable<Lesson> getLessonsByGroupId(long groupNumber);
+    Iterable<Lesson> getLessonsById(long id);
 
-    Iterable<User> getStudentsByGroupId(long groupId);
+    Iterable<User> getStudentsById(long id);
 }

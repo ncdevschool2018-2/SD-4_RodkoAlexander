@@ -8,7 +8,6 @@ import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -38,17 +37,17 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     }
 
     @Override
-    public Optional<StudentGroup> getGroupWithStudentsById(long groupId) {
-        return repository.getGroupWithStudentsById(groupId);
+    public Optional<StudentGroup> getGroupWithStudentsByid(long id) {
+        return repository.getGroupWithStudentsById(id);
     }
 
     @Override
-    public Iterable<Lesson> getLessonsByGroupId(long groupId) {
-        return repository.getLessonsByGroupId(groupId);
+    public Iterable<Lesson> getLessonsById(long id) {
+        return repository.getLessonsByGroupId(id);
     }
 
     @Override
-    public Iterable<User> getStudentsByGroupId(long groupId) {
-        return repository.getStudentsByGroupId(groupId);
+    public Iterable<User> getStudentsById(long id) {
+        return repository.getStudentsByGroupId(id);
     }
 }

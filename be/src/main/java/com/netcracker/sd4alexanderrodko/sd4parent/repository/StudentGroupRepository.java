@@ -15,16 +15,16 @@ import java.util.Optional;
 public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long> {
 
 
-    @Query(value = "SELECT new StudentGroup (id,course,description) FROM StudentGroup")
+    @Query(value = "FROM StudentGroup ")
     Iterable<StudentGroup> getDescription();
 
-    @Query(value = "SELECT new StudentGroup (id,course,description,students) FROM StudentGroup where id=:groupId")
-    Optional<StudentGroup> getGroupWithStudentsById(@Param("groupId") long groupId);
+    @Query(value = "FROM StudentGroup WHERE id = :number")
+    Optional<StudentGroup> getGroupWithStudentsById(@Param("number") long id);
 
-    @Query(value = "SELECT sg.lessons from StudentGroup sg where sg.id = :groupId")
-    Iterable<Lesson> getLessonsByGroupId(@Param("groupId") long groupId);
+    @Query(value = "SELECT sg.lessons from StudentGroup sg  where sg.id = :number")
+    Iterable<Lesson> getLessonsByGroupId(@Param("number") long id);
 
 
-    @Query(value = "SELECT sg.students from StudentGroup sg where sg.id = :groupId")
-    Iterable<User> getStudentsByGroupId(@Param("groupId") long groupId);
+    @Query(value = "SELECT sg.users from StudentGroup  sg where sg.id = :number")
+    Iterable<User> getStudentsByGroupId(@Param("number") long id);
 }

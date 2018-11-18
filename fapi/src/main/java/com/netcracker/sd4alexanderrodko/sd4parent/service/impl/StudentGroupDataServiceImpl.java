@@ -26,9 +26,9 @@ public class StudentGroupDataServiceImpl implements StudentGroupDataService {
     }
 
     @Override
-    public void deleteStudentGroup(Long id) {
+    public void deleteStudentGroup(Long number) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + groupsServerUrl + "/" + id);
+        restTemplate.delete(backendServerUrl + groupsServerUrl + "/" + number);
     }
 
     @Override

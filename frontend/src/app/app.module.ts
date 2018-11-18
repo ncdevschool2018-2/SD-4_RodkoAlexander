@@ -6,6 +6,11 @@ import {Router} from "./router";
 import {ConnectModule} from "./connect/connect.module";
 import {ModifyModule} from "./modify/modify.module";
 import {UserInterfaceModule} from "./user-interface/user-interface.module";
+import {TabModule} from "angular-tabs-component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CalendarModule, DateAdapter} from "angular-calendar";
+import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
+import {ScheduleModule} from "./schedule/schedule.module";
 
 @NgModule({
   declarations: [
@@ -17,6 +22,13 @@ import {UserInterfaceModule} from "./user-interface/user-interface.module";
     BrowserModule,
     ConnectModule,
     ModifyModule,
+    ScheduleModule,
+    TabModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   entryComponents: [],
   providers: [],

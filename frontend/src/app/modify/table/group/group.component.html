@@ -13,11 +13,12 @@
         </thead>
         <tbody>
         <tr *ngFor="let group of groups">
-          <td scope="row">{{group.number}}</td>
+          <td scope="row">{{group.id}}</td>
           <td>{{group.course}}</td>
           <td type="password">{{group.description}}</td>
-          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteGroup(group.number)">Delete</button>
-            <button type="button" class="btn btn-secondary" (click)="_openModal(template, group)">Edit</button></div></td>
+          <td><div class="button-bar"><button type="button" class="btn btn-danger" (click)="_deleteGroup(group.id)">Delete</button>
+            <button type="button" class="btn btn-secondary" (click)="_openModal(template, group)">Edit</button>
+          <button type="button" class="btn btn-success" (click)="_students(users,group.id)">Students</button></div></td>
         </tr>
 
         </tbody>
@@ -77,6 +78,36 @@
             [disabled]="course.invalid || description.invalid">{{editMode ? "Save": "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
+
+  </div>
+</ng-template>
+
+<ng-template #users>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Students</h4>
+    <button type="button" class="close pull-right"
+            aria-label="Close" (click)="_closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <table class="table align-self-center table-sm table-bordered table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col" style="width: 15%">Id</th>
+      <th scope="col" style="width: 20%">First name</th>
+      <th scope="col" style="width: 20%">Last name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let student of groupStudents">
+      <td>{{student.id}}</td>
+      <td>{{student.firstName}}</td>
+      <td>{{student.lastName}}</td>
+    </tr>
+
+    </tbody>
+  </table>
 
   </div>
 </ng-template>

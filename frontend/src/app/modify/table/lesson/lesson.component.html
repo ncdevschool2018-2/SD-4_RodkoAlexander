@@ -27,7 +27,9 @@
           <td>
             <div class="button-bar">
               <button type="button" class="btn btn-danger" (click)="_deleteLesson(lesson.id)">Delete</button>
+<!--
               <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button>
+-->
             </div>
           </td>
         </tr>
@@ -103,7 +105,7 @@
     </div>
     <div class="form-group">
       <ng-select [(ngModel)]="lessonToEdit.groups" multiple="true" [items]="groups" bindLabel="description">
-       <!-- <ng-option  *ngFor="let gr of groups">{{gr.number + '. ' + gr.description}}</ng-option>-->
+       <!-- <ng-option  *ngFor="let gr of groups">{{gr.id + '. ' + gr.description}}</ng-option>-->
       </ng-select>
     </div>
     <div class="form-group">

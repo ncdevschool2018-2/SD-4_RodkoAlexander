@@ -2,10 +2,10 @@ import {Component, OnInit, TemplateRef} from '@angular/core';
 import {Lesson} from "../../../model/lesson";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
-import {LessonService} from "../../../connect/lesson/lesson.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
-import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
+import {ScheduleService} from "../../../connect/schedule/schedule.service";
+import {GroupService} from "../../../connect/group/group.service";
 import {UserService} from "../../../connect/user/user.service";
 import {User} from "../../../model/user";
 
@@ -27,7 +27,7 @@ export class LessonComponent implements OnInit {
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
 
-  constructor(private lessonService: LessonService,
+  constructor(private scheduleService: ScheduleService,
               private groupService: GroupService,
               private userService: UserService,
               private loadingService: Ng4LoadingSpinnerService,
@@ -71,7 +71,7 @@ export class LessonComponent implements OnInit {
   }
 
   public _addLesson(): void {
-    this.subscriptions.push(this.lessonService.saveLesson(this.lessonToEdit).subscribe(() => {
+    this.subscriptions.push(this.scheduleService.saveLesson(this.lessonToEdit).subscribe(() => {
       this._updateLessons();
       this.refreshLessonToEdit();
       this._closeModal();
@@ -87,7 +87,7 @@ export class LessonComponent implements OnInit {
 
   public _deleteLesson(id: number): void {
     this.loadingService.show();
-    this.subscriptions.push(this.lessonService.deleteLesson(id).subscribe(() => {
+    this.subscriptions.push(this.scheduleService.deleteLesson(id).subscribe(() => {
       this._updateLessons();
     }));
   }
@@ -102,9 +102,8 @@ export class LessonComponent implements OnInit {
 
   private loadLessons(): void {
     this.loadingService.show();
-    this.subscriptions.push(this.lessonService.getLessons().subscribe(lessons => {
+    this.subscriptions.push(this.scheduleService.getLessons().subscribe(lessons => {
       this.lessons = lessons;
-      console.log(lessons);
       this.loadingService.hide();
     }));
   }
@@ -112,14 +111,16 @@ export class LessonComponent implements OnInit {
 
   private loadGroups() {
     this.loadingService.show();
-    this.subscriptions.push(this.groupService.getDescriptions().subscribe(gr => {
+    this.subscriptions.push(this.groupService.getGroups().subscribe(gr => {
       this.groups = gr;
       this.loadingService.hide();
     }));
   }
+
   private loadTeachers() {
     this.loadingService.show();
     this.subscriptions.push(this.userService.getTeachers().subscribe(teachers => {
+      console.log(this.teachers);
       this.teachers = teachers;
       this.loadingService.hide();
     }));

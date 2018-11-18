@@ -2,11 +2,11 @@ import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
-import {AccountService} from "../../../connect/account/account.service";
+import {UserService} from "../../../connect/user/user.service";
 import {Account} from "../../../model/account";
 import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
-import {AccountToStudentPipe} from "../../account-to-student.pipe";
+import {AccountToStudentPipe} from "../../pipe/account-to-student/account-to-student.pipe";
 
 @Component({
   selector: 'app-account',
@@ -16,9 +16,9 @@ import {AccountToStudentPipe} from "../../account-to-student.pipe";
 export class AccountComponent implements OnInit {
 
 
-  public editMode = false;
+  public editMode: boolean = false;
   public roleTypes: string[] = ["Teacher", "Student", "Administrator"];
-  public groupNumber: number;
+  public groupId: number;
   public groups: Group[];
   public accounts: Account[];
   public accountToEdit: Account = new Account();
@@ -26,7 +26,7 @@ export class AccountComponent implements OnInit {
   private subscriptions: Subscription[] = [];
 
 
-  constructor(private accountService: AccountService,
+  constructor(private accountService: UserService,
               private groupService: GroupService,
               private accountToStudentPipe: AccountToStudentPipe,
               private loadingService: Ng4LoadingSpinnerService,
@@ -44,7 +44,7 @@ export class AccountComponent implements OnInit {
     this.modalEditor.hide();
   }
 
-  public _openModal(template: TemplateRef<any>, account: Account): void {
+  public _openModal(template: TemplateRef<any>, account?: Account): void {
 
     if (account) {
       this.editMode = true;
@@ -61,7 +61,7 @@ export class AccountComponent implements OnInit {
     this.loadingService.show();
     if (this.accountToEdit.role == "Student") {
       this.subscriptions.push(this.accountService.saveStudent(
-        this.accountToStudentPipe.transform(this.accountToEdit,this.groupNumber)).subscribe(() => {
+        this.accountToStudentPipe.transform(this.accountToEdit, this.groupId)).subscribe(() => {
         this._updateAccounts();
         this.refreshAccountToEdit();
         this._closeModal();
@@ -106,7 +106,7 @@ export class AccountComponent implements OnInit {
 
   private loadGroups(): void {
     this.loadingService.show();
-    this.subscriptions.push(this.groupService.getDescriptions().subscribe(groups => {
+    this.subscriptions.push(this.groupService.getGroups().subscribe(groups => {
       this.groups = groups;
       this.loadingService.hide();
     }));

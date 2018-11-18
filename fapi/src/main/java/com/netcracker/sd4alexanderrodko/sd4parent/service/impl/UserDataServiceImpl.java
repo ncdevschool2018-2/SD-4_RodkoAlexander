@@ -18,8 +18,6 @@ public class UserDataServiceImpl implements UserDataService {
     private String backendServerUrl;
     @Value("${users.server.url}")
     private String usersServerUrl;
-    @Value("${students.addition.uri}")
-    private String studentsAdditionUri;
     @Value("${groups.server.url}")
     private String groupsServerUrl;
 
@@ -38,20 +36,20 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public AccountViewModel saveStudent(StudentViewModel studentViewModel) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + usersServerUrl + studentsAdditionUri, studentViewModel, AccountViewModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + usersServerUrl + "/students", studentViewModel, AccountViewModel.class).getBody();
     }
 
 
     @Override
     public void deleteStudent(long groupId, long studentId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + usersServerUrl + studentsAdditionUri+ "/" + groupId + "/" +studentId);
+        restTemplate.delete(backendServerUrl + usersServerUrl + "/students"+ "/" + groupId + "/" +studentId);
     }
 
     @Override
     public void deleteEmployer(long employerId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + usersServerUrl + studentsAdditionUri +"/" + employerId);
+        restTemplate.delete(backendServerUrl + usersServerUrl + "/users"+"/" + employerId);
     }
 
     @Override
@@ -62,9 +60,9 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public List<AccountViewModel> getTeachers() {
+    public List<UserViewModel> getTeachers() {
         RestTemplate restTemplate = new RestTemplate();
-        AccountViewModel[] teachers = restTemplate.getForObject(backendServerUrl + usersServerUrl  +"/teachers",AccountViewModel[].class);
+        UserViewModel[] teachers = restTemplate.getForObject(backendServerUrl + usersServerUrl  + "/teachers",UserViewModel[].class);
         return teachers == null ? Collections.emptyList() : Arrays.asList(teachers);
     }
 

@@ -21,11 +21,11 @@ public class StudentGroupController {
 
     @RequestMapping(value = "/{groupId}/students", method = RequestMethod.GET)
     public Iterable<User> getStudentsFromGroup(@PathVariable(name = "groupId") Long groupId) {
-        return studentGroupService.getStudentsByGroupId(groupId);
+        return studentGroupService.getStudentsById(groupId);
     }
     @RequestMapping(value = "/{groupId}/lessons", method = RequestMethod.GET)
     public Iterable<Lesson> getLessonByGroupId(@PathVariable(name = "groupId") Long groupId) {
-        return studentGroupService.getLessonsByGroupId(groupId);
+        return studentGroupService.getLessonsById(groupId);
     }
     @RequestMapping(value = "/descriptions", method = RequestMethod.GET)
     public Iterable<StudentGroup> getStudentGroupsDescriptions() {

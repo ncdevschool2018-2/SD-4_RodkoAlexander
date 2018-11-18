@@ -6,7 +6,5 @@ import java.util.List;
 
 public interface VisitDataService {
     List<VisitViewModel> getAll();
-    VisitViewModel getVisitById(Long id);
-    VisitViewModel saveVisit(VisitViewModel visitViewModel);
-    void deleteVisit(Long id);
+    VisitViewModel saveVisit(List<VisitViewModel> visits);
 }

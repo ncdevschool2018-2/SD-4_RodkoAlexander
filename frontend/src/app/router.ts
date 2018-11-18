@@ -1,8 +1,7 @@
 import {Routes} from "@angular/router";
 import {StartComponent} from "./user-interface/start/start.component";
-import {AccountComponent} from "./modify/table/account/account.component";
-import {GroupComponent} from "./modify/table/group/group.component";
-import {LessonComponent} from "./modify/table/lesson/lesson.component";
+import {ModifyComponent} from "./modify/modify/modify.component";
+import {ScheduleComponent} from "./schedule/schedule/schedule.component";
 
 const routes: Routes = [
   {
@@ -15,38 +14,29 @@ const routes: Routes = [
     component: StartComponent
   },
   {
-    path: 'accounts',
-    redirectTo: 'accounts',
+    path: 'modify',
+    redirectTo: 'modify',
     pathMatch: 'full',
   },
   {
-    path: 'accounts',
-    component: AccountComponent
+    path: 'modify',
+    component: ModifyComponent
   },
   {
-    path: 'groups',
-    redirectTo: 'groups',
+    path: 'schedule',
+    redirectTo: 'schedule',
     pathMatch: 'full',
   },
   {
-    path: 'groups',
-    component: GroupComponent
-  },
-  {
-    path: 'lessons',
-    redirectTo: 'lessons',
-    pathMatch: 'full',
-  },
-  {
-    path: 'lessons',
-    component: LessonComponent
+    path: 'schedule',
+    component: ScheduleComponent
   }
 ];
 
 
 export class Router {
 
-  static routes(): Routes{
+  static routes(): Routes {
     return routes;
   }
 }

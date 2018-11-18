@@ -27,20 +27,9 @@ public class VisitDataServiceImpl implements VisitDataService {
     }
 
     @Override
-    public VisitViewModel getVisitById(Long id) {
-        return null;
-    }
-
-    @Override
-    public VisitViewModel saveVisit(VisitViewModel visitViewModel) {
+    public VisitViewModel saveVisit(List<VisitViewModel> visits) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + studentsVisitsServerUrl, visitViewModel, VisitViewModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + studentsVisitsServerUrl, visits, VisitViewModel.class).getBody();
 
-    }
-
-    @Override
-    public void deleteVisit(Long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + studentsVisitsServerUrl + "/" + id);
     }
 }

@@ -20,7 +20,7 @@ public interface UserDataService {
 
     List<AccountViewModel> getEmployers();
 
-    List<AccountViewModel> getTeachers();
+    List<UserViewModel> getTeachers();
 
     List<UserViewModel> getStudentsFromGroup(long groupId);
 }

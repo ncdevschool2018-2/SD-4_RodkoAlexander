@@ -1,6 +1,5 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -22,11 +21,12 @@ public class Lesson {
     private User teacher;
     private Collection<StudentGroup> groups;
 
+    public Lesson() {
+    }
 
-    @JsonIgnore
+
     @ManyToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "lessons"
+            fetch = FetchType.LAZY
     )
     public Collection<StudentGroup> getGroups() {
         return groups;
@@ -98,25 +98,12 @@ public class Lesson {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Lesson lesson = (Lesson) o;
-        return id == lesson.id &&
-                Objects.equals(timeStart, lesson.timeStart) &&
-                Objects.equals(timeEnd, lesson.timeEnd) &&
-                Objects.equals(description, lesson.description) &&
-                Objects.equals(room, lesson.room) &&
-                Objects.equals(type, lesson.type);
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(id, timeStart, timeEnd, description, room, type);
     }
 
     @OneToOne
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id", insertable=false, updatable=false )
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     public User getTeacher() {
         return teacher;
     }
@@ -124,4 +111,5 @@ public class Lesson {
     public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
+
 }
