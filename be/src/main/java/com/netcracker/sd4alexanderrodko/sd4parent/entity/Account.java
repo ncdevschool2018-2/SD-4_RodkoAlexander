@@ -12,7 +12,7 @@ public class Account {
     private long id;
     private String email;
     private String password;
-    private String role;
+    private Role role;
     private User user;
 
     @Id
@@ -47,12 +47,13 @@ public class Account {
     }
 
     @Basic
-    @Column(name = "role", nullable = true, length = 256)
-    public String getRole() {
+    @OneToOne
+    @JoinColumn(name = "role",referencedColumnName = "id")
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -67,15 +68,4 @@ public class Account {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Account{");
-        sb.append("id=").append(id);
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", role='").append(role).append('\'');
-        sb.append(", user=").append(user);
-        sb.append('}');
-        return sb.toString();
-    }
 }

@@ -1,6 +1,9 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Account} from "../../model/account";
+import {Router} from "@angular/router";
+
+
 
 @Component({
   selector: 'header',
@@ -12,17 +15,18 @@ export class HeaderComponent implements OnInit {
 
   private modalEditor: BsModalRef;
   public accountToLogin: Account = new Account();
-  constructor(private modalService: BsModalService) {
+  constructor(private modalService: BsModalService,
+              private router: Router) {
   }
 
   ngOnInit() {
   }
 
-  public _closeModal(): void {
-    this.modalEditor.hide();
+  goToLogin() {
+    this.router.navigateByUrl('/login')
   }
 
-  public _openModal(template: TemplateRef<any>): void {
-    this.modalEditor = this.modalService.show(template);
+  loginStatus(): boolean {
+    return !!sessionStorage.getItem("Token");
   }
 }

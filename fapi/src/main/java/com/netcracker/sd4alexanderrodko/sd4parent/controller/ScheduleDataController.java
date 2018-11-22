@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/api/schedule")
 public class ScheduleDataController {
 
+    private final ScheduleDataService scheduleDataService;
+
     @Autowired
-    private ScheduleDataService scheduleDataService;
+    public ScheduleDataController(ScheduleDataService scheduleDataService) {
+        this.scheduleDataService = scheduleDataService;
+    }
 
     @RequestMapping
     public ResponseEntity<List<LessonViewModel>> getAllLessons() {

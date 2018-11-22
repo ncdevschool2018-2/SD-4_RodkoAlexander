@@ -17,4 +17,6 @@ public interface AccountService {
 
     Iterable<User> getTeachers();
 
+    Optional<Account> login(String email);
+
 }

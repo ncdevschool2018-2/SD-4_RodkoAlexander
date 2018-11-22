@@ -2,6 +2,7 @@ import {Routes} from "@angular/router";
 import {StartComponent} from "./user-interface/start/start.component";
 import {ModifyComponent} from "./modify/modify/modify.component";
 import {ScheduleComponent} from "./schedule/schedule/schedule.component";
+import {LoginComponent} from "./user-interface/login/login.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,15 @@ const routes: Routes = [
   {
     path: 'schedule',
     component: ScheduleComponent
+  },
+  {
+    path: 'login',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ];
 

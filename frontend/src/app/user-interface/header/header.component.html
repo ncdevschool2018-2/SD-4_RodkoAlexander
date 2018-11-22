@@ -4,55 +4,20 @@
     <img src="/src/assets/images/app_icons/android-icon-36x36.png" width="30" height="30"
          class="d-inline-block align-top" alt="">
   </a>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto" *ngIf="loginStatus()">
       <li class="nav-item active">
         <a class="nav-link" href="modify">Modify</a>
       </li>
-    </ul>
-    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="schedule">Schedule</a>
       </li>
     </ul>
     <div class="form-inline my-2 my-lg-0">
 
-      <button class="btn btn-info my-2 my-sm-0" (click)="_openModal(template)">Sign in
+      <button class="btn btn-info mr-auto" (click)="goToLogin()">Sign in
       </button>
 
     </div>
   </div>
 </nav>
-<ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Login</h4>
-    <button type="button" class="close pull-right"
-            aria-label="Close" (click)="_closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="form-group">
-      <label>Email</label>
-      <input class="form-control" name="email" [(ngModel)]="accountToLogin.email" #email="ngModel"
-             required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"/>
-      <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
-        Please set email
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-control" name="password" [(ngModel)]="accountToLogin.password"
-             #password="ngModel"
-             required/>
-      <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-        Password
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="_closeModal()"
-            [disabled]="email.invalid || password.invalid">Login
-    </button>
-  </div>
-</ng-template>

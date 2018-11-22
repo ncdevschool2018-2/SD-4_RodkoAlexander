@@ -2,6 +2,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
 import com.netcracker.sd4alexanderrodko.sd4parent.models.AccountViewModel;
+import com.netcracker.sd4alexanderrodko.sd4parent.models.RoleViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.models.StudentViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.models.UserViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.UserDataService;
@@ -14,8 +15,12 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserDataController {
 
+    private final UserDataService userDataService;
+
     @Autowired
-    private UserDataService userDataService;
+    public UserDataController(UserDataService userDataService) {
+        this.userDataService = userDataService;
+    }
 
     @RequestMapping("/{id}")
     public AccountViewModel getEmployerById(@PathVariable long id) {
@@ -46,6 +51,11 @@ public class UserDataController {
     @RequestMapping("/employers")
     public List<AccountViewModel> getEmployers() {
         return userDataService.getEmployers();
+    }
+
+    @RequestMapping("/roles")
+    public List<RoleViewModel> getRoles() {
+        return userDataService.getRoles();
     }
 
     @RequestMapping("/teachers")

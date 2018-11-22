@@ -29,7 +29,6 @@ public class LessonController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Lesson saveLesson(@RequestBody Lesson lesson) {
-        System.out.println(lesson.toString());
         return lessonService.saveLesson(lesson);
     }
 

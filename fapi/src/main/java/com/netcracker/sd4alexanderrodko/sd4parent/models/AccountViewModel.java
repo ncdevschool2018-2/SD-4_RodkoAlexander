@@ -5,7 +5,7 @@ public class AccountViewModel {
     private long id;
     private String email;
     private String password;
-    private String role;
+    private RoleViewModel role;
     private UserViewModel user;
 
     public AccountViewModel() {
@@ -43,11 +43,11 @@ public class AccountViewModel {
         this.user = user;
     }
 
-    public String getRole() {
+    public RoleViewModel getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(RoleViewModel role) {
         this.role = role;
     }
 

@@ -14,8 +14,13 @@ import java.util.List;
 @RequestMapping("/api/visits")
 public class VisitDataController {
 
+    private final VisitDataService visitDataService;
+
+
     @Autowired
-    private VisitDataService visitDataService;
+    public VisitDataController(VisitDataService visitDataService) {
+        this.visitDataService = visitDataService;
+    }
 
 
     @RequestMapping

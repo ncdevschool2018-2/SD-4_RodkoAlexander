@@ -15,10 +15,14 @@ import java.util.List;
 @RequestMapping("/api/groups")
 public class StudentGroupDataController {
 
+    private final StudentGroupDataService studentGroupDataService;
+    private final UserDataService userDataService;
+
     @Autowired
-    private StudentGroupDataService studentGroupDataService;
-    @Autowired
-    private UserDataService userDataService;
+    public StudentGroupDataController(StudentGroupDataService studentGroupDataService, UserDataService userDataService) {
+        this.studentGroupDataService = studentGroupDataService;
+        this.userDataService = userDataService;
+    }
 
     @RequestMapping
     public ResponseEntity<List<StudentGroupViewModel>> getGroupsWithDescriptions() {

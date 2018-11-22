@@ -1,15 +1,17 @@
 import {User} from "./user";
+import {Role} from "./role";
 
 export class Account {
 
   id: number;
   email: string;
   password: string;
-  role: string;
+  role: Role;
   user: User;
 
   constructor() {
     this.user = new User();
+    this.role = new Role();
   }
 
 

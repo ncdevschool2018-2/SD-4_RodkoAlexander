@@ -5,6 +5,7 @@ import {UserService} from "./user/user.service";
 import {ScheduleService} from "./schedule/schedule.service";
 import {GroupService} from "./group/group.service";
 import {VisitService} from "./visit/visit.service";
+import {AuthService} from "./auth/auth.service";
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import {VisitService} from "./visit/visit.service";
     HttpClientModule,
   ],
   declarations: [],
-  providers: [UserService, ScheduleService, GroupService, VisitService]
+  providers: [UserService, ScheduleService, GroupService, VisitService,AuthService]
 })
 export class ConnectModule {
 }

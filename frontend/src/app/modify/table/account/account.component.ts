@@ -7,6 +7,7 @@ import {Account} from "../../../model/account";
 import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
 import {AccountToStudentPipe} from "../../pipe/account-to-student/account-to-student.pipe";
+import {Role} from "../../../model/role";
 
 @Component({
   selector: 'app-account',
@@ -17,7 +18,7 @@ export class AccountComponent implements OnInit {
 
 
   public editMode: boolean = false;
-  public roleTypes: string[] = ["Teacher", "Student", "Administrator"];
+  public roleTypes: Role[];
   public groupId: number;
   public groups: Group[];
   public accounts: Account[];
@@ -37,6 +38,7 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.loadAccounts();
     this.loadGroups();
+    this.loadRoles();
   }
 
 
@@ -59,7 +61,7 @@ export class AccountComponent implements OnInit {
 
   public _addAccount(): void {
     this.loadingService.show();
-    if (this.accountToEdit.role == "Student") {
+    if (this.accountToEdit.role.name == "Student") {
       this.subscriptions.push(this.accountService.saveStudent(
         this.accountToStudentPipe.transform(this.accountToEdit, this.groupId)).subscribe(() => {
         this._updateAccounts();
@@ -108,6 +110,13 @@ export class AccountComponent implements OnInit {
     this.loadingService.show();
     this.subscriptions.push(this.groupService.getGroups().subscribe(groups => {
       this.groups = groups;
+      this.loadingService.hide();
+    }));
+  }
+  private loadRoles(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.accountService.getRoles().subscribe(roles => {
+      this.roleTypes = roles;
       this.loadingService.hide();
     }));
   }

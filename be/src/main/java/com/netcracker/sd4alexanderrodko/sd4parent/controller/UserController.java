@@ -1,11 +1,9 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
-import com.netcracker.sd4alexanderrodko.sd4parent.entity.Account;
-import com.netcracker.sd4alexanderrodko.sd4parent.entity.Student;
-import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
-import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
+import com.netcracker.sd4alexanderrodko.sd4parent.entity.*;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.AccountService;
+import com.netcracker.sd4alexanderrodko.sd4parent.service.RoleService;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +16,14 @@ import java.util.Optional;
 public class UserController {
 
     private AccountService accountService;
-
     private StudentGroupService groupService;
+    private RoleService roleService;
 
     @Autowired
-    public UserController(AccountService accountService, StudentGroupService groupService) {
+    public UserController(AccountService accountService, StudentGroupService groupService, RoleService roleService) {
         this.accountService = accountService;
         this.groupService = groupService;
+        this.roleService = roleService;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -51,6 +50,11 @@ public class UserController {
     @RequestMapping(value = "/employers", method = RequestMethod.GET)
     public Iterable<Account> getEmployers() {
         return accountService.getEmployers();
+    }
+
+    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    public Iterable<Role> getRoles() {
+        return roleService.findAll();
     }
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
