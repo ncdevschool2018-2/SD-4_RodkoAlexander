@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "accounts", schema = "backend", catalog = "")
+@Table(name = "accounts", schema = "backend")
 public class Account {
 
     private long id;
@@ -48,7 +48,7 @@ public class Account {
 
     @Basic
     @OneToOne
-    @JoinColumn(name = "role",referencedColumnName = "id")
+    @JoinColumn(name = "role", referencedColumnName = "id")
     public Role getRole() {
         return role;
     }

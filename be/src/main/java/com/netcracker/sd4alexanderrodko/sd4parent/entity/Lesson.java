@@ -1,8 +1,5 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -10,7 +7,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "lessons", schema = "backend", catalog = "")
+@Table(name = "lessons", schema = "backend")
 public class Lesson {
     private long id;
     private Timestamp timeStart;

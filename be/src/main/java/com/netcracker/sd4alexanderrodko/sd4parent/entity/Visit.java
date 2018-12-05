@@ -5,7 +5,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "visits", schema = "backend", catalog = "")
+@Table(name = "visits", schema = "backend")
 public class Visit {
     private long id;
     private Byte visit;

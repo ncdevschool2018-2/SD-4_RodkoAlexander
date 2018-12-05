@@ -6,14 +6,15 @@ import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
 import com.netcracker.sd4alexanderrodko.sd4parent.repository.AccountRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.repository.RoleRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.AccountService;
-import com.netcracker.sd4alexanderrodko.sd4parent.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
-public class AccountServiceImpl implements AccountService , RoleService {
+public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
     private RoleRepository roleRepository;
@@ -40,9 +41,10 @@ public class AccountServiceImpl implements AccountService , RoleService {
     }
 
     @Override
-    public Iterable<User> getTeachers() {
-        return accountRepository.getTeachers();
+    public List<User> getFindTeacherByLastName(String lastName) {
+        return accountRepository.getTeachersByLastName(lastName);
     }
+
 
     @Override
     public Optional<Account> login(String email) {
@@ -50,12 +52,34 @@ public class AccountServiceImpl implements AccountService , RoleService {
     }
 
     @Override
-    public Iterable<Account> getEmployers() {
-        return accountRepository.getEmployers();
+    public long count() {
+        return accountRepository.count();
+    }
+
+
+    @Override
+    public List<Account> getAllByPage(Pageable pageable) {
+        return accountRepository.findAll(pageable).getContent();
     }
 
     @Override
-    public Iterable<Role> findAll() {
+    public List<Account> getAll() {
+        return accountRepository.findAll();
+    }
+
+    @Override
+    public List<Account> findByLastName(String lastName) {
+        return accountRepository.findAccountsByUserLastName(lastName);
+    }
+
+    @Override
+    public List<Account> findByLastNameAndRole(String lastName, long roleId) {
+        return accountRepository.findAccountsByUserLastNameAndRole(lastName, roleId);
+    }
+
+    @Override
+    public Iterable<Role> getRoles() {
         return roleRepository.findAll();
     }
+
 }

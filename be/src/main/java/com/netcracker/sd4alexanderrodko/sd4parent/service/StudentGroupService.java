@@ -3,9 +3,10 @@ package com.netcracker.sd4alexanderrodko.sd4parent.service;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.Lesson;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.StudentGroup;
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.User;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -15,11 +16,19 @@ public interface StudentGroupService {
 
     void deleteStudentGroup(Long id);
 
-    Iterable<StudentGroup> getDescriptions();
+    List<StudentGroup> getDescriptionsPage(Pageable pageable);
 
-    Optional<StudentGroup> getGroupWithStudentsByid(long id);
+    List<StudentGroup> getDescriptions();
 
-    Iterable<Lesson> getLessonsById(long id);
+    Optional<StudentGroup> getGroupWithStudentsById(long id);
 
-    Iterable<User> getStudentsById(long id);
+    List<Lesson> getLessonsById(long id, Date dateFrom, Date dateTo);
+
+    List<User> getStudentsById(long id);
+
+    long count();
+
+    Iterable<StudentGroup> findById(Long number);
+
+    Iterable<StudentGroup> findByCourse(Integer course);
 }

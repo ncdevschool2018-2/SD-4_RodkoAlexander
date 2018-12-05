@@ -4,7 +4,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles", schema = "backend",catalog = "")
+@Table(name = "roles", schema = "backend")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

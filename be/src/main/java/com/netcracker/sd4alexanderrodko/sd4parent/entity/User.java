@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "users", schema = "backend", catalog = "")
+@Table(name = "users", schema = "backend")
 public class User {
     private long id;
     private String firstName;
@@ -54,7 +54,6 @@ public class User {
     public void setAccount(Account account) {
         this.account = account;
     }
-
 
 
 }

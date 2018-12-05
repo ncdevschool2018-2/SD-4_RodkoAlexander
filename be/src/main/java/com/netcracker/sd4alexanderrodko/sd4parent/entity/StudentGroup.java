@@ -1,6 +1,5 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -9,7 +8,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name = "student_groups", schema = "backend", catalog = "")
+@Table(name = "student_groups", schema = "backend")
 public class StudentGroup {
     private long id;
     private long course;
@@ -21,20 +20,14 @@ public class StudentGroup {
     }
 
     public StudentGroup(long id, long course, String description) {
+        super();
         this.id = id;
         this.course = course;
         this.description = description;
-    }
-
-    public StudentGroup(long id, long course, String description, Collection<User> users) {
-        this.id = id;
-        this.course = course;
-        this.description = description;
-        this.users = users;
     }
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "groups")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groups")
     public Collection<Lesson> getLessons() {
         return lessons;
     }
