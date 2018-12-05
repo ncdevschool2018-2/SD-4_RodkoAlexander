@@ -6,6 +6,7 @@ import com.netcracker.sd4alexanderrodko.sd4parent.models.UserViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupDataService;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +26,14 @@ public class StudentGroupDataController {
     }
 
     @RequestMapping
-    public ResponseEntity<List<StudentGroupViewModel>> getGroupsWithDescriptions() {
-        return ResponseEntity.ok(studentGroupDataService.getDescriptions());
+    public List<StudentGroupViewModel> getGroupsWithDescriptions(Integer page,Integer size,
+                                                                                 @RequestParam(required = false, value = "number") String number,
+                                                                 @RequestParam(required = false, value = "course") Integer course) {
+        if (number != null && !number.equals(""))
+            return studentGroupDataService.findByGroupNumber(number);
+        if (course != null)
+            return studentGroupDataService.findGroupsByCourse(course);
+        return studentGroupDataService.getDescriptions(page,size);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -47,5 +54,9 @@ public class StudentGroupDataController {
         return userDataService.getStudentsFromGroup(groupId);
     }
 
+    @RequestMapping("/count")
+    public Long getCount() {
+        return studentGroupDataService.count();
+    }
 
 }

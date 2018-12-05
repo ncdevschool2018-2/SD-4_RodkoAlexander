@@ -10,22 +10,27 @@ import java.util.List;
 
 public interface UserDataService extends UserDetailsService {
 
-    AccountViewModel getEmployerById(Long id);
-
     AccountViewModel saveEmployer(AccountViewModel employer);
 
     AccountViewModel saveStudent(StudentViewModel student);
+
+    AccountViewModel transferStudent(Long oldGroup, Long newGroup, Long id);
 
     void deleteStudent(long groupId, long studentId);
 
     void deleteEmployer(long employerId);
 
-    List<AccountViewModel> getEmployers();
+    List<AccountViewModel> getAll(Integer page, Integer size);
 
-    List<UserViewModel> getTeachers();
+    List<AccountViewModel> getAllByLastName(String lastName);
+
+    List<AccountViewModel> getAllByLastNameAndRole(String lastName, String roleId);
+
+    List<UserViewModel> getTeachersByLastName(String lastName);
 
     List<UserViewModel> getStudentsFromGroup(long groupId);
 
     List<RoleViewModel> getRoles();
 
+    Long count();
 }

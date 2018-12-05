@@ -23,13 +23,15 @@ public class VisitDataController {
     }
 
 
-    @RequestMapping
-    List<VisitViewModel> getAll() {
-        return visitDataService.getAll();
+    @RequestMapping(method = RequestMethod.GET)
+    public Iterable<VisitViewModel> getVisitsForLessonByGroupId(Long groupId, Long lessonId) {
+        return visitDataService.getAll(groupId, lessonId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    VisitViewModel saveVisit(List<VisitViewModel> visits) {
+    List<VisitViewModel> saveVisits(List<VisitViewModel> visits) {
         return visitDataService.saveVisit(visits);
     }
+
+
 }

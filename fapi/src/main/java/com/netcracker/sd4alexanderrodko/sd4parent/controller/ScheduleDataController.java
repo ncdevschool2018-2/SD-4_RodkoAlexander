@@ -21,17 +21,21 @@ public class ScheduleDataController {
     }
 
     @RequestMapping
-    public ResponseEntity<List<LessonViewModel>> getAllLessons() {
-        return ResponseEntity.ok(scheduleDataService.getAll());
+    public List<LessonViewModel> getAllLessons(int page, int size) {
+        return scheduleDataService.getAll(page, size);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<LessonViewModel> saveLesson(@RequestBody LessonViewModel lessonViewModel) {
-        System.out.println(lessonViewModel);
         if (lessonViewModel != null) {
             return ResponseEntity.ok(scheduleDataService.saveLesson(lessonViewModel));
         }
         return null;
+    }
+
+    @RequestMapping("/count")
+    public Long getCount() {
+        return scheduleDataService.count();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -39,13 +43,13 @@ public class ScheduleDataController {
         scheduleDataService.deleteLesson(Long.valueOf(id));
     }
 
-    @RequestMapping(value = "/teacher/{teacherId}")
-    public ResponseEntity<List<LessonViewModel>> getLessonsByTeacherId(@PathVariable long teacherId) {
-        return ResponseEntity.ok(scheduleDataService.getLessonsByTeacherId(teacherId));
+    @RequestMapping(value = "/teacher/{teacherId}", method = RequestMethod.GET)
+    public ResponseEntity<List<LessonViewModel>> getLessonsByTeacherId(@PathVariable long teacherId, String dateFrom, String dateTo) {
+        return ResponseEntity.ok(scheduleDataService.getLessonsByTeacherId(teacherId, dateFrom, dateTo));
     }
 
-    @RequestMapping(value = "/group/{groupId}")
-    public ResponseEntity<List<LessonViewModel>> getLessonsByGroupId(@PathVariable long groupId) {
-        return ResponseEntity.ok(scheduleDataService.getLessonsByGroupId(groupId));
+    @RequestMapping(value = "/group/{groupId}", method = RequestMethod.GET)
+    public ResponseEntity<List<LessonViewModel>> getLessonsByGroupId(@PathVariable long groupId, String dateFrom, String dateTo) {
+        return ResponseEntity.ok(scheduleDataService.getLessonsByGroupId(groupId, dateFrom, dateTo));
     }
 }

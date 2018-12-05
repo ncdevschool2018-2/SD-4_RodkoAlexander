@@ -1,10 +1,13 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.security.jwt;
 
 import com.netcracker.sd4alexanderrodko.sd4parent.models.AccountViewModel;
+import com.netcracker.sd4alexanderrodko.sd4parent.service.UserDataService;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,12 +25,18 @@ public class JwtProvider {
     @Value("${app.expiration}")
     private int expiration;
 
+
+    @Autowired
+    private UserDataService userDetailsService;
+
     public String generate(AccountViewModel user) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
 
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(userDetails.getUsername())
+                .addClaims(roleClaim(userDetails.getAuthorities().toArray()[0].toString()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + expiration * 10))
+                .setExpiration(new Date((new Date()).getTime() + expiration * 30))
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
@@ -61,6 +70,13 @@ public class JwtProvider {
     public String getEmailFromJwtToken(String token) {
         return Jwts.parser()
                 .setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+    }
+
+
+    private Map<String,Object> roleClaim(String role){
+        Map<String,Object> claims = new HashMap<>();
+        claims.put("Role",role);
+        return claims;
     }
 
 
