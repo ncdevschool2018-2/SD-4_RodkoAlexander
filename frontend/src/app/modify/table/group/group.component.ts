@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
@@ -12,7 +12,7 @@ import {UserService} from "../../../connect/user/user.service";
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.css']
 })
-export class GroupComponent implements OnInit {
+export class GroupComponent implements OnInit,OnDestroy {
 
   public editMode = false;
 
@@ -21,6 +21,12 @@ export class GroupComponent implements OnInit {
   public groupStudents: User[];
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
+  totalElements = 100;
+  pageNumber: number = 1;
+  elementsToView: number = 25;
+  searchParam: string = '';
+  searchValue: string = '';
+  findParams: string[] = ['course', 'number'];
 
 
   constructor(private groupService: GroupService,
@@ -31,7 +37,8 @@ export class GroupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadGroups();
+    this._loadPage();
+    this._updateNumberOfEntries();
   }
 
 
@@ -45,7 +52,7 @@ export class GroupComponent implements OnInit {
       this.editMode = true;
       this.groupToEdit = Group.clone(group);
     } else {
-      this.refreshGroupToEdit();
+      this._refreshGroupToEdit();
       this.editMode = false;
     }
 
@@ -56,7 +63,8 @@ export class GroupComponent implements OnInit {
     this.loadingService.show();
     this.subscriptions.push(this.groupService.saveGroup(this.groupToEdit).subscribe(() => {
       this._updateGroups();
-      this.refreshGroupToEdit();
+      this._updateNumberOfEntries();
+      this._refreshGroupToEdit();
       this._closeModal();
       this.loadingService.hide();
 
@@ -64,13 +72,15 @@ export class GroupComponent implements OnInit {
   }
 
   public _updateGroups(): void {
-    this.loadGroups();
+    this._loadPage();
   }
 
   public _deleteGroup(id: number): void {
     this.loadingService.show();
     this.subscriptions.push(this.groupService.deleteGroup(id).subscribe(() => {
       this._updateGroups();
+      this._updateNumberOfEntries();
+      this.loadingService.hide();
     }));
   }
 
@@ -78,29 +88,44 @@ export class GroupComponent implements OnInit {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  private refreshGroupToEdit(): void {
+  private _refreshGroupToEdit(): void {
     this.groupToEdit = new Group();
   }
 
-  private loadGroups(): void {
-    this.loadingService.show();
-    this.subscriptions.push(this.groupService.getGroups().subscribe(groups => {
-      this.groups = groups;
-      this.loadingService.hide();
-    }));
-  }
-
-  private loadStudentsFromGroup(groupId: number): void {
+  private _loadStudentsFromGroup(groupId: number): void {
     this.loadingService.show();
     this.subscriptions.push(this.userService.getStudentsFromGroup(groupId).subscribe(students => {
-      console.log(this.groupStudents);
       this.groupStudents = students;
       this.loadingService.hide();
     }));
   }
 
+  private _loadPage(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.groupService.getGroups(this.pageNumber - 1,this.elementsToView).subscribe(groups => {
+      this.groups = groups;
+      this.loadingService.hide();
+    }));
+  }
+
   public _students(template: TemplateRef<any>,groupId :number): void {
-    this.loadStudentsFromGroup(groupId);
+    this._loadStudentsFromGroup(groupId);
     this.modalEditor = this.modalService.show(template);
+  }
+
+  private _updateNumberOfEntries(): void {
+    this.subscriptions.push(this.groupService.count().subscribe(numberOfEntries => {
+      this.totalElements = numberOfEntries;
+    }));
+  }
+
+  _search() {
+    this.loadingService.show();
+    this.subscriptions.push(
+      this.groupService.getGroupsByParam(this.searchParam, +this.searchValue).subscribe(groups => {
+          this.groups = groups;
+          this.loadingService.hide();
+        }));
+
   }
 }

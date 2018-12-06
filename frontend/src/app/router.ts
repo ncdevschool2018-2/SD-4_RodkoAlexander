@@ -3,6 +3,8 @@ import {StartComponent} from "./user-interface/start/start.component";
 import {ModifyComponent} from "./modify/modify/modify.component";
 import {ScheduleComponent} from "./schedule/schedule/schedule.component";
 import {LoginComponent} from "./user-interface/login/login.component";
+import {AdminGuardService} from "./util/admin-guard.service";
+import {LoginGuardService} from "./util/login-guard.service";
 
 const routes: Routes = [
   {
@@ -17,10 +19,11 @@ const routes: Routes = [
   {
     path: 'modify',
     redirectTo: 'modify',
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: 'modify',
+    canActivate: [AdminGuardService],
     component: ModifyComponent
   },
   {
@@ -35,6 +38,16 @@ const routes: Routes = [
   {
     path: 'login',
     redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    canActivate: [LoginGuardService],
+    component: LoginComponent
+  },
+  {
+    path: '*',
+    redirectTo: '*',
     pathMatch: 'full',
   },
   {

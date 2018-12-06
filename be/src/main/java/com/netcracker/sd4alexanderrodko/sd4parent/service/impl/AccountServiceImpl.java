@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> getEmployerById(Long id) {
+    public Optional<Account> getById(Long id) {
         return accountRepository.findById(id);
     }
 

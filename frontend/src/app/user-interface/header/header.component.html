@@ -1,23 +1,28 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-h">
 
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand">
     <img src="/src/assets/images/app_icons/android-icon-36x36.png" width="30" height="30"
          class="d-inline-block align-top" alt="">
   </a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto" *ngIf="loginStatus()">
       <li class="nav-item active">
-        <a class="nav-link" href="modify">Modify</a>
+        <a class="nav-link" href="modify" *ngIf="isAdmin()">Modify</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="schedule">Schedule</a>
       </li>
     </ul>
-    <div class="form-inline my-2 my-lg-0">
-
-      <button class="btn btn-info mr-auto" (click)="goToLogin()">Sign in
+    <div class="form-inline my-2 my-lg-0" *ngIf="loginStatus()">
+      <button class="btn btn-danger mr-auto" (click)="signOut()">
+        Sign out
       </button>
+    </div>
+    <div class="form-inline my-2 my-lg-0" *ngIf="!loginStatus()">>
 
+      <button class="btn btn-info mr-auto" (click)="goToLogin()">
+        Sign in
+      </button>
     </div>
   </div>
 </nav>

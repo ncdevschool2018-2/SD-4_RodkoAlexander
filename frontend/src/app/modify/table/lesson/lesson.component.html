@@ -1,67 +1,84 @@
 <ng4-loading-spinner></ng4-loading-spinner>
 <div class="container mt-lg-5">
+
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <input class="form-control" [(ngModel)]="searchId"/>
+    </div>
+    <div class="col">
+      <button type="button" [disabled]="!selectedType || !searchId?.length " class="btn btn-primary" (click)="_search();">
+        <fa name="search"></fa>
+      </button>
+    </div>
+    <div class="col">
+      <ng-select [items]="scheduleTypes" [(ngModel)]="selectedType"></ng-select>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary" (click)="_changeWeek(-1)">Previous week</button>
+      <button type="button" class="btn btn-secondary" (click)="_searchNow()">Now</button>
+      <button type="button" class="btn btn-secondary" (click)="_changeWeek(1)">Next week</button>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+              (click)="_openModal(template,lessonToEdit)">
+        <fa name="plus-circle"></fa>
+      </button>
+    </div>
+  </div>
+
+  <p></p>
+
   <div class="row">
     <div class="col">
-      <table class="table align-self-center table-bordered table-hover table-sm">
+      <table class="table table-sm table-hover table-responsive-sm">
         <thead class="thead-dark">
         <tr>
-          <th scope="col" style="width: 5%">Id</th>
-          <th scope="col" style="width: 5%">TimeStart</th>
-          <th scope="col" style="width: 10%">TimeEnd</th>
+          <th scope="col" style="width: 5%">#</th>
+          <th scope="col" style="width: 15%">TimeStart</th>
+          <th scope="col" style="width: 15%">TimeEnd</th>
           <th scope="col" style="width: 5%">Type</th>
           <th scope="col" style="width: 5%">Room</th>
-          <th scope="col" style="width: 5%">Description</th>
-          <th scope="col" style="width: 20%">Teacher</th>
+          <th scope="col" style="width: 10%">Description</th>
+          <th scope="col" style="width: 10%">Teacher</th>
           <th scope="col" style="width: 10%">Modify</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let lesson of lessons">
           <td scope="row">{{lesson.id}}</td>
-          <td>{{lesson.timeStart}}</td>
-          <td>{{lesson.timeEnd}}</td>
+          <td>{{lesson.timeStart | date:'medium'}}</td>
+          <td>{{lesson.timeEnd | date:'medium'}}</td>
           <td>{{lesson.type}}</td>
           <td>{{lesson.room}}</td>
           <td>{{lesson.description}}</td>
           <td>{{lesson.teacher.lastName + " " + lesson.teacher.firstName}}</td>
           <td>
             <div class="button-bar">
-              <button type="button" class="btn btn-danger" (click)="_deleteLesson(lesson.id)">Delete</button>
-<!--
-              <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">Edit</button>
--->
+              <button type="button" class="btn btn-danger" (click)="_deleteLesson(lesson.id)">
+                <fa name="trash"></fa>
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="_openModal(template, lesson)">
+                <fa name="edit"></fa>
+              </button>
             </div>
           </td>
         </tr>
 
         </tbody>
       </table>
-
-      <div>
-        <p>Lessons count: {{lessons ? lessons.length : 0}}</p>
-      </div>
-
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-dark" (click)="_updateLessons()">Update</button>
-
-    </div>
-    <div class="col">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-              (click)="_openModal(template,lessonToEdit)">
-        Create new lesson
-      </button>
-    </div>
-  </div>
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="totalElements" [(page)]="pageNumber"
+                  [maxSize]="5"
+                  [pageSize]="elementsToView"
+                  [boundaryLinks]="true" [rotate]="true" [ellipses]="false" (pageChange)="loadPage()"></ngb-pagination>
 
 </div>
 
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}} new Lesson</h4>
+    <h4 class="modal-title pull-left">{{editMode ? "Edit" : "Create"}} new Lesson</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -71,7 +88,7 @@
     <div class="form-group">
       <label>Room</label>
       <input class="form-control control-box" name="room" [(ngModel)]="lessonToEdit.room" #room="ngModel"
-             required/>
+             required pattern="[0-9]*"/>
       <div [hidden]="room.valid || room.untouched" class="alert alert-danger">
         Room
       </div>
@@ -82,43 +99,81 @@
              #description="ngModel"
              required/>
       <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
-        Room
+        Description
       </div>
     </div>
     <div class="form-group">
       <label>Teacher</label>
-      <ng-select [(ngModel)]="lessonToEdit.teacher">
-        <ng-option *ngFor="let tch of teachers" [value]="tch" >{{tch.firstName + ' ' + tch.lastName}}</ng-option>
+      <ng-select [(ngModel)]="lessonToEdit.teacher"  bindLabel="id"
+                 [items]="teachers" (search)="_elasticSearchTeacher($event)" required>
+
+        <ng-option *ngFor="let car of teachers"
+                   [value]="car"  >{{car.firstName + ' ' +car.lastName }}</ng-option>
+        <!--<ng-template ng-label-tmp let-item="item" let-unselect="unselect">
+          {{item}}
+        </ng-template>
+        <ng-template ng-optgroup-tmp let-item="item" let-index="index">
+          {{item}}
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          <div [ngOptionHighlight]="search">   {{item}}</div>
+        </ng-template>-->
       </ng-select>
+      <!--<div [hidden]="teacher.untouched || teacher.valid" class="alert alert-danger">
+        Please set teacher
+      </div>-->
     </div>
     <div class="form-group">
       <label>Starts</label>
-      <input class="form-control control-box" [(ngModel)]="lessonToEdit.timeStart"
-             [owlDateTimeTrigger]="start" [owlDateTime]="start">
-      <owl-date-time pickerMode="modal" #start></owl-date-time>
+      <input class="form-control control-box" [(ngModel)]="lessonToEdit.timeStart" [min]="now"
+             [owlDateTimeTrigger]="start" (dateTimeChange)="lessonToEdit.timeEnd = lessonToEdit.timeStart"
+             [owlDateTime]="start" required>
+      <owl-date-time pickerMode="popup" #start></owl-date-time>
     </div>
     <div class="form-group">
-      <label>Ends</label>
-      <input class="form-control control-box"  [(ngModel)]="lessonToEdit.timeEnd"
-             [owlDateTimeTrigger]="end" [owlDateTime]="end">
-      <owl-date-time pickerMode="modal" #end></owl-date-time>
+      <label>End</label>
+      <input class="form-control control-box" [(ngModel)]="lessonToEdit.timeEnd"
+             [owlDateTimeTrigger]="end" [owlDateTime]="end"
+             name="end" #end="ngModel" required>
+      <owl-date-time [pickerType]="'timer'" #end></owl-date-time>
+      <div *ngIf="lessonToEdit.timeEnd < lessonToEdit.timeStart" class="alert alert-danger" role="alert">
+        Time end less than start
+      </div>
+      <div *ngIf="lessonToEdit.timeEnd.valueOf() - lessonToEdit.timeStart.valueOf() < 2700000"
+           class="alert alert-danger"
+           role="alert">
+        At least one academic hour
+      </div>
     </div>
     <div class="form-group">
-      <ng-select [(ngModel)]="lessonToEdit.groups" multiple="true" [items]="groups" bindLabel="description">
-       <!-- <ng-option  *ngFor="let gr of groups">{{gr.id + '. ' + gr.description}}</ng-option>-->
+      <label>Groups</label>
+      <ng-select [(ngModel)]="lessonToEdit.groups" multiple="true"  name="grs" #grs="ngModel"
+                 [items]="groups" (search)="_elasticSearchGroups($event)" bindLabel="id"
+                 required>
+        <ng-option *ngFor="let car of groups"
+                   [value]="car"  >{{car.id + ' ' +car.description }}</ng-option>
       </ng-select>
+      <div [hidden]="grs.untouched || grs.valid" class="alert alert-danger">
+        Please set groups
+      </div>
     </div>
     <div class="form-group">
       <label>Type</label>
-      <ng-select [(ngModel)]="lessonToEdit.type">
-        <ng-option *ngFor="let type of lessonTypes" [value]="type" >{{type}}</ng-option>
+      <ng-select [(ngModel)]="lessonToEdit.type" name="type" #type="ngModel" required>
+        <ng-option *ngFor="let type of lessonTypes" [value]="type">{{type}}</ng-option>
       </ng-select>
+      <div [hidden]="type.untouched || type.valid" class="alert alert-danger">
+        Please set type
+      </div>
     </div>
 
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="_addLesson()"
-            [disabled]="description.invalid">{{editMode ? "Save": "Create"}}
+            [disabled]="room.invalid
+            || description.invalid
+            || grs.invalid
+            || type.invalid ">{{editMode ? "Save" : "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
 

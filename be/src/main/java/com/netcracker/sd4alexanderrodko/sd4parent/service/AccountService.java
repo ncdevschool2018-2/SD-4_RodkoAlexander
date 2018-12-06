@@ -12,7 +12,7 @@ public interface AccountService {
 
     Account saveEmployer(Account employer);
 
-    Optional<Account> getEmployerById(Long id);
+    Optional<Account> getById(Long id);
 
     void deleteEmployer(Long id);
 

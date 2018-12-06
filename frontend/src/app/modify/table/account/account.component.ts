@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Subscription} from "rxjs";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
@@ -6,15 +6,15 @@ import {UserService} from "../../../connect/user/user.service";
 import {Account} from "../../../model/account";
 import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
-import {AccountToStudentPipe} from "../../pipe/account-to-student/account-to-student.pipe";
 import {Role} from "../../../model/role";
+import {AccountToStudentPipe} from "../../../util/pipe/account-to-student/account-to-student.pipe";
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit,OnDestroy {
 
 
   public editMode: boolean = false;
@@ -25,6 +25,11 @@ export class AccountComponent implements OnInit {
   public accountToEdit: Account = new Account();
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
+  public roleId: number;
+  totalElements = 0;
+  pageNumber: number = 1;
+  elementsToView: number = 25;
+  lastNameSearchParam: string = "";
 
 
   constructor(private accountService: UserService,
@@ -36,9 +41,9 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAccounts();
-    this.loadGroups();
-    this.loadRoles();
+    this._loadPage();
+    this._updateNumberOfEntries();
+    this._loadRoles();
   }
 
 
@@ -52,41 +57,47 @@ export class AccountComponent implements OnInit {
       this.editMode = true;
       this.accountToEdit = Account.clone(account);
     } else {
-      this.refreshAccountToEdit();
+      this._refreshAccountToEdit();
       this.editMode = false;
     }
 
     this.modalEditor = this.modalService.show(template);
   }
 
+
+  public _addStudent(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.accountService.saveStudent(
+      this.accountToStudentPipe.transform(this.accountToEdit, this.groupId)).subscribe(() => {
+      this._updateAccounts();
+      this._updateNumberOfEntries();
+      this._refreshAccountToEdit();
+      this._closeModal();
+      this.loadingService.hide();
+    }));
+  }
+
   public _addAccount(): void {
     this.loadingService.show();
-    if (this.accountToEdit.role.name == "Student") {
-      this.subscriptions.push(this.accountService.saveStudent(
-        this.accountToStudentPipe.transform(this.accountToEdit, this.groupId)).subscribe(() => {
-        this._updateAccounts();
-        this.refreshAccountToEdit();
-        this._closeModal();
-        this.loadingService.hide();
-      }));
-    } else {
-      this.subscriptions.push(this.accountService.saveAccount(this.accountToEdit).subscribe(() => {
-        this._updateAccounts();
-        this.refreshAccountToEdit();
-        this._closeModal();
-        this.loadingService.hide();
-      }));
-    }
+    this.subscriptions.push(this.accountService.saveAccount(this.accountToEdit).subscribe(() => {
+      this._updateAccounts();
+      this._updateNumberOfEntries();
+      this._refreshAccountToEdit();
+      this._closeModal();
+      this.loadingService.hide();
+    }));
+
   }
 
   public _updateAccounts(): void {
-    this.loadAccounts();
+    this._loadPage();
   }
 
   public _deleteAccount(id: number): void {
     this.loadingService.show();
     this.subscriptions.push(this.accountService.deleteAccount(id).subscribe(() => {
       this._updateAccounts();
+      this._updateNumberOfEntries();
     }));
   }
 
@@ -94,30 +105,56 @@ export class AccountComponent implements OnInit {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  private refreshAccountToEdit(): void {
+  private _refreshAccountToEdit(): void {
     this.accountToEdit = new Account();
   }
 
-  private loadAccounts(): void {
+
+  private _loadPage(): void {
     this.loadingService.show();
-    this.subscriptions.push(this.accountService.getAccounts().subscribe(accounts => {
+    this.subscriptions.push(this.accountService.getAll(this.pageNumber - 1, this.elementsToView).subscribe(accounts => {
       this.accounts = accounts;
       this.loadingService.hide();
     }));
   }
 
-  private loadGroups(): void {
-    this.loadingService.show();
-    this.subscriptions.push(this.groupService.getGroups().subscribe(groups => {
-      this.groups = groups;
-      this.loadingService.hide();
+  private _updateNumberOfEntries(): void {
+    this.subscriptions.push(this.accountService.count().subscribe(numberOfEntries => {
+      this.totalElements = numberOfEntries;
     }));
   }
-  private loadRoles(): void {
+
+  private _loadRoles(): void {
     this.loadingService.show();
     this.subscriptions.push(this.accountService.getRoles().subscribe(roles => {
       this.roleTypes = roles;
       this.loadingService.hide();
     }));
+  }
+
+  _search() {
+    this.loadingService.show();
+    this.subscriptions.push(
+      this.roleId ? this.accountService.findByLastNameAndRole(this.lastNameSearchParam, this.roleId).subscribe(accounts => {
+          this.accounts = accounts;
+          this.loadingService.hide();
+        }) :
+        this.accountService.findByLastName(this.lastNameSearchParam).subscribe(accounts => {
+          this.accounts = accounts;
+          this.loadingService.hide();
+        }));
+
+  }
+
+  ifStudent(role: Role): boolean {
+    return role && role.name == 'Student';
+  }
+
+  _elasticSearchGroups(event) {
+    if ((event + '').match('[0-9]+')) {
+      this.subscriptions.push(this.groupService.getGroupsByParam('number', event).subscribe(groups => {
+        this.groups = groups;
+      }));
+    }
   }
 }

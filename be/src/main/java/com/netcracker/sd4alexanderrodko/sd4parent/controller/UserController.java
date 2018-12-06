@@ -2,6 +2,7 @@ package com.netcracker.sd4alexanderrodko.sd4parent.controller;
 
 
 import com.netcracker.sd4alexanderrodko.sd4parent.entity.*;
+import com.netcracker.sd4alexanderrodko.sd4parent.repository.LessonRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.AccountService;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +18,32 @@ import java.util.Optional;
 public class UserController {
     private AccountService accountService;
     private StudentGroupService groupService;
+    private LessonRepository lessonRepository;
 
     @Autowired
-    public UserController(AccountService accountService, StudentGroupService groupService) {
+    public UserController(AccountService accountService, StudentGroupService groupService, LessonRepository lessonRepository) {
         this.accountService = accountService;
         this.groupService = groupService;
+        this.lessonRepository = lessonRepository;
     }
+
+
 
     @RequestMapping(method = RequestMethod.POST)
     public Account saveEmployer(@RequestBody Account employer) {
         return accountService.saveEmployer(employer);
     }
 
+
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteEmployerById(@PathVariable(name = "id") Long id) {
+        Optional<Account> user = accountService.getById(id);
+        if (user.isPresent()){
+            if (user.get().getRole().getId() == 2){
+                lessonRepository.deleteTeachersLessons(id);
+            }
+        }
         accountService.deleteEmployer(id);
         return ResponseEntity.noContent().build();
     }
@@ -60,24 +73,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public ResponseEntity transferStudent(@RequestParam(value = "old")Long oldGroup,
-                                          @RequestParam(value = "new")Long newGroup,
-                                          @RequestParam(value = "id")Long id) {
-        Optional<StudentGroup> oldStudentGroup = groupService.getGroupWithStudentsById(oldGroup);
+    public ResponseEntity transferStudent(@RequestParam(value = "new") Long newGroup,
+                                          @RequestParam(value = "id") Long id) {
+        Optional<StudentGroup> oldStudentGroup = groupService.getGroupByStudent(id);
+        Optional<Account> student = accountService.getById(id);
         Optional<StudentGroup> newStudentGroup = groupService.getGroupWithStudentsById(newGroup);
-        Optional<Account> student = accountService.getEmployerById(id);
         if (oldStudentGroup.isPresent() && newStudentGroup.isPresent() && student.isPresent()) {
-            if (oldStudentGroup.get().getUsers().contains(student.get().getUser())) {
-                oldStudentGroup.get().getUsers().removeIf(i -> i.getId() == student.get().getId());
-                newStudentGroup.get().getUsers().add(student.get().getUser());
-                groupService.saveStudentGroup(oldStudentGroup.get());
-                groupService.saveStudentGroup(newStudentGroup.get());
-                return ResponseEntity.ok(student.get());
-            }
-            else return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.notFound().build();
+            oldStudentGroup.get().getUsers().removeIf(i -> i.getId() == id);
+            newStudentGroup.get().getUsers().add(student.get().getUser());
+            groupService.saveStudentGroup(oldStudentGroup.get());
+            groupService.saveStudentGroup(newStudentGroup.get());
+            return ResponseEntity.ok(student.get());
         }
+        return ResponseEntity.notFound().build();
     }
 
     @RequestMapping(value = "/students", method = RequestMethod.POST)
@@ -95,7 +103,7 @@ public class UserController {
 
     @RequestMapping(value = "/students/{groupId}/{studentId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "studentId") Long studentId) {
-        Optional<Account> student = accountService.getEmployerById(studentId);
+        Optional<Account> student = accountService.getById(studentId);
         Optional<StudentGroup> studentGroup = groupService.getGroupWithStudentsById(groupId);
         if (student.isPresent() && studentGroup.isPresent()) {
             studentGroup.get().getUsers().removeIf(i -> i.getId() == studentId);

@@ -43,8 +43,7 @@ public class StudentGroupController {
     @RequestMapping(value = "/descriptions", method = RequestMethod.GET)
     public Iterable<StudentGroup> getStudentGroupsDescriptionsPage(Integer page, Integer size,
                                                                    @RequestParam(required = false, value = "number") Long number,
-
-                                                                   @RequestParam(required = false, value = "course") Integer course) {
+                                                                   @RequestParam(required = false, value = "course") Long course) {
         if (course != null) {
             return studentGroupService.findByCourse(course);
         } else

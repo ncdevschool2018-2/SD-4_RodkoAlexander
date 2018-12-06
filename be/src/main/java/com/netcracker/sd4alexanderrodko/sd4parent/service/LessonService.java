@@ -20,4 +20,6 @@ public interface LessonService {
     long count();
 
     Iterable<Lesson> getAll();
+
+    void deleteTeachersLessons(Long teacherId);
 }

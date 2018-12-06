@@ -2,6 +2,7 @@ import {Component, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {Account} from "../../model/account";
 import {Router} from "@angular/router";
+import {TokenProcessorService} from "../../util/pipe/token-processor.service";
 
 
 
@@ -13,10 +14,9 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
 
 
-  private modalEditor: BsModalRef;
-  public accountToLogin: Account = new Account();
-  constructor(private modalService: BsModalService,
-              private router: Router) {
+
+  constructor(private router: Router,
+              private tokenService: TokenProcessorService) {
   }
 
   ngOnInit() {
@@ -28,5 +28,12 @@ export class HeaderComponent implements OnInit {
 
   loginStatus(): boolean {
     return !!sessionStorage.getItem("Token");
+  }
+  isAdmin(): boolean {
+    return this.tokenService.isAdmin(sessionStorage.getItem("Token"))
+  }
+  signOut(){
+    this.router.navigateByUrl('/login');
+    sessionStorage.removeItem("Token");
   }
 }

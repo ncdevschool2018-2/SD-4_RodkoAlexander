@@ -1,107 +1,89 @@
 <ng4-loading-spinner></ng4-loading-spinner>
+<div class="container mt-lg-5">
 
-<ng-template #modalContent >
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <input class="form-control" [(ngModel)]="searchId"/>
+    </div>
+    <div class="col">
+      <button type="button" [disabled]="!selectedType || !searchId?.length " class="btn btn-primary" (click)="_search();">
+        <fa name="search"></fa>
+      </button>
+    </div>
+    <div class="col">
+      <ng-select [items]="scheduleTypes" [hidden]="editMode" [(ngModel)]="selectedType"></ng-select>
+    </div>
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-secondary" (click)="_changeWeek(-1)">Previous week</button>
+      <button type="button" class="btn btn-secondary" (click)="_searchNow()">Now</button>
+      <button type="button" class="btn btn-secondary" (click)="_changeWeek(1)">Next week</button>
+    </div>
+  </div>
+
+  <p></p>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-sm table-hover table-responsive-sm">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col" style="width: 5%">#</th>
+          <th scope="col" style="width: 15%">TimeStart</th>
+          <th scope="col" style="width: 15%">TimeEnd</th>
+          <th scope="col" style="width: 5%">Type</th>
+          <th scope="col" style="width: 5%">Room</th>
+          <th scope="col" style="width: 10%">Description</th>
+          <th scope="col" style="width: 10%">Teacher</th>
+          <th scope="col" style="width: 10%">Modify</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let lesson of lessons">
+          <td scope="row">{{lesson.id}}</td>
+          <td>{{lesson.timeStart | date:'medium'}}</td>
+          <td>{{lesson.timeEnd | date:'medium'}}</td>
+          <td>{{lesson.type}}</td>
+          <td>{{lesson.room}}</td>
+          <td>{{lesson.description}}</td>
+          <td>{{lesson.teacher.lastName + " " + lesson.teacher.firstName}}</td>
+          <td>
+            <div class="button-bar">
+              <button type="button" class="btn btn-success" (click)="_openModal(template, lesson)">
+                <fa name="list-ul"></fa>
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-template #template>
   <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
-    <button type="button" class="close" (click)="close()">
+    <h4 class="modal-title pull-left">{{editMode ? "Edit" : "Create"}} new Lesson</h4>
+    <button type="button" class="close pull-right"
+            aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <div>
-      Action:
-      <pre>{{ modalData?.action }}</pre>
+    <div class="form-group">
+      <label>Room</label>
+      <input class="form-control control-box" name="room" [(ngModel)]="lessonToEdit.room" #room="ngModel"
+             required/>
+      <div [hidden]="room.valid || room.untouched" class="alert alert-danger">
+        Room
+      </div>
     </div>
-    <div>
-      Event:
-      <pre>{{ modalData?.event | json }}</pre>
-    </div>
+
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
   </div>
 </ng-template>
-
-<div class="row text-center">
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-info"
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false">
-        Previous
-      </div>
-      <div
-        class="btn btn-info"
-        mwlCalendarToday
-        [(viewDate)]="viewDate">
-        Today
-      </div>
-      <div
-        class="btn btn-info"
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate"
-        (viewDateChange)="activeDayIsOpen = false">
-        Next
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-info"
-        (click)="view = CalendarView.Month"
-        [class.active]="view === CalendarView.Month">
-        Month
-      </div>
-      <div
-        class="btn btn-info"
-        (click)="view = CalendarView.Week"
-        [class.active]="view === CalendarView.Week">
-        Week
-      </div>
-      <div
-        class="btn btn-info"
-        (click)="view = CalendarView.Day"
-        [class.active]="view === CalendarView.Day">
-        Day
-      </div>
-    </div>
-  </div>
-</div>
-<br>
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="CalendarView.Month"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="CalendarView.Week"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="CalendarView.Day"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-day-view>
-</div>
 

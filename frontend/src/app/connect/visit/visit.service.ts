@@ -11,12 +11,12 @@ export class VisitService {
   constructor(private http: HttpClient) {
   }
 
-  getVisits(): Observable<Visit[]> {
-    return this.http.get<Visit[]>('/api/visits');
+  getVisits(lessonId: number,groupId: number): Observable<Visit[]> {
+    return this.http.get<Visit[]>('/lessons/' + lessonId + '/groups/' + groupId);
   }
 
-  saveVisits(stl: Visit[]): Observable<Visit[]> {
-    return this.http.post<Visit[]>('/api/visits', stl);
+  saveVisits(visits: Visit[]): Observable<Visit[]> {
+    return this.http.post<Visit[]>('/api/visits', visits);
   }
 
 }

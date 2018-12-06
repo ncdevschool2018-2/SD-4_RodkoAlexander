@@ -7,16 +7,17 @@ import {Ng4LoadingSpinnerModule} from "ng4-loading-spinner";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BsDropdownModule, ModalModule, TooltipModule} from "ngx-bootstrap";
-import {ButtonsModule, CarouselModule, WavesModule} from "angular-bootstrap-md";
+import {ButtonsModule, CarouselModule, InputsModule, WavesModule} from "angular-bootstrap-md";
 import {BrowserModule} from "@angular/platform-browser";
 import {CalendarModule} from "primeng/primeng";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from "ng-pick-datetime";
 import {NgSelectModule} from '@ng-select/ng-select';
-import {AccountToStudentPipe} from './pipe/account-to-student/account-to-student.pipe';
 import {ModifyComponent} from './modify/modify.component';
 import {TabModule} from 'angular-tabs-component';
-import { LessonToCalendarEventPipe } from './pipe/lesson-to-calendar-event/lesson-to-calendar-event.pipe';
+import {AngularFontAwesomeModule} from "angular-font-awesome";
+import {UtilModule} from "../util/util.module";
+import {UserInterfaceModule} from "../user-interface/user-interface.module";
 
 
 @NgModule({
@@ -38,18 +39,19 @@ import { LessonToCalendarEventPipe } from './pipe/lesson-to-calendar-event/lesso
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgSelectModule,
-    TabModule
+    TabModule,
+    AngularFontAwesomeModule,
+    UtilModule,
+    UserInterfaceModule,
+    InputsModule
   ],
   declarations: [
     AccountComponent,
     GroupComponent,
     LessonComponent,
-    AccountToStudentPipe,
-    ModifyComponent,
-    LessonToCalendarEventPipe],
-  exports: [
     ModifyComponent],
-  providers: [AccountToStudentPipe,LessonToCalendarEventPipe]
+  exports: [
+    ModifyComponent]
 })
 export class ModifyModule {
 }

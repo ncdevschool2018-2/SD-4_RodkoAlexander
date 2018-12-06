@@ -30,5 +30,7 @@ public interface StudentGroupService {
 
     Iterable<StudentGroup> findById(Long number);
 
-    Iterable<StudentGroup> findByCourse(Integer course);
+    Iterable<StudentGroup> findByCourse(Long course);
+
+    Optional<StudentGroup> getGroupByStudent(Long id);
 }

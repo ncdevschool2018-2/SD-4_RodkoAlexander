@@ -10,8 +10,8 @@ export class Account {
   user: User;
 
   constructor() {
-    this.user = new User();
-    this.role = new Role();
+    this.user = new User();/*
+    this.role = new Role();*/
   }
 
 

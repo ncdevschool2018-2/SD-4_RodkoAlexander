@@ -52,12 +52,12 @@ public class StudentGroupServiceImpl implements StudentGroupService {
 
     @Override
     public Optional<StudentGroup> getGroupWithStudentsById(long id) {
-        return studentGroupRepository.getGroupWithStudentsById(id);
+        return studentGroupRepository.findById(id);
     }
 
     @Override
     public List<Lesson> getLessonsById(long id, Date dateFrom, Date dateTo) {
-        Optional<StudentGroup> gr = studentGroupRepository.getGroupWithStudentsById(id);
+        Optional<StudentGroup> gr = studentGroupRepository.findById(id);
         if (gr.isPresent()) {
             return lessonRepository.getLessonsByGroupIdByOrderByTimeStart(gr.get(), dateFrom, dateTo);
         } else return Collections.emptyList();
@@ -79,7 +79,12 @@ public class StudentGroupServiceImpl implements StudentGroupService {
     }
 
     @Override
-    public Iterable<StudentGroup> findByCourse(Integer course) {
+    public Iterable<StudentGroup> findByCourse(Long course) {
         return studentGroupRepository.findByCourse(course);
+    }
+
+    @Override
+    public Optional<StudentGroup> getGroupByStudent(Long id) {
+        return studentGroupRepository.findGroupIdByStudent(id);
     }
 }

@@ -1,62 +1,79 @@
 <ng4-loading-spinner></ng4-loading-spinner>
 <div class="container mt-lg-5">
-  <div class="row">
-    <div class="col">
-      <table class="table align-self-center table-sm table-bordered table-hover">
-        <thead class="thead-dark">
-        <tr>
-          <th scope="col" style="width: 15%">Id</th>
-          <th scope="col" style="width: 30%">Email</th>
-          <th scope="col" style="width: 20%">First name</th>
-          <th scope="col" style="width: 20%">Last name</th>
-          <th scope="col" style="width: 20%">Role</th>
-          <th scope="col" style="width: 15%">Modify</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let account of accounts">
-          <td>{{account.id}}</td>
-          <td>{{account.email}}</td>
-          <td>{{account.user.firstName}}</td>
-          <td>{{account.user.lastName}}</td>
-          <td>{{account.role.name}}</td>
-
-          <td>
-            <div class="button-bar">
-              <button type="button" class="btn btn-danger" (click)="_deleteAccount(account.id)">Delete</button>
-              <button type="button" class="btn btn-secondary" (click)="_openModal(create, account)">Edit</button>
-            </div>
-          </td>
-        </tr>
-
-        </tbody>
-      </table>
-
-      <div>
-        <p>Accounts count: {{accounts ? accounts.length : 0}}</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <input type="search" placeholder="Last name" class="form-control" [(ngModel)]="lastNameSearchParam"
+               (change)="_loadPage() ">
       </div>
-
+      <div class="col-sm-1">
+        <button [disabled]="lastNameSearchParam.length < 3" type="button" class="btn btn-primary"  (click)="_search()">
+          <fa name="search"></fa>
+        </button>
+      </div>
+      <div class="col-3">
+        <ng-select placeholder="Role" [items]="roleTypes" [(ngModel)]="roleId" bindLabel="name" bindValue="id">
+        </ng-select>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                (click)="_openModal(create)">
+          <fa name="plus-circle"></fa>
+        </button>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-dark" (click)="_updateAccounts()">Update</button>
 
+  <p></p>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <table class="table table-sm table-hover table-responsive-sm">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Modify</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let account of accounts">
+            <td>{{account.id}}</td>
+            <td>{{account.email}}</td>
+            <td>{{account.user.firstName}}</td>
+            <td>{{account.user.lastName}}</td>
+            <td>{{account.role.name}}</td>
+
+            <td>
+              <div class="button-bar">
+                <button type="button" class="btn btn-danger" (click)="_deleteAccount(account.id)">
+                  <fa name="trash"></fa>
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="_openModal(create, account)">
+                  <fa name="edit"></fa>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="col">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-              (click)="_openModal(create)">
-        Create new account
-      </button>
-    </div>
+    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="totalElements" [(page)]="pageNumber"
+                    [maxSize]="5" [pageSize]="elementsToView"
+                    [boundaryLinks]="true" [rotate]="true" [ellipses]="false"
+                    (pageChange)="_loadPage()"></ngb-pagination>
   </div>
-
 </div>
-
 
 <ng-template #create>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit": "Create"}} new Account</h4>
+    <h4 class="modal-title pull-left">{{editMode ? "Edit" : "Create"}} new Account</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
@@ -64,61 +81,85 @@
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label [hidden]="editMode" >Role</label>
-      <ng-select [hidden]="editMode" [(ngModel)]="accountToEdit.role">
+      <label [hidden]="editMode">Role</label>
+      <ng-select [hidden]="editMode" [(ngModel)]="accountToEdit.role" name="role" #role="ngModel" required>
         <ng-option *ngFor="let selected of roleTypes" [value]="selected">{{selected.name}}</ng-option>
       </ng-select>
-      <div>
+      <div [hidden]="role.untouched || role.valid" class="alert alert-danger">
+        Please set role
       </div>
       <div class="form-group">
         <label>First name</label>
         <input class="form-control" name="firstName" [(ngModel)]="accountToEdit.user.firstName"
-        #firstName="ngModel"
-        required/>
+               #firstName="ngModel"
+               required [minlength]="3" [maxlength]="255" pattern="[A-Z]{1}[a-z]+"/>
         <div [hidden]="firstName.valid || firstName.untouched" class="alert alert-danger">
-          First Name
+          Please set name
         </div>
       </div>
       <div class="form-group">
         <label>Last name</label>
-        <input class="form-control" name="lastName" [(ngModel)]="accountToEdit.user.lastName"
-        #lastName="ngModel"
-        required/>
-        <div [hidden]="lastName.valid || lastName.untouched" class="alert alert-danger">
-          Last Name
+        <input class="form-control" name="secondName" [(ngModel)]="accountToEdit.user.lastName"
+               #secondName="ngModel"
+               required [minlength]="3" [maxlength]="255" pattern="[A-Z]{1}[a-z]+"/>
+        <div [hidden]="secondName.valid || secondName.untouched" class="alert alert-danger">
+          Please set surname
         </div>
       </div>
-      <div class="form-group">
-        <label [hidden]="accountToEdit.role.name!='Student'">Group</label>
-        <ng-select [hidden]="accountToEdit.role.name!='Student'" [(ngModel)]="groupId">
-          <ng-option *ngFor="let gr of groups" [value]="gr.id">{{gr.id + ". " + gr.description}}</ng-option>
+      <div class="form-group" [hidden]="!ifStudent(accountToEdit.role)">
+        <label>Group</label>
+        <ng-select [(ngModel)]="groupId" [items]="groups" bindValue="id"  bindLabel="id" name="groupsEl" #grs="ngModel" required (search)="_elasticSearchGroups($event)" >
+          <ng-template ng-label-tmp let-item="item" let-unselect="unselect">
+            {{item.id + '. ' + item.description}}
+          </ng-template>
+          <ng-template ng-optgroup-tmp let-item="item" let-index="index">
+            {{item.id + '. ' + item.description}}
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <div [ngOptionHighlight]="search">{{item.id + '. ' + item.description}}</div>
+          </ng-template>
         </ng-select>
+        <div [hidden]="grs.valid || grs.untouched" class="alert alert-danger">
+          Please set group
+        </div>
       </div>
+
     </div>
     <div class="form-group">
       <label>Email</label>
       <input class="form-control" name="email" [(ngModel)]="accountToEdit.email" #email="ngModel"
-             required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"/>
+             required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*" [minlength]="3"
+             [maxlength]="255"/>
       <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
         Please set email
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" [hidden]="editMode">
       <label>Password</label>
       <input type="password" class="form-control" name="password" [(ngModel)]="accountToEdit.password"
              #password="ngModel"
-             required/>
+             required [minlength]="3" maxlength="255"/>
       <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
         Password
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-default" (click)="_addAccount()"
-            [disabled]="email.invalid || password.invalid">{{editMode ? "Save": "Create"}}
+    <button *ngIf="!ifStudent(accountToEdit.role)" type="button" class="btn btn-default" (click)="_addAccount()"
+            [disabled]="email.invalid ||
+            password.invalid ||
+            secondName.invalid ||
+            firstName.invalid ||
+            role.invalid">{{editMode ? "Save" : "Create"}}
+    </button>
+    <button *ngIf="ifStudent(accountToEdit.role)" type="button" class="btn btn-default" (click)="_addStudent()"
+            [disabled]="email.invalid ||
+            password.invalid ||
+            secondName.invalid ||
+            firstName.invalid ||
+            role.invalid || grs.invalid">{{editMode ? "Save" : "Create"}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>
-
   </div>
 </ng-template>
 

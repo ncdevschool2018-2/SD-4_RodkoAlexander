@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Account} from "../../model/account";
 import {AuthService} from "../../connect/auth/auth.service";
 import {Subscription} from "rxjs";
-import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {Router} from "@angular/router";
+import {TokenProcessorService} from "../../util/pipe/token-processor.service";
 
 @Component({
   selector: 'app-login',
@@ -14,44 +14,30 @@ export class LoginComponent implements OnInit {
 
 
   loginAccount: Account;
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
   private subscriptions: Subscription[] = [];
 
   constructor(private authService: AuthService,
-              private loadingService: Ng4LoadingSpinnerService,
-              private router:Router) {
+              private router: Router,
+              private tokenService: TokenProcessorService) {
     this.loginAccount = new Account();
   }
 
   ngOnInit() {
-    if (sessionStorage.getItem("Token")) {
-      this.isLoggedIn = true;
-    }
+
   }
 
-  onSubmit() {
-    this.authService.attemptAuth(this.loginAccount);
-  }
-
-  reloadPage() {
-    window.location.reload();
-  }
 
   loginTry() {
-    this.loadingService.show();
     this.subscriptions.push(this.authService.attemptAuth(this.loginAccount).subscribe(token => {
         if (token) {
-          console.log(token.token);
           sessionStorage.setItem("Token", token.token);
+          if (this.tokenService.isAdmin(token.token))
           this.router.navigateByUrl("/modify");
-        }
-        else console.log("something bad");
+          else this.router.navigateByUrl("/schedule")
+        } else console.log("something bad");
 
       }
     ));
-    this.loadingService.show();
 
   }
 

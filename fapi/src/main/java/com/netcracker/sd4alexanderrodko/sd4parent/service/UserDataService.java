@@ -14,7 +14,7 @@ public interface UserDataService extends UserDetailsService {
 
     AccountViewModel saveStudent(StudentViewModel student);
 
-    AccountViewModel transferStudent(Long oldGroup, Long newGroup, Long id);
+    AccountViewModel transferStudent(Long newGroup, Long id);
 
     void deleteStudent(long groupId, long studentId);
 

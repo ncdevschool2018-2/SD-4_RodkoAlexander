@@ -7,11 +7,9 @@ import com.netcracker.sd4alexanderrodko.sd4parent.models.StudentViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.models.UserViewModel;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -47,10 +45,10 @@ public class UserDataController {
 
 
     @RequestMapping()
-    public List<AccountViewModel> getAll(Integer page, Integer size, @RequestParam(required = false,value="lastName") String lastName,
-                                                        @RequestParam(required = false,value="roleId") String roleId) {
+    public List<AccountViewModel> getAll(Integer page, Integer size, @RequestParam(required = false, value = "lastName") String lastName,
+                                         @RequestParam(required = false, value = "roleId") String roleId) {
         if (roleId != null && !roleId.equals(""))
-        return userDataService.getAllByLastNameAndRole(lastName,roleId);
+            return userDataService.getAllByLastNameAndRole(lastName, roleId);
         if (lastName != null && !lastName.equals(""))
             return userDataService.getAllByLastName(lastName);
         return userDataService.getAll(page, size);
@@ -67,17 +65,16 @@ public class UserDataController {
     }
 
     @RequestMapping("/teachers")
-    public List<UserViewModel> getTeachers(String lastName) {
+    public List<UserViewModel> getTeachers(@RequestParam(value = "lastName") String lastName) {
         return userDataService.getTeachersByLastName(lastName);
     }
 
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
-    public AccountViewModel transferStudent(@RequestParam(value = "old")Long oldGroup,
-                                          @RequestParam(value = "new")Long newGroup,
-                                          @RequestParam(value = "id") Long id) {
+    public AccountViewModel transferStudent(@RequestParam(value = "new") Long newGroup,
+                                            @RequestParam(value = "id") Long id) {
 
-        return userDataService.transferStudent(oldGroup, newGroup, id);
+        return userDataService.transferStudent(newGroup, id);
     }
 
 }

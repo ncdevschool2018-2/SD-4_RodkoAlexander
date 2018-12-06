@@ -11,6 +11,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+
+
   attemptAuth(acc: Account): Observable<Token> {
     return this.http.post<Token>('/api/auth/token', acc);
   }

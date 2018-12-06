@@ -3,9 +3,6 @@ export class User {
   firstName: string;
   lastName: string;
 
-  constructor() {
-  }
-
 
   static clone(user: User): User {
     let cloned: User = new User();

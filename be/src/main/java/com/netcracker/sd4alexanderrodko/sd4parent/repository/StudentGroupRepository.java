@@ -24,12 +24,12 @@ public interface StudentGroupRepository extends JpaRepository<StudentGroup, Long
     @Query(value = "select new StudentGroup (id,course,description) FROM StudentGroup where str(id) like :number%")
     List<StudentGroup> getGroupByNumber(@Param("number") String id);
 
-    @Query(value = "FROM StudentGroup WHERE id = :number")
-    Optional<StudentGroup> getGroupWithStudentsById(@Param("number") long id);
-
     @Query(value = "SELECT sg.users from StudentGroup  sg where sg.id = :number")
     List<User> getStudentsFromGroupById(@Param("number") long id);
 
     @Query(value = "select new StudentGroup (id,course,description) FROM StudentGroup WHERE course = :course")
-    Iterable<StudentGroup> findByCourse(@Param("course") Integer course);
+    Iterable<StudentGroup> findByCourse(@Param("course") Long course);
+
+    @Query(value = "select gr FROM StudentGroup gr join gr.users p WHERE p.id = :student")
+    Optional<StudentGroup> findGroupIdByStudent(@Param("student") Long student);
 }

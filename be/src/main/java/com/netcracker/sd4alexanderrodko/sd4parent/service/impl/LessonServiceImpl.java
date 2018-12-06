@@ -4,9 +4,7 @@ import com.netcracker.sd4alexanderrodko.sd4parent.entity.Lesson;
 import com.netcracker.sd4alexanderrodko.sd4parent.repository.LessonRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
@@ -53,6 +51,12 @@ public class LessonServiceImpl implements LessonService {
     public Iterable<Lesson> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public void deleteTeachersLessons(Long teacherId) {
+        repository.deleteTeachersLessons(teacherId);
+    }
+
 
 
 }

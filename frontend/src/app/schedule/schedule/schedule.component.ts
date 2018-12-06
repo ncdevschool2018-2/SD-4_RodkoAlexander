@@ -1,26 +1,11 @@
-import {Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
-import {CalendarEvent, CalendarEventTimesChangedEvent, CalendarView} from 'angular-calendar';
-import {isSameDay, isSameMonth} from 'date-fns';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Subject, Subscription} from "rxjs";
+import {Component, OnInit, TemplateRef} from "@angular/core";
+import {Subscription} from "rxjs";
 import {ScheduleService} from "../../connect/schedule/schedule.service";
-import {LessonToCalendarEventPipe} from "../../modify/pipe/lesson-to-calendar-event/lesson-to-calendar-event.pipe";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
-
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
+import {Lesson} from "../../model/lesson";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {VisitService} from "../../connect/visit/visit.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-schedule',
@@ -28,72 +13,92 @@ const colors: any = {
   styleUrls: ['./schedule.component.css']
 })
 export class ScheduleComponent implements OnInit {
-
-  @ViewChild('modalContent')
-  modalContent: TemplateRef<any>;
-
-  view: CalendarView = CalendarView.Month;
-
-  CalendarView = CalendarView;
-  viewDate: Date = new Date();
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-  refresh: Subject<any> = new Subject();
-  events: CalendarEvent[] = [];
-  activeDayIsOpen: boolean = true;
+  public editMode = false;
+  public lessons: Lesson[] = [];
+  public week: number = 604800000;
+  private pipe: DatePipe = new DatePipe('en-US');
+  public dateToLoadFrom: Date;
+  public dateToLoadTo: Date;
+  public selectedType: string;
+  public scheduleTypes: string[] = ['Teacher', 'Student'];
+  public lessonToEdit: Lesson = new Lesson();
+  public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
+  searchId: string;
 
-  constructor(private modal: NgbModal,
-              private lessonService: ScheduleService,
-              private lessonToCalendarEventPipe: LessonToCalendarEventPipe,
-              private loadingService: Ng4LoadingSpinnerService) {
+  constructor(private scheduleService: ScheduleService,
+              private visitService: VisitService,
+              private loadingService: Ng4LoadingSpinnerService,
+              private modalService: BsModalService) {
+
   }
 
-  dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
+  ngOnInit() {
+    this._now();
+
+  }
+
+
+  public _closeModal(): void {
+    this.modalEditor.hide();
+  }
+
+  public _openModal(template: TemplateRef<any>, lesson: Lesson): void {
+
+    if (lesson) {
+      this.editMode = true;
+      this.lessonToEdit = Lesson.clone(lesson);
+    } else {
+      this._refreshLessonToEdit();
+      this.editMode = false;
     }
+
+    this.modalEditor = this.modalService.show(template);
   }
 
-  eventTimesChanged({
-                      event,
-                      newStart,
-                      newEnd
-                    }: CalendarEventTimesChangedEvent): void {
-    event.start = newStart;
-    event.end = newEnd;
-    this.handleEvent('Dropped or resized', event);
-    this.refresh.next();
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = {event, action};
-    this.modal.open(this.modalContent, {size: 'lg'});
+  private _refreshLessonToEdit(): void {
+    this.lessonToEdit = new Lesson();
   }
 
-  close() {
-    this.modal.dismissAll()
-  }
-
-  ngOnInit(): void {
-    this.loadLessons();
-  }
-
-  private loadLessons(): void {
+  private _loadTeacherLessons(): void {
     this.loadingService.show();
-    this.subscriptions.push(this.lessonService.getLessons().subscribe(lessons => {
-      this.events = this.lessonToCalendarEventPipe.transform(lessons);
+    this.subscriptions.push(this.scheduleService.getLessonsByTeacher(+this.searchId, this.pipe.transform(this.dateToLoadFrom, 'yyyy-MM-dd'),
+      this.pipe.transform(this.dateToLoadTo, 'yyyy-MM-dd')).subscribe(lessons => {
+      this.lessons = lessons;
       this.loadingService.hide();
     }));
+  }
+
+  private _loadStudentLessons(): void {
+    this.loadingService.show();
+    this.subscriptions.push(this.scheduleService.getLessonsByGroup(+this.searchId, this.pipe.transform(this.dateToLoadFrom, 'yyyy-MM-dd'),
+      this.pipe.transform(this.dateToLoadTo, 'yyyy-MM-dd')).subscribe(lessons => {
+      this.lessons = lessons;
+      this.loadingService.hide();
+    }));
+  }
+
+  _now() {
+    this.dateToLoadFrom = new Date();
+    this.dateToLoadTo = new Date(this.dateToLoadFrom.getTime() + (this.week));
+  }
+
+  _changeWeek(weekChange: number) {
+    this.dateToLoadTo.setTime(this.dateToLoadTo.getTime() + (weekChange * this.week));
+    this.dateToLoadFrom.setTime(this.dateToLoadFrom.getTime() + (weekChange * this.week));
+    this._search();
+  }
+
+  _search() {
+    this.selectedType == 'Student' ? this._loadStudentLessons() : this._loadTeacherLessons();
+  }
+
+  _searchNow() {
+    this._now();
+    this._search();
   }
 }

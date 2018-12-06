@@ -54,16 +54,16 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public AccountViewModel transferStudent(Long oldGroup, Long newGroup, Long id) {
+    public AccountViewModel transferStudent(Long newGroup, Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendServerUrl + usersServerUrl + "?old=" + oldGroup + "&new=" + newGroup +"&id=" + id, AccountViewModel.class).getBody();
+        return restTemplate.getForEntity(backendServerUrl + usersServerUrl + "?new=" + newGroup +"&id=" + id, AccountViewModel.class).getBody();
     }
 
 
     @Override
     public void deleteStudent(long groupId, long studentId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + usersServerUrl + "/students" + "/" + groupId + "/" + studentId);
+        restTemplate.delete(backendServerUrl + usersServerUrl + "/students/" + groupId + "/" + studentId);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public List<UserViewModel> getTeachersByLastName(String lastName) {
         RestTemplate restTemplate = new RestTemplate();
-        UserViewModel[] teachers = restTemplate.getForObject(backendServerUrl + usersServerUrl + "/teachers?=lastName" + lastName, UserViewModel[].class);
+        UserViewModel[] teachers = restTemplate.getForObject(backendServerUrl + usersServerUrl + "/teachers?lastName=" + lastName, UserViewModel[].class);
         return teachers == null ? Collections.emptyList() : Arrays.asList(teachers);
     }
 
