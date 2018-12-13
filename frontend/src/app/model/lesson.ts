@@ -27,6 +27,7 @@ export class Lesson {
     cloned.room = lesson.room;
     cloned.type = lesson.type;
     cloned.teacher = lesson.teacher;
+    cloned.groups = lesson.groups;
     return cloned;
   }
 }

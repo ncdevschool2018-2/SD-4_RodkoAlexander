@@ -16,43 +16,39 @@ export class UserService {
   }
 
   saveAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>('/api/users', account);
+    return this.http.post<Account>('/api/accounts', account);
   }
 
   saveStudent(student: Student): Observable<Account> {
-    return this.http.post<Account>('/api/users/students', student);
+    return this.http.post<Account>('/api/accounts/students', student);
   }
 
   deleteAccount(id: number): Observable<void> {
-    return this.http.delete<void>('/api/users/' + id);
+    return this.http.delete<void>('/api/accounts/' + id);
   }
 
-  deleteStudent(groupId: number, id: number): Observable<void> {
-    return this.http.delete<void>('/api/groups/' + groupId + '/' + id);
+  deleteStudent( id: number): Observable<void> {
+    return this.http.delete<void>('/api/accounts/students/' + id);
   }
 
   getAll(page: number, size: number): Observable<Account[]> {
-    return this.http.get<Account[]>('/api/users/?page=' + page + '&size=' + size);
+    return this.http.get<Account[]>('/api/accounts/?page=' + page + '&size=' + size);
   }
 
   getRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>('/api/users/roles');
+    return this.http.get<Role[]>('/api/roles');
   }
 
   findByLastName(lastName: string): Observable<Account[]> {
-    return this.http.get<Account[]>('/api/users?lastName=' + lastName);
+    return this.http.get<Account[]>('/api/accounts?lastName=' + lastName);
   }
 
-  findByLastNameAndRole(lastNameSearchParam: string, roleId: number) {
-    return this.http.get<Account[]>('/api/users?lastName=' + lastNameSearchParam + '&roleId=' + roleId);
+  findAccountsByLastNameAndRole(lastNameSearchParam: string, roleId: number) {
+    return this.http.get<Account[]>('/api/accounts?lastName=' + lastNameSearchParam + '&roleId=' + roleId);
   }
 
-  getTeachers(): Observable<User[]> {
-    return this.http.get<User[]>('/api/users/teachers');
-  }
-
-  findTeachersByLastName(lastName: string): Observable<User[]> {
-    return this.http.get<User[]>('/api/users/teachers?lastName=' + lastName);
+  findUsersByLastNameAndRole(lastName: string, role: number): Observable<User[]> {
+    return this.http.get<User[]>('/api/users?lastName=' + lastName+'&role=' + role);
   }
 
   getStudentsFromGroup(groupId: number): Observable<User[]> {
@@ -60,10 +56,10 @@ export class UserService {
   }
 
   count(): Observable<number> {
-    return this.http.get<number>('/api/users/count');
+    return this.http.get<number>('/api/accounts/count');
   }
 
-  transfer(oldGroup: number, newGroup: number, id: number) {
-    return this.http.get<Account>('/api/users/students?old=' + oldGroup + '&new=' + newGroup + '&id=' +id );
+  transferStudent(newGroup: number, id: number) {
+    return this.http.put('/api/accounts/students?new=' + newGroup + '&id=' +id,null);
   }
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -57,6 +58,10 @@ public class LessonServiceImpl implements LessonService {
         repository.deleteTeachersLessons(teacherId);
     }
 
+    @Override
+    public boolean check(Lesson lesson) {
+        return repository.check(lesson.getTeacher().getId(),lesson.getTimeStart(),lesson.getTimeEnd(), lesson.getGroups()) == 0;
+    }
 
 
 }

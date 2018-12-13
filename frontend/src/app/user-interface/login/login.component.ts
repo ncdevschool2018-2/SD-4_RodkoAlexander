@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Account} from "../../model/account";
 import {AuthService} from "../../connect/auth/auth.service";
 import {Subscription} from "rxjs";
@@ -10,11 +10,12 @@ import {TokenProcessorService} from "../../util/pipe/token-processor.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
 
 
   loginAccount: Account;
   private subscriptions: Subscription[] = [];
+  public error: string = "";
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -26,6 +27,9 @@ export class LoginComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => {sub.unsubscribe()})
+  }
 
   loginTry() {
     this.subscriptions.push(this.authService.attemptAuth(this.loginAccount).subscribe(token => {
@@ -36,6 +40,8 @@ export class LoginComponent implements OnInit {
           else this.router.navigateByUrl("/schedule")
         } else console.log("something bad");
 
+      },error1 => {
+      this.error = "Bad credentials";
       }
     ));
 

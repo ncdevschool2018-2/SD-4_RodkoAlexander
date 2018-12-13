@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,7 @@ public class ScheduleDataController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<LessonViewModel> saveLesson(@RequestBody LessonViewModel lessonViewModel) {
+    public ResponseEntity<LessonViewModel> saveLesson(@Valid @RequestBody LessonViewModel lessonViewModel) {
         if (lessonViewModel != null) {
             return ResponseEntity.ok(scheduleDataService.saveLesson(lessonViewModel));
         }

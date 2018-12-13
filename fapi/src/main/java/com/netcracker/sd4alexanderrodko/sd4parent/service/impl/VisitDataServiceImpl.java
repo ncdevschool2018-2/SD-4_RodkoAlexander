@@ -23,15 +23,15 @@ public class VisitDataServiceImpl implements VisitDataService {
 
 
     @Override
-    public List<VisitViewModel> getAll(Long groupId,Long lessonId) {
+    public Iterable<VisitViewModel> getAll(Long groupId,Long lessonId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<VisitViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + studentsVisitsServerUrl + "?groupId=" + groupId + "lessonId=" + lessonId, VisitViewModel[].class);
+        ResponseEntity<VisitViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + studentsVisitsServerUrl + "?groupId=" + groupId + "&lessonId=" + lessonId, VisitViewModel[].class);
         VisitViewModel[] visitViewModels = forEntity.getBody();
         return visitViewModels == null ? Collections.emptyList() : Arrays.asList(visitViewModels);
     }
 
     @Override
-    public List<VisitViewModel> saveVisit(List<VisitViewModel> visits) {
+    public Iterable<VisitViewModel> saveVisit(Iterable<VisitViewModel> visits) {
         RestTemplate restTemplate = new RestTemplate();
         VisitViewModel[] responseEntity = restTemplate.postForEntity(backendServerUrl + studentsVisitsServerUrl, visits, VisitViewModel[].class).getBody();
         return responseEntity == null ? Collections.emptyList() : Arrays.asList(responseEntity);

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,7 +38,7 @@ public class StudentGroupDataController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<StudentGroupViewModel> saveStudentGroup(@RequestBody StudentGroupViewModel studentGroupViewModel) {
+    public ResponseEntity<StudentGroupViewModel> saveStudentGroup(@Valid @RequestBody StudentGroupViewModel studentGroupViewModel) {
         if (studentGroupViewModel != null) {
             return ResponseEntity.ok(studentGroupDataService.saveStudentGroup(studentGroupViewModel));
         }

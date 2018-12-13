@@ -8,7 +8,7 @@ import java.util.Objects;
 @Table(name = "visits", schema = "backend")
 public class Visit {
     private long id;
-    private Byte visit;
+    private Boolean visit;
     private Lesson lesson;
     private User student;
 
@@ -25,11 +25,11 @@ public class Visit {
 
     @Basic
     @Column(name = "visit", nullable = true)
-    public Byte getVisit() {
+    public Boolean getVisit() {
         return visit;
     }
 
-    public void setVisit(Byte visit) {
+    public void setVisit(Boolean visit) {
         this.visit = visit;
     }
 

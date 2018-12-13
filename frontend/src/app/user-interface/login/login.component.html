@@ -2,13 +2,27 @@
   <div class="card-body">
     <h5 class="card-title">Login</h5>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="text" class="form-control" id="email" placeholder="Email Address" [(ngModel)]="loginAccount.email">
+      <label>Email</label>
+      <input class="form-control"  [(ngModel)]="loginAccount.email" #email="ngModel" name="email"
+             required pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*" [minlength]="3"
+             [maxlength]="255"/>
+      <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+        Please input email
+      </div>
     </div>
     <div class="form-group">
-      <label for="email">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="loginAccount.password">
+      <label>Password</label>
+      <input type="password" class="form-control" name="password" [(ngModel)]="loginAccount.password"
+             #password="ngModel"
+             required [minlength]="6" maxlength="255"/>
+      <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+        Please input password (at least 6 characters)
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="loginTry()" >Login</button>
+    <div [hidden]="error.length < 3" class="alert alert-danger">
+      {{error}}
+    </div>
+    <button [disabled]="email.invalid ||
+            password.invalid" type="submit" class="btn btn-primary" (click)="loginTry()" >Login</button>
   </div>
 </div>

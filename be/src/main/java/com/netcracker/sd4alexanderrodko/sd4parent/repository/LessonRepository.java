@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -26,5 +28,12 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Transactional
     @Query(value = "delete  FROM Lesson  where teacher.id = :id")
     void deleteTeachersLessons(@Param("id") Long id);
+
+    @Query(value = "select count(lesson) from Lesson lesson where lesson.teacher.id = :teacher and lesson.timeStart in (:timeStart,:timeEnd) or lesson.timeEnd in (:timeStart,:timeEnd) and lesson.groups in :groups")
+    Long check(@Param("teacher") long teacher,
+               @Param("timeStart") Timestamp start,
+               @Param("timeEnd") Timestamp end,
+               @Param("groups") Collection<StudentGroup> groups);
+
 
 }

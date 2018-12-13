@@ -8,19 +8,21 @@ import {GroupService} from "../../../connect/group/group.service";
 import {Group} from "../../../model/group";
 import {Role} from "../../../model/role";
 import {AccountToStudentPipe} from "../../../util/pipe/account-to-student/account-to-student.pipe";
+import {Transfer} from "../../../model/transfer";
+import {User} from "../../../model/user";
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent implements OnInit,OnDestroy {
+export class AccountComponent implements OnInit, OnDestroy {
 
 
   public editMode: boolean = false;
   public roleTypes: Role[];
   public groupId: number;
-  public groups: Group[];
+  public groups: Group[] = [];
   public accounts: Account[];
   public accountToEdit: Account = new Account();
   public modalEditor: BsModalRef;
@@ -30,6 +32,9 @@ export class AccountComponent implements OnInit,OnDestroy {
   pageNumber: number = 1;
   elementsToView: number = 25;
   lastNameSearchParam: string = "";
+  public transferStudent: Transfer = new Transfer();
+  public students: User[] = [];
+  public error: string ="";
 
 
   constructor(private accountService: UserService,
@@ -51,7 +56,7 @@ export class AccountComponent implements OnInit,OnDestroy {
     this.modalEditor.hide();
   }
 
-  public _openModal(template: TemplateRef<any>, account?: Account): void {
+  public _openNewModal(template: TemplateRef<any>, account?: Account): void {
 
     if (account) {
       this.editMode = true;
@@ -64,26 +69,40 @@ export class AccountComponent implements OnInit,OnDestroy {
     this.modalEditor = this.modalService.show(template);
   }
 
+  public _openTransferModal(template: TemplateRef<any>): void {
+
+    this.modalEditor = this.modalService.show(template);
+  }
+
 
   public _addStudent(): void {
     this.loadingService.show();
     this.subscriptions.push(this.accountService.saveStudent(
-      this.accountToStudentPipe.transform(this.accountToEdit, this.groupId)).subscribe(() => {
-      this._updateAccounts();
-      this._updateNumberOfEntries();
-      this._refreshAccountToEdit();
-      this._closeModal();
+      this.accountToStudentPipe.transform(this.accountToEdit, this.groupId)).subscribe(saved => {
+      if (saved) {
+        this._updateAccounts();
+        this._updateNumberOfEntries();
+        this._refreshAccountToEdit();
+        this._closeModal();
+      } else {
+        this.error = "Bad credentials(mail already registered)";
+      }
+
       this.loadingService.hide();
     }));
   }
 
   public _addAccount(): void {
     this.loadingService.show();
-    this.subscriptions.push(this.accountService.saveAccount(this.accountToEdit).subscribe(() => {
-      this._updateAccounts();
-      this._updateNumberOfEntries();
-      this._refreshAccountToEdit();
-      this._closeModal();
+    this.subscriptions.push(this.accountService.saveAccount(this.accountToEdit).subscribe(saved => {
+      if (saved) {
+        this._updateAccounts();
+        this._updateNumberOfEntries();
+        this._refreshAccountToEdit();
+        this._closeModal();
+      } else {
+        this.error = "Bad credentials(mail already registered)";
+      }
       this.loadingService.hide();
     }));
 
@@ -98,6 +117,7 @@ export class AccountComponent implements OnInit,OnDestroy {
     this.subscriptions.push(this.accountService.deleteAccount(id).subscribe(() => {
       this._updateAccounts();
       this._updateNumberOfEntries();
+      this.loadingService.hide();
     }));
   }
 
@@ -135,19 +155,15 @@ export class AccountComponent implements OnInit,OnDestroy {
   _search() {
     this.loadingService.show();
     this.subscriptions.push(
-      this.roleId ? this.accountService.findByLastNameAndRole(this.lastNameSearchParam, this.roleId).subscribe(accounts => {
-          this.accounts = accounts;
-          this.loadingService.hide();
-        }) :
-        this.accountService.findByLastName(this.lastNameSearchParam).subscribe(accounts => {
-          this.accounts = accounts;
-          this.loadingService.hide();
-        }));
+      this.accountService.findAccountsByLastNameAndRole(this.lastNameSearchParam, this.roleId == undefined ? 0 : this.roleId).subscribe(accounts => {
+        this.accounts = accounts;
+        this.loadingService.hide();
+      }));
 
   }
 
   ifStudent(role: Role): boolean {
-    return role && role.name == 'Student';
+    return role && role.id == 3;
   }
 
   _elasticSearchGroups(event) {
@@ -156,5 +172,33 @@ export class AccountComponent implements OnInit,OnDestroy {
         this.groups = groups;
       }));
     }
+  }
+
+  _elasticSearchStudents(event) {
+    if ((event + '').match('[A-Z]{1}[a-z]+')) {
+      this.subscriptions.push(this.accountService.findUsersByLastNameAndRole(event, 3).subscribe(students => {
+        this.students = students;
+      }));
+    }
+  }
+
+  _deleteStudent(id: number) {
+    this.loadingService.show();
+    this.subscriptions.push(this.accountService.deleteStudent(id).subscribe(() => {
+      this._updateAccounts();
+      this._updateNumberOfEntries();
+      this.loadingService.hide();
+    }));
+  }
+
+
+  _transfer() {
+    this.loadingService.show();
+    this.subscriptions.push(this.accountService.transferStudent(this.transferStudent.group, this.transferStudent.student).subscribe(() => {
+      this._updateAccounts();
+      this._updateNumberOfEntries();
+      this._closeModal();
+      this.loadingService.hide();
+    }));
   }
 }

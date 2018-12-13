@@ -10,6 +10,7 @@ export class Visit {
   constructor() {
     this.lesson = new Lesson();
     this.student = new User();
+    this.visit = true;
   }
 
 

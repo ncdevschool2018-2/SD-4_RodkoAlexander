@@ -1,10 +1,15 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 public class StudentGroupViewModel {
     private Long id;
+    @NotNull
     private Long course;
+    @NotBlank
     private String description;
     private Collection<UserViewModel> students;
     private Collection<LessonViewModel> lessons;

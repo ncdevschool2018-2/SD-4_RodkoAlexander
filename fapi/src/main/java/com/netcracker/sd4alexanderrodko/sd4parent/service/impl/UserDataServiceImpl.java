@@ -26,8 +26,12 @@ import java.util.List;
 public class UserDataServiceImpl implements UserDataService {
     @Value("${backend.server.url}")
     private String backendServerUrl;
+    @Value("${accounts.server.url}")
+    private String accountsServerUrl;
     @Value("${users.server.url}")
     private String usersServerUrl;
+    @Value("${roles.server.url}")
+    private String rolesServerUrl;
     @Value("${groups.server.url}")
     private String groupsServerUrl;
     @Value("${login.server.url}")
@@ -42,7 +46,7 @@ public class UserDataServiceImpl implements UserDataService {
         if (accountViewModel.getId() == 0)
             accountViewModel.setPassword(encoder.encode(accountViewModel.getPassword()));
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + usersServerUrl, accountViewModel, AccountViewModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + accountsServerUrl, accountViewModel, AccountViewModel.class).getBody();
     }
 
     @Override
@@ -50,62 +54,55 @@ public class UserDataServiceImpl implements UserDataService {
         if (studentViewModel.getAccount().getId() == 0)
             studentViewModel.getAccount().setPassword(encoder.encode(studentViewModel.getAccount().getPassword()));
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendServerUrl + usersServerUrl + "/students", studentViewModel, AccountViewModel.class).getBody();
+        return restTemplate.postForEntity(backendServerUrl + accountsServerUrl + "/students", studentViewModel, AccountViewModel.class).getBody();
     }
 
     @Override
-    public AccountViewModel transferStudent(Long newGroup, Long id) {
+    public void transferStudent(Long newGroup, Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendServerUrl + usersServerUrl + "?new=" + newGroup +"&id=" + id, AccountViewModel.class).getBody();
+        restTemplate.put(backendServerUrl + accountsServerUrl + "/students"+ "?new=" + newGroup +"&id=" + id,null);
     }
 
 
     @Override
-    public void deleteStudent(long groupId, long studentId) {
+    public void deleteStudent( Long studentId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + usersServerUrl + "/students/" + groupId + "/" + studentId);
+        restTemplate.delete(backendServerUrl + accountsServerUrl + "/students/"  + studentId);
     }
 
     @Override
-    public void deleteEmployer(long employerId) {
+    public void deleteEmployer(Long employerId) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(backendServerUrl + usersServerUrl + "/" + employerId);
+        restTemplate.delete(backendServerUrl + accountsServerUrl + "/" + employerId);
     }
 
     @Override
     public List<AccountViewModel> getAll(Integer page, Integer size) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<AccountViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + usersServerUrl + "?page=" + page + "&size=" + size, AccountViewModel[].class);
+        ResponseEntity<AccountViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + accountsServerUrl + "?page=" + page + "&size=" + size, AccountViewModel[].class);
         AccountViewModel[] accountViewModels = forEntity.getBody();
         return accountViewModels == null ? Collections.emptyList() : Arrays.asList(accountViewModels);
 
     }
 
+
     @Override
-    public List<AccountViewModel> getAllByLastName(String lastName) {
+    public List<AccountViewModel> getAccountsByLastNameAndRole(String lastName, Long roleId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<AccountViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + usersServerUrl + "?lastName=" + lastName, AccountViewModel[].class);
+        ResponseEntity<AccountViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + accountsServerUrl + "?lastName=" + lastName + "&roleId=" + roleId, AccountViewModel[].class);
         AccountViewModel[] accountViewModels = forEntity.getBody();
         return accountViewModels == null ? Collections.emptyList() : Arrays.asList(accountViewModels);
     }
 
     @Override
-    public List<AccountViewModel> getAllByLastNameAndRole(String lastName, String roleId) {
+    public List<UserViewModel> getUsersByLastNameAndRole(String lastName,Long roleId) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<AccountViewModel[]> forEntity = restTemplate.getForEntity(backendServerUrl + usersServerUrl + "?lastName=" + lastName + "&roleId=" + roleId, AccountViewModel[].class);
-        AccountViewModel[] accountViewModels = forEntity.getBody();
-        return accountViewModels == null ? Collections.emptyList() : Arrays.asList(accountViewModels);
-    }
-
-    @Override
-    public List<UserViewModel> getTeachersByLastName(String lastName) {
-        RestTemplate restTemplate = new RestTemplate();
-        UserViewModel[] teachers = restTemplate.getForObject(backendServerUrl + usersServerUrl + "/teachers?lastName=" + lastName, UserViewModel[].class);
+        UserViewModel[] teachers = restTemplate.getForObject(backendServerUrl + usersServerUrl + "?lastName=" + lastName+ "&roleId=" + roleId, UserViewModel[].class);
         return teachers == null ? Collections.emptyList() : Arrays.asList(teachers);
     }
 
     @Override
-    public List<UserViewModel> getStudentsFromGroup(long groupId) {
+    public List<UserViewModel> getStudentsFromGroup(Long groupId) {
         RestTemplate restTemplate = new RestTemplate();
         UserViewModel[] students = restTemplate.getForObject(backendServerUrl + groupsServerUrl + "/" + groupId + "/students", UserViewModel[].class);
         return students == null ? Collections.emptyList() : Arrays.asList(students);
@@ -114,13 +111,13 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public List<RoleViewModel> getRoles() {
         RestTemplate restTemplate = new RestTemplate();
-        RoleViewModel[] students = restTemplate.getForObject(backendServerUrl + usersServerUrl + "/roles", RoleViewModel[].class);
+        RoleViewModel[] students = restTemplate.getForObject(backendServerUrl + rolesServerUrl, RoleViewModel[].class);
         return students == null ? Collections.emptyList() : Arrays.asList(students);
     }
 
     @Override
     public Long count() {
-        return new RestTemplate().getForEntity(backendServerUrl + usersServerUrl + "/count", Long.class).getBody();
+        return new RestTemplate().getForEntity(backendServerUrl + accountsServerUrl + "/count", Long.class).getBody();
     }
 
 

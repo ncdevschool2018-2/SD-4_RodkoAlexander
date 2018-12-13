@@ -1,9 +1,15 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class RoleViewModel {
 
+    @NotNull
     private Long id;
-
+    @NotBlank
+    @Size(min = 3)
     private String name;
 
     public RoleViewModel() {

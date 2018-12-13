@@ -1,16 +1,28 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 public class LessonViewModel {
     private long id;
+    @PastOrPresent
     private Timestamp timeStart;
+    @Future
     private Timestamp timeEnd;
+    @NotBlank
+    @Size(min=2)
     private String description;
+    @NotBlank
+    @Size(min=1)
     private String room;
+    @NotBlank
     private String type;
+    @Valid
+    @NotNull
     private UserViewModel teacher;
+    @NotNull
     private Collection<StudentGroupViewModel> groups;
 
     public LessonViewModel() {

@@ -5,6 +5,6 @@ import com.netcracker.sd4alexanderrodko.sd4parent.models.VisitViewModel;
 import java.util.List;
 
 public interface VisitDataService {
-    List<VisitViewModel> getAll(Long groupId,Long lessonId);
-    List<VisitViewModel> saveVisit(List<VisitViewModel> visits);
+    Iterable<VisitViewModel> getAll(Long groupId,Long lessonId);
+    Iterable<VisitViewModel> saveVisit(Iterable<VisitViewModel> visits);
 }

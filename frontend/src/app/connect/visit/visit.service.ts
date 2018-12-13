@@ -12,7 +12,7 @@ export class VisitService {
   }
 
   getVisits(lessonId: number,groupId: number): Observable<Visit[]> {
-    return this.http.get<Visit[]>('/lessons/' + lessonId + '/groups/' + groupId);
+    return this.http.get<Visit[]>('/api/visits?groupId='+ groupId+ '&lessonId='+ lessonId);
   }
 
   saveVisits(visits: Visit[]): Observable<Visit[]> {

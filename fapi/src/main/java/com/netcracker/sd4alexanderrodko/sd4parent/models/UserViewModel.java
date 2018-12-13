@@ -1,9 +1,17 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class UserViewModel {
 
     private long id;
+    @NotBlank
+    @Size(min = 3)
     private String firstName;
+    @Size(min = 3)
+    @NotBlank
     private String lastName;
 
     public UserViewModel() {

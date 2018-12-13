@@ -138,11 +138,9 @@ export class LessonComponent implements OnInit ,OnDestroy{
 
   _elasticSearchTeacher(event) {
     if ((event + '').match('[A-Z]{1}[a-z]+')) {
-      this.userService.findTeachersByLastName(event).subscribe(data => {
+      this.userService.findUsersByLastNameAndRole(event,2).subscribe(data => {
         this.teachers = [];
-        console.log(this.selectedTeacher);
         this.teachers = [...this.teachers,...data];
-        console.log(this.teachers);
       });
     }
   }

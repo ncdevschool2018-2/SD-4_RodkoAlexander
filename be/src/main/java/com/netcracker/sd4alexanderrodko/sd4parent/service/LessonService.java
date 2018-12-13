@@ -22,4 +22,5 @@ public interface LessonService {
     Iterable<Lesson> getAll();
 
     void deleteTeachersLessons(Long teacherId);
+    boolean check(Lesson lesson);
 }

@@ -41,8 +41,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<User> getFindTeacherByLastName(String lastName) {
-        return accountRepository.getTeachersByLastName(lastName);
+    public List<User> getUserByLastNameAndRole(String lastName, Long role) {
+        return accountRepository.getTeachersByLastName(lastName,role);
     }
 
 
@@ -73,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> findByLastNameAndRole(String lastName, long roleId) {
+    public List<Account> getAccountByLastNameAndRole(String lastName, Long roleId) {
         return accountRepository.findAccountsByUserLastNameAndRole(lastName, roleId);
     }
 
@@ -82,4 +82,8 @@ public class AccountServiceImpl implements AccountService {
         return roleRepository.findAll();
     }
 
+    @Override
+    public boolean checkDuplicate(String email) {
+        return accountRepository.check(email) == 0;
+    }
 }

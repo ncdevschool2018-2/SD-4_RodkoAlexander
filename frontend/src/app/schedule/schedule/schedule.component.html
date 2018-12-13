@@ -6,7 +6,8 @@
       <input class="form-control" [(ngModel)]="searchId"/>
     </div>
     <div class="col">
-      <button type="button" [disabled]="!selectedType || !searchId?.length " class="btn btn-primary" (click)="_search();">
+      <button type="button" [disabled]="!selectedType || !searchId?.length " class="btn btn-primary"
+              (click)="_search();">
         <fa name="search"></fa>
       </button>
     </div>
@@ -34,7 +35,7 @@
           <th scope="col" style="width: 5%">Room</th>
           <th scope="col" style="width: 10%">Description</th>
           <th scope="col" style="width: 10%">Teacher</th>
-          <th scope="col" style="width: 10%">Modify</th>
+          <th *ngIf="isEmployer()" scope="col" style="width: 10%">Info</th>
         </tr>
         </thead>
         <tbody>
@@ -46,7 +47,7 @@
           <td>{{lesson.room}}</td>
           <td>{{lesson.description}}</td>
           <td>{{lesson.teacher.lastName + " " + lesson.teacher.firstName}}</td>
-          <td>
+          <td *ngIf="isEmployer()">
             <div class="button-bar">
               <button type="button" class="btn btn-success" (click)="_openModal(template, lesson)">
                 <fa name="list-ul"></fa>
@@ -65,22 +66,44 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">{{editMode ? "Edit" : "Create"}} new Lesson</h4>
+    <h4 class="modal-title pull-left">Info</h4>
     <button type="button" class="close pull-right"
             aria-label="Close" (click)="_closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <div class="form-group">
-      <label>Room</label>
-      <input class="form-control control-box" name="room" [(ngModel)]="lessonToEdit.room" #room="ngModel"
-             required/>
-      <div [hidden]="room.valid || room.untouched" class="alert alert-danger">
-        Room
-      </div>
-    </div>
+    <ngb-accordion [closeOthers]="true" #acc="ngbAccordion">
+      <div *ngFor="let gr of lessonToEdit.groups">
+        <ngb-panel>
+        <ng-template ngbPanelTitle>
+          <span (click)="_loadStudents(gr.id,lessonToEdit.id)">{{gr.id}}.{{gr.description}}</span>
+        </ng-template>
 
+        <ng-template ngbPanelContent >
+          <table class="table align-self-center table-sm table-bordered table-hover">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col" style="width: 20%">First name</th>
+              <th scope="col" style="width: 20%">Last name</th>
+              <th scope="col" style="width: 20%">Visit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let visit of visitsForGroup">
+              <td>{{visit.student.firstName}}</td>
+              <td>{{visit.student.lastName}}</td>
+              <td>
+                <input type="checkbox" [(ngModel)]="visit.visit"/></td>
+            </tr>
+
+            </tbody>
+          </table>
+          <button type="button" class="btn btn-default" (click)="_saveVisits()">Save
+          </button>
+        </ng-template>
+      </ngb-panel></div>
+    </ngb-accordion>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="_closeModal()">Close</button>

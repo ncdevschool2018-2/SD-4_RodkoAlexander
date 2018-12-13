@@ -1,8 +1,15 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class StudentViewModel {
 
+    @NotEmpty
+    @Valid
     private AccountViewModel account;
+    @NotNull
     private long groupId;
 
     public StudentViewModel() {

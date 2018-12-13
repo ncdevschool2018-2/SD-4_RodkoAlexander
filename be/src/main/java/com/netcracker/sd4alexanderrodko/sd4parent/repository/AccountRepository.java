@@ -23,8 +23,11 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query(value = "from Account acc where acc.email=:email")
     Optional<Account> isExists(@Param("email") String email);
 
-    @Query(value = "select account.user from Account account where account.role.id=2 and account.user.lastName like :lastName%")
-    List<User> getTeachersByLastName(@Param("lastName") String lastName);
+    @Query(value = "select account.user from Account account where account.role.id= :role and account.user.lastName like :lastName%")
+    List<User> getTeachersByLastName(@Param("lastName") String lastName,@Param("role") Long role);
+
+    @Query(value = "select count(acc) from Account acc where acc.email = :email")
+    Long check(@Param("email") String email);
 
 }
 

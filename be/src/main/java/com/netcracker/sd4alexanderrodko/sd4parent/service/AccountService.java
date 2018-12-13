@@ -26,10 +26,12 @@ public interface AccountService {
 
     List<Account> findByLastName(String lastName);
 
-    List<User> getFindTeacherByLastName(String lastName);
+    List<User> getUserByLastNameAndRole(String lastName, Long role);
 
-    List<Account> findByLastNameAndRole(String lastName, long roleId);
+    List<Account> getAccountByLastNameAndRole(String lastName, Long roleId);
 
     Iterable<Role> getRoles();
+
+    boolean checkDuplicate(String email);
 
 }

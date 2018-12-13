@@ -6,6 +6,10 @@ import {Lesson} from "../../model/lesson";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {VisitService} from "../../connect/visit/visit.service";
 import {DatePipe} from "@angular/common";
+import {Visit} from "../../model/visit";
+import {UserService} from "../../connect/user/user.service";
+import {StudentsToVisitsPipe} from "../../util/pipe/students-to-visits/students-to-visits.pipe";
+import {TokenProcessorService} from "../../util/pipe/token-processor.service";
 
 @Component({
   selector: 'app-schedule',
@@ -15,6 +19,7 @@ import {DatePipe} from "@angular/common";
 export class ScheduleComponent implements OnInit {
   public editMode = false;
   public lessons: Lesson[] = [];
+  private visitsPipe: StudentsToVisitsPipe = new StudentsToVisitsPipe();
   public week: number = 604800000;
   private pipe: DatePipe = new DatePipe('en-US');
   public dateToLoadFrom: Date;
@@ -25,10 +30,13 @@ export class ScheduleComponent implements OnInit {
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
   searchId: string;
+  public visitsForGroup: Visit[] = [];
 
   constructor(private scheduleService: ScheduleService,
               private visitService: VisitService,
+              private userService: UserService,
               private loadingService: Ng4LoadingSpinnerService,
+              private tokenProcessor: TokenProcessorService,
               private modalService: BsModalService) {
 
   }
@@ -39,6 +47,10 @@ export class ScheduleComponent implements OnInit {
   }
 
 
+  isEmployer(): boolean {
+    return this.tokenProcessor.isTeacher(sessionStorage.getItem("Token")) || this.tokenProcessor.isAdmin(sessionStorage.getItem("Token"));
+  }
+
   public _closeModal(): void {
     this.modalEditor.hide();
   }
@@ -48,6 +60,7 @@ export class ScheduleComponent implements OnInit {
     if (lesson) {
       this.editMode = true;
       this.lessonToEdit = Lesson.clone(lesson);
+      console.log(this.lessonToEdit)
     } else {
       this._refreshLessonToEdit();
       this.editMode = false;
@@ -100,5 +113,31 @@ export class ScheduleComponent implements OnInit {
   _searchNow() {
     this._now();
     this._search();
+  }
+
+
+  _loadStudents(groupId: number, lessonId: number): void {
+    this.visitsForGroup = [];
+    this.loadingService.show();
+    this.subscriptions.push(this.visitService.getVisits(lessonId, groupId).subscribe(groupVisits => {
+      if (groupVisits)
+        this.visitsForGroup = groupVisits;
+        console.log(groupVisits);
+    }));
+    if (this.visitsForGroup) {
+      this.subscriptions.push(this.userService.getStudentsFromGroup(groupId).subscribe(ifNotProtocoled => {
+        this.visitsForGroup = this.visitsPipe.transform(ifNotProtocoled, this.lessonToEdit);
+        this.loadingService.hide();
+      }));
+    }
+  }
+
+  _saveVisits() {
+    this.loadingService.show();
+    console.log(this.visitsForGroup);
+    this.subscriptions.push(this.visitService.saveVisits(this.visitsForGroup).subscribe(() => {
+      console.log(this.visitsForGroup);
+      this.loadingService.hide();
+    }));
   }
 }

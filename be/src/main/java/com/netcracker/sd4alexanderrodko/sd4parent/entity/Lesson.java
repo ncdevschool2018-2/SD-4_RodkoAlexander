@@ -23,7 +23,7 @@ public class Lesson {
 
 
     @ManyToMany(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     public Collection<StudentGroup> getGroups() {
         return groups;

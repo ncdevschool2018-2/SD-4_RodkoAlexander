@@ -1,9 +1,18 @@
 package com.netcracker.sd4alexanderrodko.sd4parent.models;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class VisitViewModel {
     private long id;
-    private Byte visit;
+    @NotNull
+    private Boolean visit;
+    @NotNull
+    @Valid
     private LessonViewModel lesson;
+    @NotNull
+    @Valid
     private UserViewModel student;
 
 
@@ -18,11 +27,11 @@ public class VisitViewModel {
         this.id = id;
     }
 
-    public Byte getVisit() {
+    public Boolean getVisit() {
         return visit;
     }
 
-    public void setVisit(Byte visit) {
+    public void setVisit(Boolean visit) {
         this.visit = visit;
     }
 

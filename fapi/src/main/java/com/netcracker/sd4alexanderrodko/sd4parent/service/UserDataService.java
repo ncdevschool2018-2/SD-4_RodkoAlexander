@@ -14,21 +14,19 @@ public interface UserDataService extends UserDetailsService {
 
     AccountViewModel saveStudent(StudentViewModel student);
 
-    AccountViewModel transferStudent(Long newGroup, Long id);
+    void transferStudent(Long newGroup, Long id);
 
-    void deleteStudent(long groupId, long studentId);
+    void deleteStudent(Long studentId);
 
-    void deleteEmployer(long employerId);
+    void deleteEmployer(Long employerId);
 
     List<AccountViewModel> getAll(Integer page, Integer size);
 
-    List<AccountViewModel> getAllByLastName(String lastName);
+    List<AccountViewModel> getAccountsByLastNameAndRole(String lastName, Long roleId);
 
-    List<AccountViewModel> getAllByLastNameAndRole(String lastName, String roleId);
+    List<UserViewModel> getUsersByLastNameAndRole(String lastName,Long roleId);
 
-    List<UserViewModel> getTeachersByLastName(String lastName);
-
-    List<UserViewModel> getStudentsFromGroup(long groupId);
+    List<UserViewModel> getStudentsFromGroup(Long groupId);
 
     List<RoleViewModel> getRoles();
 
