@@ -45,7 +45,7 @@
           <td>{{lesson.timeEnd | date:'medium'}}</td>
           <td>{{lesson.type}}</td>
           <td>{{lesson.room}}</td>
-          <td>{{lesson.description}}</td>
+          <td>{{lesson.subject.abbreviation}}</td>
           <td>{{lesson.teacher.lastName + " " + lesson.teacher.firstName}}</td>
           <td *ngIf="isEmployer()">
             <div class="button-bar">
@@ -77,7 +77,7 @@
       <div *ngFor="let gr of lessonToEdit.groups">
         <ngb-panel>
         <ng-template ngbPanelTitle>
-          <span (click)="_loadStudents(gr.id,lessonToEdit.id)">{{gr.id}}.{{gr.description}}</span>
+          <span (click)="_loadVisits(gr.id,lessonToEdit.id)">{{gr.id}}.{{gr.description}}</span>
         </ng-template>
 
         <ng-template ngbPanelContent >

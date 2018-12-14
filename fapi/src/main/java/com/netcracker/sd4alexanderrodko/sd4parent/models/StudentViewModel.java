@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 public class StudentViewModel {
 
-    @NotEmpty
+    @NotNull
     @Valid
     private AccountViewModel account;
     @NotNull

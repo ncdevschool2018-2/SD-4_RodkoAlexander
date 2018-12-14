@@ -11,11 +11,10 @@ public class LessonViewModel {
     private Timestamp timeStart;
     @Future
     private Timestamp timeEnd;
+    @NotNull
+    private SubjectViewModel subject;
     @NotBlank
-    @Size(min=2)
-    private String description;
-    @NotBlank
-    @Size(min=1)
+    @Size(min = 1)
     private String room;
     @NotBlank
     private String type;
@@ -52,12 +51,12 @@ public class LessonViewModel {
         this.timeEnd = timeEnd;
     }
 
-    public String getDescription() {
-        return description;
+    public SubjectViewModel getSubject() {
+        return subject;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSubject(SubjectViewModel subject) {
+        this.subject = subject;
     }
 
     public String getRoom() {

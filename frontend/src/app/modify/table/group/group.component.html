@@ -44,7 +44,7 @@
           <tr *ngFor="let group of groups">
             <td scope="row">{{group.id}}</td>
             <td>{{group.course}}</td>
-            <td type="password">{{group.description}}</td>
+            <td type="fullName">{{group.description}}</td>
             <td>
               <div class="button-bar">
                 <button type="button" class="btn btn-danger" (click)="_deleteGroup(group.id)">

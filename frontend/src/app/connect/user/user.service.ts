@@ -40,7 +40,7 @@ export class UserService {
   }
 
   findByLastName(lastName: string): Observable<Account[]> {
-    return this.http.get<Account[]>('/api/accounts?lastName=' + lastName);
+    return this.http.get<Account[]>('/api/accounts?fullName=' + lastName);
   }
 
   findAccountsByLastNameAndRole(lastNameSearchParam: string, roleId: number) {

@@ -12,7 +12,7 @@ public class Lesson {
     private long id;
     private Timestamp timeStart;
     private Timestamp timeEnd;
-    private String description;
+    private Subject subject;
     private String room;
     private String type;
     private User teacher;
@@ -44,7 +44,7 @@ public class Lesson {
         this.id = id;
     }
 
-    @Basic
+
     @Column(name = "time_start", nullable = true)
     public Timestamp getTimeStart() {
         return timeStart;
@@ -54,7 +54,7 @@ public class Lesson {
         this.timeStart = timeStart;
     }
 
-    @Basic
+
     @Column(name = "time_end", nullable = true)
     public Timestamp getTimeEnd() {
         return timeEnd;
@@ -64,17 +64,18 @@ public class Lesson {
         this.timeEnd = timeEnd;
     }
 
-    @Basic
-    @Column(name = "description", nullable = true, length = 256)
-    public String getDescription() {
-        return description;
+
+    @OneToOne
+    @JoinColumn(name = "subject_id", referencedColumnName = "id")
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    @Basic
+
     @Column(name = "room", nullable = true, length = 256)
     public String getRoom() {
         return room;
@@ -84,7 +85,7 @@ public class Lesson {
         this.room = room;
     }
 
-    @Basic
+
     @Column(name = "type", nullable = true, length = 256)
     public String getType() {
         return type;
@@ -96,7 +97,7 @@ public class Lesson {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timeStart, timeEnd, description, room, type);
+        return Objects.hash(id, timeStart, timeEnd, room, type);
     }
 
     @OneToOne

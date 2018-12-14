@@ -1,5 +1,6 @@
 use backend;
 insert into users (id, first_name, last_name) values (1001, 'Farah', 'Adamo');
+insert into accounts (id, email, password, role) values (1001, 'admin@domain.com', '$2a$10$hIezejwR6XUeLojyIsuVy.CzNsyo.YJFJFBTVHcpmcB3wVS0dBqzu', 1);
 insert into users (id, first_name, last_name) values (1002, 'Nelly', 'Kilbourn');
 insert into users (id, first_name, last_name) values (1003, 'Mikol', 'Haydney');
 insert into users (id, first_name, last_name) values (1004, 'Sherwin', 'Petren');
@@ -51,7 +52,6 @@ insert into users (id, first_name, last_name) values (1049, 'Constantine', 'Andr
 insert into users (id, first_name, last_name) values (1050, 'Crissie', 'Shyre');
 insert into users (id, first_name, last_name) values (1051, 'Jimmy', 'Gaitley');
 insert into users (id, first_name, last_name) values (1052, 'Itch', 'Brimmicombe');
-insert into accounts (id, email, password, role) values (1001, 'admin@domain.com', '$2a$10$hIezejwR6XUeLojyIsuVy.CzNsyo.YJFJFBTVHcpmcB3wVS0dBqzu', 1);
 insert into accounts (id, email, password, role) values (1002, 'ebrunesco1@examiner.com', '$2a$10$hIezejwR6XUeLojyIsuVy.CzNsyo.YJFJFBTVHcpmcB3wVS0dBqzu', 1);
 insert into accounts (id, email, password, role) values (1003, 'teacher@domain.com', '$2a$10$hIezejwR6XUeLojyIsuVy.CzNsyo.YJFJFBTVHcpmcB3wVS0dBqzu', 2);
 insert into accounts (id, email, password, role) values (1004, 'smcquaid3@alexa.com', '$2a$10$hIezejwR6XUeLojyIsuVy.CzNsyo.YJFJFBTVHcpmcB3wVS0dBqzu', 2);

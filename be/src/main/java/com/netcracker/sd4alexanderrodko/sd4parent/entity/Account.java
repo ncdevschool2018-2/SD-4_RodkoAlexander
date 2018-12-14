@@ -26,7 +26,7 @@ public class Account {
         this.id = id;
     }
 
-    @Basic
+
     @Column(unique = true,name = "email", nullable = false, length = 256)
     public String getEmail() {
         return email;
@@ -36,7 +36,7 @@ public class Account {
         this.email = email;
     }
 
-    @Basic
+
     @Column(name = "password", nullable = false, length = 256)
     public String getPassword() {
         return password;
@@ -46,7 +46,7 @@ public class Account {
         this.password = password;
     }
 
-    @Basic
+
     @OneToOne
     @JoinColumn(name = "role", referencedColumnName = "id")
     public Role getRole() {

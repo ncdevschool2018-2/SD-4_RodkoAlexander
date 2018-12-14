@@ -21,7 +21,7 @@ export class GroupComponent implements OnInit,OnDestroy {
   public groupStudents: User[];
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
-  totalElements = 100;
+  totalElements:number = 0;
   pageNumber: number = 1;
   elementsToView: number = 25;
   searchParam: string = '';

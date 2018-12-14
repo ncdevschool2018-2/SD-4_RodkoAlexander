@@ -28,7 +28,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
   public roleId: number;
-  totalElements = 0;
+  totalElements:number = 0;
   pageNumber: number = 1;
   elementsToView: number = 25;
   lastNameSearchParam: string = "";

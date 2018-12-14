@@ -47,7 +47,7 @@ public class StudentGroup {
         this.id = id;
     }
 
-    @Basic
+
     @Column(name = "course")
     public long getCourse() {
         return course;
@@ -57,7 +57,7 @@ public class StudentGroup {
         this.course = course;
     }
 
-    @Basic
+
     @Column(name = "description", length = 256)
     public String getDescription() {
         return description;

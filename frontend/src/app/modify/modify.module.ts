@@ -18,6 +18,7 @@ import {TabModule} from 'angular-tabs-component';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {UtilModule} from "../util/util.module";
 import {UserInterfaceModule} from "../user-interface/user-interface.module";
+import { SubjectComponent } from './table/subject/subject.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {UserInterfaceModule} from "../user-interface/user-interface.module";
     AccountComponent,
     GroupComponent,
     LessonComponent,
-    ModifyComponent],
+    ModifyComponent,
+    SubjectComponent],
   exports: [
     ModifyComponent]
 })

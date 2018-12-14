@@ -7,7 +7,7 @@ FROM users u JOIN
          HAVING COUNT(*) > 1
        ) X on X.last_name = u.last_name and X.id != u.id;
 
-use backend
+use backend;
 SELECT *
 FROM users u JOIN
        (

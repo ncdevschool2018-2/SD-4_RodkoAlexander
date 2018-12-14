@@ -9,6 +9,7 @@ import com.netcracker.sd4alexanderrodko.sd4parent.service.StudentGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Date;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Component
+@Service
 public class StudentGroupServiceImpl implements StudentGroupService {
 
     private StudentGroupRepository studentGroupRepository;

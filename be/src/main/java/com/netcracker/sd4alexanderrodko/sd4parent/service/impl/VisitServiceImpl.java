@@ -6,11 +6,12 @@ import com.netcracker.sd4alexanderrodko.sd4parent.repository.VisitRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
-@Component
+@Service
 public class VisitServiceImpl implements VisitService {
     private VisitRepository visitRepository;
     private StudentGroupRepository studentGroupRepository;

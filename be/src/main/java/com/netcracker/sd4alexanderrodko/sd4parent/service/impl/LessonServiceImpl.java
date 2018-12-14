@@ -6,13 +6,14 @@ import com.netcracker.sd4alexanderrodko.sd4parent.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
 
-@Component
+@Service
 public class LessonServiceImpl implements LessonService {
 
     private LessonRepository repository;

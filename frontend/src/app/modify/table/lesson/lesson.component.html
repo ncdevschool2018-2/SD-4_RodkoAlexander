@@ -38,7 +38,7 @@
           <th scope="col" style="width: 15%">TimeEnd</th>
           <th scope="col" style="width: 5%">Type</th>
           <th scope="col" style="width: 5%">Room</th>
-          <th scope="col" style="width: 10%">Description</th>
+          <th scope="col" style="width: 10%">Subject</th>
           <th scope="col" style="width: 10%">Teacher</th>
           <th scope="col" style="width: 10%">Modify</th>
         </tr>
@@ -50,7 +50,7 @@
           <td>{{lesson.timeEnd | date:'medium'}}</td>
           <td>{{lesson.type}}</td>
           <td>{{lesson.room}}</td>
-          <td>{{lesson.description}}</td>
+          <td>{{lesson.subject.abbreviation}}</td>
           <td>{{lesson.teacher.lastName + " " + lesson.teacher.firstName}}</td>
           <td>
             <div class="button-bar">
@@ -94,13 +94,17 @@
       </div>
     </div>
     <div class="form-group">
-      <label>Description</label>
-      <input class="form-control control-box" name="description" [(ngModel)]="lessonToEdit.description"
-             #description="ngModel"
-             required/>
-      <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
+      <label>Subject</label>
+      <ng-select [(ngModel)]="lessonToEdit.subject"  bindLabel="id"
+                 [items]="teachers" (search)="_elasticSearchSubject($event)" required>
+
+        <ng-option *ngFor="let car of subjects"
+                   [value]="car"  >{{car.fullName }}</ng-option>
+
+      </ng-select>
+     <!-- <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
         Description
-      </div>
+      </div>-->
     </div>
     <div class="form-group">
       <label>Teacher</label>
@@ -109,15 +113,7 @@
 
         <ng-option *ngFor="let car of teachers"
                    [value]="car"  >{{car.firstName + ' ' +car.lastName }}</ng-option>
-        <!--<ng-template ng-label-tmp let-item="item" let-unselect="unselect">
-          {{item}}
-        </ng-template>
-        <ng-template ng-optgroup-tmp let-item="item" let-index="index">
-          {{item}}
-        </ng-template>
-        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-          <div [ngOptionHighlight]="search">   {{item}}</div>
-        </ng-template>-->
+
       </ng-select>
       <!--<div [hidden]="teacher.untouched || teacher.valid" class="alert alert-danger">
         Please set teacher
@@ -171,7 +167,6 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-default" (click)="_addLesson()"
             [disabled]="room.invalid
-            || description.invalid
             || grs.invalid
             || type.invalid ">{{editMode ? "Save" : "Create"}}
     </button>

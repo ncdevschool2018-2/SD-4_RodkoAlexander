@@ -26,6 +26,7 @@ public class AuthController {
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
     public ResponseEntity login(@RequestBody AccountViewModel loginUser) throws AuthenticationException {
+        System.out.println(loginUser.getPassword());
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

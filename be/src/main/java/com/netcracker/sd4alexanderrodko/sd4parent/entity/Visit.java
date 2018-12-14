@@ -23,7 +23,6 @@ public class Visit {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "visit", nullable = true)
     public Boolean getVisit() {
         return visit;

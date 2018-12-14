@@ -8,12 +8,12 @@ import com.netcracker.sd4alexanderrodko.sd4parent.repository.RoleRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<User> getUserByLastNameAndRole(String lastName, Long role) {
-        return accountRepository.getTeachersByLastName(lastName,role);
+        return accountRepository.getTeachersByLastName(lastName, role);
     }
 
 

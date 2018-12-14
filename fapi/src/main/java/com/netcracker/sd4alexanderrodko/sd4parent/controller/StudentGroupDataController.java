@@ -17,8 +17,8 @@ import java.util.List;
 @RequestMapping("/api/groups")
 public class StudentGroupDataController {
 
-    private final StudentGroupDataService studentGroupDataService;
-    private final UserDataService userDataService;
+    private StudentGroupDataService studentGroupDataService;
+    private UserDataService userDataService;
 
     @Autowired
     public StudentGroupDataController(StudentGroupDataService studentGroupDataService, UserDataService userDataService) {

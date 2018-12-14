@@ -9,6 +9,8 @@ import {GroupService} from "../../../connect/group/group.service";
 import {UserService} from "../../../connect/user/user.service";
 import {User} from "../../../model/user";
 import {DatePipe} from "@angular/common";
+import {SubjectService} from "../../../connect/subject/subject.service";
+import {Subject} from "../../../model/subject";
 
 @Component({
   selector: 'app-lesson',
@@ -26,14 +28,13 @@ export class LessonComponent implements OnInit ,OnDestroy{
   public lessonTypes = ['Laboratory', 'Practical', 'Lection'];
   public scheduleTypes: string[] = ['Teacher', 'Student'];
   public lessons: Lesson[] = [];
-  public selectedTeacher: User[] = [];
   public teachers: User[] = [];
   public groups: Group[] = [];
   public lessonToEdit: Lesson = new Lesson();
   public modalEditor: BsModalRef;
   private subscriptions: Subscription[] = [];
   now: Date = new Date();
-  totalElements = 0;
+  totalElements:number = 0;
   pageNumber: number = 1;
   elementsToView: number = 25;
   searchId: string = '';
@@ -42,8 +43,10 @@ export class LessonComponent implements OnInit ,OnDestroy{
   public dateToLoadFrom: Date;
   public dateToLoadTo: Date;
   public selectedType: string;
+  public subjects: Subject[];
 
   constructor(private scheduleService: ScheduleService,
+              private subjectService: SubjectService,
               private groupService: GroupService,
               private userService: UserService,
               private loadingService: Ng4LoadingSpinnerService,
@@ -141,6 +144,15 @@ export class LessonComponent implements OnInit ,OnDestroy{
       this.userService.findUsersByLastNameAndRole(event,2).subscribe(data => {
         this.teachers = [];
         this.teachers = [...this.teachers,...data];
+      });
+    }
+  }
+
+  _elasticSearchSubject(event) {
+    if ((event + '').match('[A-Z]+')) {
+      this.subjectService.getSubjectByAbbreviation(event).subscribe(data => {
+        this.subjects = [];
+        this.subjects = [...this.subjects,...data];
       });
     }
   }

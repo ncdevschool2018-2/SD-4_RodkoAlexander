@@ -1,11 +1,12 @@
 import {Group} from "./group";
 import {User} from "./user";
+import {Subject} from "./subject";
 
 export class Lesson {
   id: number;
   timeStart: Date;
   timeEnd: Date;
-  description: string;
+  subject: Subject;
   room: string;
   type: string;
   teacher: User;
@@ -13,6 +14,7 @@ export class Lesson {
 
   constructor() {
     this.teacher = new User();
+    this.subject = new Subject();
     this.timeStart = new Date();
     this.timeEnd = new Date();
     this.groups = [];
@@ -23,7 +25,7 @@ export class Lesson {
     cloned.id = lesson.id;
     cloned.timeStart = lesson.timeStart;
     cloned.timeEnd = lesson.timeEnd;
-    cloned.description = lesson.description;
+    cloned.subject = lesson.subject;
     cloned.room = lesson.room;
     cloned.type = lesson.type;
     cloned.teacher = lesson.teacher;

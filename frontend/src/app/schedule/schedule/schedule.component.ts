@@ -116,16 +116,18 @@ export class ScheduleComponent implements OnInit {
   }
 
 
-  _loadStudents(groupId: number, lessonId: number): void {
+  _loadVisits(groupId: number, lessonId: number): void {
     this.visitsForGroup = [];
     this.loadingService.show();
     this.subscriptions.push(this.visitService.getVisits(lessonId, groupId).subscribe(groupVisits => {
-      if (groupVisits)
+      this.loadingService.show();
+      if (groupVisits.length > 0)
         this.visitsForGroup = groupVisits;
-        console.log(groupVisits);
+      this.loadingService.hide();
     }));
-    if (this.visitsForGroup) {
+    if (this.visitsForGroup.length > 0) {
       this.subscriptions.push(this.userService.getStudentsFromGroup(groupId).subscribe(ifNotProtocoled => {
+        this.loadingService.show();
         this.visitsForGroup = this.visitsPipe.transform(ifNotProtocoled, this.lessonToEdit);
         this.loadingService.hide();
       }));
@@ -134,9 +136,7 @@ export class ScheduleComponent implements OnInit {
 
   _saveVisits() {
     this.loadingService.show();
-    console.log(this.visitsForGroup);
     this.subscriptions.push(this.visitService.saveVisits(this.visitsForGroup).subscribe(() => {
-      console.log(this.visitsForGroup);
       this.loadingService.hide();
     }));
   }

@@ -23,7 +23,6 @@ public class User {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "first_name", nullable = true, length = 256)
     public String getFirstName() {
         return firstName;
@@ -33,7 +32,7 @@ public class User {
         this.firstName = firstName;
     }
 
-    @Basic
+
     @Column(name = "last_name", nullable = true, length = 256)
     public String getLastName() {
         return lastName;
