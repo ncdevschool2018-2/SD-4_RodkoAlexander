@@ -28,7 +28,6 @@ export class ScheduleService {
   }
 
   saveLesson(lesson: Lesson): Observable<Lesson> {
-    console.log(lesson);
     return this.http.post<Lesson>('/api/schedule', lesson);
   }
 

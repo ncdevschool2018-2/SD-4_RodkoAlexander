@@ -43,7 +43,8 @@ export class LessonComponent implements OnInit ,OnDestroy{
   public dateToLoadFrom: Date;
   public dateToLoadTo: Date;
   public selectedType: string;
-  public subjects: Subject[];
+  public subjects: Subject[] = [];
+  public error: string = "";
 
   constructor(private scheduleService: ScheduleService,
               private subjectService: SubjectService,
@@ -91,17 +92,25 @@ export class LessonComponent implements OnInit ,OnDestroy{
   }
 
   public _addLesson(): void {
-    this.subscriptions.push(this.scheduleService.saveLesson(this.lessonToEdit).subscribe(() => {
-      this._updateLessons();
-      this.refreshLessonToEdit();
-      this._updateNumberOfEntries();
-      this._closeModal();
+    this.subscriptions.push(this.scheduleService.saveLesson(this.lessonToEdit).subscribe(result => {
+      if (result) {
+        this.fieldClear();
+        this._updateLessons();
+        this.refreshLessonToEdit();
+        this._updateNumberOfEntries();
+        this._closeModal();
+      } else this.error = "time intersection"
 
     }));
 
 
   }
 
+  fieldClear(){
+    this.subjects = [];
+    this.teachers = [];
+    this.groups = [];
+  }
   public _updateLessons(): void {
     this.loadPage();
   }
@@ -142,8 +151,7 @@ export class LessonComponent implements OnInit ,OnDestroy{
   _elasticSearchTeacher(event) {
     if ((event + '').match('[A-Z]{1}[a-z]+')) {
       this.userService.findUsersByLastNameAndRole(event,2).subscribe(data => {
-        this.teachers = [];
-        this.teachers = [...this.teachers,...data];
+        this.teachers = data;
       });
     }
   }
@@ -151,8 +159,7 @@ export class LessonComponent implements OnInit ,OnDestroy{
   _elasticSearchSubject(event) {
     if ((event + '').match('[A-Z]+')) {
       this.subjectService.getSubjectByAbbreviation(event).subscribe(data => {
-        this.subjects = [];
-        this.subjects = [...this.subjects,...data];
+        this.subjects = data;
       });
     }
   }

@@ -27,7 +27,7 @@ public class Account {
     }
 
 
-    @Column(unique = true,name = "email", nullable = false, length = 256)
+    @Column(name = "email", nullable = false, length = 256)
     public String getEmail() {
         return email;
     }

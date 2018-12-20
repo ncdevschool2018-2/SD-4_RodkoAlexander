@@ -5,11 +5,9 @@ import com.netcracker.sd4alexanderrodko.sd4parent.repository.LessonRepository;
 import com.netcracker.sd4alexanderrodko.sd4parent.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -61,7 +59,13 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public boolean check(Lesson lesson) {
-        return repository.check(lesson.getTeacher().getId(),lesson.getTimeStart(),lesson.getTimeEnd(), lesson.getGroups()) == 0;
+        if (repository.checkTeacher(lesson.getTeacher().getId(),lesson.getTimeStart(),lesson.getTimeEnd()) > 0) {
+            return false;
+        }
+        if (repository.checkGroups(lesson.getTimeStart(),lesson.getTimeEnd(),lesson.getGroups()) > 0) {
+            return false;
+        }
+        return true;
     }
 
 

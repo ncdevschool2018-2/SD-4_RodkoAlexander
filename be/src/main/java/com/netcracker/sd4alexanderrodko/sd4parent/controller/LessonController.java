@@ -36,9 +36,9 @@ public class LessonController {
 
     @RequestMapping(method = RequestMethod.POST)
     public Lesson saveLesson(@RequestBody Lesson lesson) {
-        //if (lessonService.check(lesson))
+        if (lessonService.check(lesson))
             return lessonService.saveLesson(lesson);
-       // else return null;
+       else return null;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

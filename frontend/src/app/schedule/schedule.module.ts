@@ -10,6 +10,8 @@ import {UtilModule} from "../util/util.module";
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {InputsModule} from "angular-bootstrap-md";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {CalendarModule, DateAdapter} from "angular-calendar";
+import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
 
 
 @NgModule({
@@ -25,7 +27,11 @@ import {NgSelectModule} from "@ng-select/ng-select";
 
     NgSelectModule,
     AngularFontAwesomeModule,
-    InputsModule
+    InputsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   declarations: [
     ScheduleComponent

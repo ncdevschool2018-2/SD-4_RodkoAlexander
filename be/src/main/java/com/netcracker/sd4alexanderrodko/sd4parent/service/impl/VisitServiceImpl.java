@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,8 +24,8 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public List<Visit> saveVisits(Iterable<Visit> visit) {
-        return visitRepository.saveAll(visit);
+    public List<Visit> saveVisits(Iterable<Visit> visits) {
+        return visitRepository.saveAll(visits);
     }
 
 

@@ -29,11 +29,15 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query(value = "delete  FROM Lesson  where teacher.id = :id")
     void deleteTeachersLessons(@Param("id") Long id);
 
-    @Query(value = "select count(lesson) from Lesson lesson where lesson.teacher.id = :teacher and lesson.timeStart in (:timeStart,:timeEnd) or lesson.timeEnd in (:timeStart,:timeEnd) and lesson.groups in :groups")
-    Long check(@Param("teacher") long teacher,
-               @Param("timeStart") Timestamp start,
-               @Param("timeEnd") Timestamp end,
-               @Param("groups") Collection<StudentGroup> groups);
+    @Query(value = "select count(lesson) from Lesson lesson where lesson.teacher.id = :teacher and ((lesson.timeStart > :timeStart and lesson.timeStart< :timeEnd) or (lesson.timeEnd > :timeStart and lesson.timeEnd< :timeEnd))")
+    Long checkTeacher(@Param("teacher") long teacher,
+                      @Param("timeStart") Timestamp start,
+                      @Param("timeEnd") Timestamp end);
 
+
+    @Query(value = "select count(lesson) from Lesson lesson JOIN lesson.groups grs where grs in :groups and ((lesson.timeStart > :timeStart and lesson.timeStart< :timeEnd) or (lesson.timeEnd > :timeStart and lesson.timeEnd< :timeEnd))")
+    Long checkGroups(@Param("timeStart") Timestamp start,
+                     @Param("timeEnd") Timestamp end,
+                     @Param("groups") Collection<StudentGroup> groups);
 
 }

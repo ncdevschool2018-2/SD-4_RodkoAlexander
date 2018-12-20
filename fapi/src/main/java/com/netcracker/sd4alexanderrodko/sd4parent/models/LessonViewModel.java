@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class LessonViewModel {
     private long id;
-    @PastOrPresent
+    @FutureOrPresent
     private Timestamp timeStart;
     @Future
     private Timestamp timeEnd;

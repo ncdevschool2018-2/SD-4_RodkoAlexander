@@ -31,8 +31,6 @@ public class SubjectDataController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<SubjectViewModel> saveSubject(@Valid @RequestBody SubjectViewModel subject) {
-        System.out.println(subject.getAbbreviation());
-        System.out.println(subject.getFullName());
         return ResponseEntity.ok(service.saveSubjectViewModel(subject));
     }
 
